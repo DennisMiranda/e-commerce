@@ -1,0 +1,45 @@
+---
+import "./src/styles/global.css";
+import Sidebar from "../components/Sidebar.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Table from "../components/Table.astro";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>CRUD ADMIN</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="h-full flex flex-col md:flex-row">
+      <Sidebar />
+      <main class="flex-1 p-6">
+        <section
+          class="flex flex-col h-full p-6 space-y-6 bg-white rounded-lg shadow-md"
+        >
+          <Header />
+          <Table />
+        </section>
+      </main>
+    </div>
+  </body>
+
+  <script src="/AgGridClient.js" is:inline></script>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</html>
