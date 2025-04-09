@@ -30,7 +30,6 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script type="module">
-  
   document.addEventListener("DOMContentLoaded", () => {
     console.log("Carrusel cargado");
     const carrusel = document.querySelector(".carrusel-contenedor");
@@ -46,6 +45,7 @@ import { Icon } from "astro-icon/components";
       "#carrusel-indicadores",
     );
     let indiceActual = 0;
+    let intervaloAutomatico;
 
     if (diapositivas.length <= 1) {
       botonAnterior?.classList.add("hidden");
@@ -83,19 +83,52 @@ import { Icon } from "astro-icon/components";
       });
     }
 
-    botonAnterior?.addEventListener("click", () =>
-      mostrarDiapositiva(indiceActual - 1),
-    );
-    botonSiguiente?.addEventListener("click", () =>
-      mostrarDiapositiva(indiceActual + 1),
-    );
+    //function para iniciar el carrusel automatico
+    function iniciarCarrusellAutomatico() {
+      //Limpiar cualquier intervalo existente
+      detenerCarruselAutomatico();
+
+      //Crear un nuevo intervalo que cambia la diapositivacada 5.5 segundos
+      intervaloAutomatico = setInterval(() => {
+        mostrarDiapositiva(indiceActual + 1);
+      }, 4500); //4.5 segundos
+    }
+
+    //function para detener el carrusel automatico
+    function detenerCarruselAutomatico() {
+      if (intervaloAutomatico) {
+        clearInterval(intervaloAutomatico);
+      }
+    }
+
+    //Reiniciar el temporizador cuando el usuario interactua con el carrusel
+    function reiniciarTemporizador() {
+      iniciarCarrusellAutomatico();
+    }
+
+    botonAnterior?.addEventListener("click", () => {
+      mostrarDiapositiva(indiceActual - 1);
+      reiniciarTemporizador();
+    });
+    botonSiguiente?.addEventListener("click", () => {
+      mostrarDiapositiva(indiceActual + 1);
+      reiniciarTemporizador();
+    });
 
     indicadoresContenedor?.addEventListener("click", (e) => {
       if (e.target.matches(".indicador") && e.target.dataset.indice) {
         mostrarDiapositiva(parseInt(e.target.dataset.indice, 10));
+        reiniciarTemporizador();
       }
     });
+    //Pausar el carrusel automatico cuando el usuario coloque el cursor sobre el
+    carrusel.addEventListener("mouseenter", detenerCarruselAutomatico);
 
+    //Reanudar el carrusel automatico cuando el usuario quite el cursor
+    carrusel.addEventListener("mouseenter", iniciarCarrusellAutomatico);
+
+    //mostrar la primera diapositiva e iniciar el carrusel automatico
     mostrarDiapositiva(0);
+    iniciarCarrusellAutomatico();
   });
 </script>
