@@ -1,0 +1,101 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="carrusel-contenedor relative w-full mx-auto pr-2">
+  <div
+    class="carrusel-diapositivas overflow-hidden relative h-80 bg-gray-300 rounded"
+  >
+    {/* Ajusta altura/bg */}
+    <slot />
+    {/* Aquí van tus divs/imágenes de diapositiva */}
+  </div>
+  <button
+    id="boton-anterior"
+    class="absolute top-1/2 left-2 transform -translate-y-1/2 p-2 text-black rounded-full z-6"
+  >
+    <Icon name="prev" size={50} />
+  </button>
+  <button
+    id="boton-siguiente"
+    class="absolute top-1/2 right-2 transform -translate-y-1/2 p-2 text-black rounded-full z-6"
+  >
+    <Icon name="next" size={50} />
+  </button>
+  <div
+    id="carrusel-indicadores"
+    class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2 z-6"
+  >
+  </div>
+</div>
+
+<script type="module">
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("Carrusel cargado");
+    const carrusel = document.querySelector(".carrusel-contenedor");
+    if (!carrusel) return; // Salir si no existe este carrusel en la página
+
+    const diapositivasContenedor = carrusel.querySelector(
+      ".carrusel-diapositivas",
+    );
+    const diapositivas = Array.from(diapositivasContenedor?.children || []);
+    const botonAnterior = carrusel.querySelector("#boton-anterior");
+    const botonSiguiente = carrusel.querySelector("#boton-siguiente");
+    const indicadoresContenedor = carrusel.querySelector(
+      "#carrusel-indicadores",
+    );
+    let indiceActual = 0;
+
+    if (diapositivas.length <= 1) {
+      botonAnterior?.classList.add("hidden");
+      botonSiguiente?.classList.add("hidden");
+      indicadoresContenedor?.classList.add("hidden");
+      if (diapositivas[0]) diapositivas[0].classList.remove("hidden");
+      return;
+    }
+
+    // Crear indicadores
+    indicadoresContenedor.innerHTML = "";
+    diapositivas.forEach((_, i) => {
+      const indicador = document.createElement("button");
+      indicador.classList.add(
+        "indicador",
+        "w-2.5",
+        "h-2.5",
+        "rounded-full",
+        "bg-gray-400",
+        "hover:bg-gray-600",
+      );
+      indicador.dataset.indice = i;
+      indicadoresContenedor?.appendChild(indicador);
+    });
+    const indicadores = Array.from(indicadoresContenedor?.children || []);
+
+    function mostrarDiapositiva(indice) {
+      indiceActual = (indice + diapositivas.length) % diapositivas.length;
+      diapositivas.forEach((d, i) => {
+        d.classList.toggle("hidden", i !== indiceActual);
+      });
+      indicadores.forEach((ind, i) => {
+        ind.classList.toggle("bg-gray-800", i === indiceActual);
+        ind.classList.toggle("bg-gray-400", i !== indiceActual);
+      });
+    }
+
+    botonAnterior?.addEventListener("click", () =>
+      mostrarDiapositiva(indiceActual - 1),
+    );
+    botonSiguiente?.addEventListener("click", () =>
+      mostrarDiapositiva(indiceActual + 1),
+    );
+
+    indicadoresContenedor?.addEventListener("click", (e) => {
+      if (e.target.matches(".indicador") && e.target.dataset.indice) {
+        mostrarDiapositiva(parseInt(e.target.dataset.indice, 10));
+      }
+    });
+
+    mostrarDiapositiva(0);
+  });
+</script>
