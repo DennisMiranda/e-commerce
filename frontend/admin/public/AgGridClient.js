@@ -13,18 +13,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Grid Options: Contains all of the grid configurations
       const gridOptions = {
-        // Data to be displayed
         rowData: products,
-        // Columns to be displayed (Should match rowData properties)
+        // Columns to be displayed
         columnDefs: [
-          { field: "id" },
-          { field: "name" },
-          { field: "brand" },
-          { field: "price" },
+          { field: "id", headerName: "ID" },
+          { field: "category", headerName: "Categoría" },
+          { field: "name", headerName: "Nombre" },
+          { field: "brand", headerName: "Marca" },
+          { field: "description", headerName: "Descripción" },
+          { field: "price", headerName: "Precio" },
+          { field: "stock", headerName: "Cantidad" },
         ],
         defaultColDef: {
           flex: 1,
         },
+        autoSizeStrategy: {
+          type: "fitCellContents",
+        },
+        theme:
+          agGrid.themeQuartz?.withParams?.({ wrapperBorder: false }) ||
+          undefined,
       };
       // Create Grid: Create new grid within the #myGrid div, using the Grid Options object
       const container = document.querySelector("#myGrid");
