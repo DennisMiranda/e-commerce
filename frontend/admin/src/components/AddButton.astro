@@ -3,3 +3,10 @@
   class="min-w-48 bg-[var(--color-aside-bg)] text-[var(--color-text-primary)] px-4 py-2 rounded-md hover:bg-[var(--color-text-primary)] hover:text-white"
   >+ Agregar
 </button>
+
+<script type="module">
+  document.getElementById("add-button").addEventListener("click", () => {
+    const modal = document.getElementById("modal-form");
+    modal.style.display = "block";
+  });
+</script>
