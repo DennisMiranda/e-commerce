@@ -21,14 +21,7 @@ import Table from "../components/Table.astro";
   <body>
     <div class="h-full flex flex-col md:flex-row">
       <Sidebar />
-      <main class="flex-1 p-6">
-        <section
-          class="flex flex-col h-full p-6 space-y-6 bg-white rounded-lg shadow-md"
-        >
-          <Header />
-          <Table />
-        </section>
-      </main>
+      <slot />
     </div>
   </body>
 
