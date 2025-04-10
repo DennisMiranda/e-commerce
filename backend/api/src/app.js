@@ -1,8 +1,11 @@
 import express from "express";
+import cors from "cors";
 import { getConnection } from "./database/connection.js";
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 app.get("/products", async (req, res) => {
   const dbConnection = await getConnection();
