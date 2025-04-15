@@ -1,0 +1,155 @@
+---
+let actualState = 1;
+---
+
+<form class="bg-white w-full rounded p-6 flex flex-col">
+  <!--Category -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="category"
+    >
+      Categoria:
+    </label>
+    <select
+      name="select-category"
+      id="category"
+      class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    >
+      <option value="">Selecciona una categoría</option>
+      <option value="ropa">Skincare</option>
+      <option value="electronica">Maquillaje</option>
+      <option value="hogar">Cuidado Personal</option>
+      <option value="juguetes">Accesorios</option>
+    </select>
+  </div>
+
+  <!--Product Name -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-name"
+    >
+      Nombre:
+    </label>
+    <input
+      class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="product-name"
+      type="text"
+      required
+    />
+  </div>
+
+  <!--Product Brand -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-name"
+    >
+      Marca:
+    </label>
+    <input
+      class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="product-brand"
+      type="text"
+      required
+    />
+  </div>
+
+  <!--Product Description -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-name"
+    >
+      Descripción:
+    </label>
+    <input
+      class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="product-description"
+      type="text"
+      required
+    />
+  </div>
+  <!--Product status -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-status"
+    >
+      Estatus:
+    </label>
+    <div class="flex justify-center gap-4">
+      <div>
+        <input
+          class="p-2"
+          id="product-description"
+          type="radio"
+          name="estado"
+          value="0"
+          checked={actualState === 0}
+        />
+        <span>Inactivo</span>
+      </div>
+      <div>
+        <input
+          type="radio"
+          name="estado"
+          value="1"
+          checked={actualState === 1}
+        />
+        <span> Activo</span>
+      </div>
+    </div>
+  </div>
+  <!--Product price -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-price"
+    >
+      Precio:
+    </label>
+    <input
+      class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="product-price"
+      type="number"
+      required
+    />
+  </div>
+  <!--Product quantity -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-quantity"
+    >
+      Cantidad:
+    </label>
+    <input
+      class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="product-quantity"
+      type="number"
+      required
+    />
+  </div>
+
+  <!--Product image -->
+  <div class="mb-4 w-full flex flex-col">
+    <label
+      class="text-left block text-gray-700 text-sm font-bold mb-2"
+      for="product-image"
+    >
+      Imagen:
+    </label>
+    <input
+      id="product-image"
+      type="file"
+      name="imagen"
+      accept="image/*"
+      class="mt-1 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
+           file:rounded-full file:border-0 file:text-sm file:font-semibold
+           file:bg-blue-50 file:text-gray-800 hover:file:bg-blue-100"
+      required
+    />
+  </div>
+</form>
