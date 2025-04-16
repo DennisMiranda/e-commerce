@@ -54,17 +54,67 @@
 </div>
 
 <script type="module">
-  const btnCancel = "cancel";
-  const btnAdd = "";
   const modalID = "modal-form";
-  const querySlectElement = "form";
+  const cancelBtnID = "cancel";
+  const addBtnID = "add";
 
   const modal = document.getElementById(modalID);
-  const cancelBtn = document.getElementById(btnCancel);
-  const form = modal.querySelector(querySlectElement);
+  const cancelBtn = document.getElementById(cancelBtnID);
+  const addBtn = document.getElementById(addBtnID);
+  const form = modal.querySelector("form");
 
+  // Paso 2: Cancelar -> cerrar modal y limpiar campos
   cancelBtn.addEventListener("click", () => {
     modal.style.display = "none";
-    form.reset(); // limpia todos los campos del formulario
+    form.reset();
+  });
+
+  // Paso 3–8: Agregar -> validar, enviar y cerrar si todo está bien
+  addBtn.addEventListener("click", async () => {
+    // Validación manual
+    const requiredFields = form.querySelectorAll(
+      "input[required], select[required]"
+    );
+    let isValid = true;
+
+    requiredFields.forEach((field) => {
+      if (!field.value) {
+        field.classList.add("border-red-500");
+        isValid = false;
+      } else {
+        field.classList.remove("border-red-500");
+      }
+    });
+
+    if (!isValid) {
+      alert("Por favor completa todos los campos obligatorios.");
+      return;
+    }
+
+    // Paso 4: Crear FormData
+    const formData = new FormData(form);
+    console.log(formData.get("product-name"));
+
+    try {
+      // Paso 5–6: Enviar al backend
+      const response = await fetch("http://localhost:3000/products", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Paso 7: Éxito
+        alert("Producto agregado correctamente ✅");
+        modal.style.display = "none";
+        form.reset(); // Paso 8: limpiar
+      } else {
+        alert("Error: " + result.message);
+      }
+    } catch (error) {
+      console.error("Error al enviar producto:", error);
+      alert("Ocurrió un error al enviar el producto.");
+    }
   });
 </script>
