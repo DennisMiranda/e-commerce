@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
           { field: "description", headerName: "Descripción" },
           { field: "price", headerName: "Precio" },
           { field: "stock", headerName: "Cantidad" },
+          { field: "status", headerName: "Estatus" },
+          { field: "image", headerName: "Imagen" },
+          { field: "actions", headerName: "Acciones" },
         ],
         defaultColDef: {
           flex: 1,
