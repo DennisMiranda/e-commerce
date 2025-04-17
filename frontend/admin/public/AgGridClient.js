@@ -16,16 +16,48 @@ document.addEventListener("DOMContentLoaded", function () {
         rowData: products,
         // Columns to be displayed
         columnDefs: [
-          { field: "id", headerName: "ID" },
-          { field: "category", headerName: "Categoría" },
-          { field: "name", headerName: "Nombre" },
-          { field: "brand", headerName: "Marca" },
-          { field: "description", headerName: "Descripción" },
-          { field: "price", headerName: "Precio" },
-          { field: "stock", headerName: "Cantidad" },
-          { field: "status", headerName: "Estatus" },
+          { field: "id", headerName: "ID", filter: "agNumberColumnFilter" },
+          {
+            field: "category",
+            headerName: "Categoría",
+            filter: "agTextColumnFilter",
+          },
+          { field: "name", headerName: "Nombre", filter: "agTextColumnFilter" },
+          { field: "brand", headerName: "Marca", filter: "agTextColumnFilter" },
+          {
+            field: "description",
+            headerName: "Descripción",
+            filter: "agTextColumnFilter",
+          },
+          {
+            field: "price",
+            headerName: "Precio",
+            filter: "agNumberColumnFilter",
+          },
+          {
+            field: "stock",
+            headerName: "Cantidad",
+            filter: "agNumberColumnFilter",
+          },
+          {
+            field: "status",
+            headerName: "Estatus",
+            filter: "agNumberColumnFilter",
+          },
           { field: "image", headerName: "Imagen" },
-          { field: "actions", headerName: "Acciones" },
+          {
+            field: "actions",
+            headerName: "Acciones",
+            cellRenderer: (params) => {
+              return `<div class="flex items-center h-full gap-3">
+              <button class="edit-btn min-w-10 text-center  bg-aside-bg text-text-primary px-3 py-2 rounded-md hover:bg-text-primary hover:text-white transition" 
+              data-id="${params.data.id}"> <img src="/icons/edit.svg" alt="Edit" width="18" height="18" /></button>
+              <button class="delete-btn min-w-10 text-center  bg-aside-bg text-text-primary px-3 py-2 rounded-md hover:bg-text-primary hover:text-white transition"
+              data-id="${params.data.id}"> <img src="/icons/delete.svg" alt="Delete" width="16" height="16"/></button>
+              </div>
+            `;
+            },
+          },
         ],
         defaultColDef: {
           flex: 1,
