@@ -20,10 +20,22 @@ const upload = multer({ storage });
 app.use(cors());
 app.use(express.static("public"));
 
-// GET: obtener productos para la tabla
+// GET: obtener productos con categorias y marca  para la tabla
 app.get("/products", async (req, res) => {
   const dbConnection = await getConnection();
-  const result = await dbConnection.request().query("SELECT * FROM products");
+  const result = await dbConnection.request().query(`SELECT 
+p.id, 
+p.name,
+p.description,
+p.status ,
+p.price ,
+p.stock ,
+p.image,
+c.name as category,
+b.name as brand
+FROM products as p
+INNER JOIN categories as c ON p.categories_id=c.id
+INNER JOIN brands as b ON p.brands_id=b.id`);
   res.send(result.recordset);
 });
 
