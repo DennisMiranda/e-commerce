@@ -1,5 +1,12 @@
 ---
+import ArrowDown from "../../icons/arrow-down.svg";
+import { getImage } from "astro:assets";
+
+const arrowDownIcon = await getImage({ src: ArrowDown });
 let actualState = 1;
+
+const resCategories = await fetch("http://localhost:3000/categories");
+const categories = await resCategories.json();
 ---
 
 <form
@@ -19,12 +26,14 @@ let actualState = 1;
       name="select-category"
       id="category"
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      style={`background-image: url(${arrowDownIcon.src}); ;
+      background-repeat: no-repeat;
+      background-position: right 0.7rem top 50%;
+      background-size: 0.65rem auto;`}
     >
-      <option value="">Selecciona una categoría</option>
-      <option value="Skincare">Skincare</option>
-      <option value="Maquillaje">Maquillaje</option>
-      <option value="Cuidado Personal">Cuidado Personal</option>
-      <option value="Accesorios">Accesorios</option>
+      <option value="" class="text-gray-400">Selecciona una categoría</option>
+
+      {categories.map((cat: any) => <option value={cat.id}>{cat.name}</option>)}
     </select>
   </div>
 

@@ -1,8 +1,7 @@
 <div
   id="modal-form"
   style="display:none;"
-  class="relative z-10"
-  aria-labelledby="modal-title"
+  aria-labelledby="modal-add-product"
   role="dialog"
   aria-modal="true"
 >
@@ -63,15 +62,14 @@
   const addBtn = document.getElementById(addBtnID);
   const form = modal.querySelector("form");
 
-  // Paso 2: Cancelar -> cerrar modal y limpiar campos
+  // Cancelar -> cerrar modal y limpiar campos
   cancelBtn.addEventListener("click", () => {
     modal.style.display = "none";
     form.reset();
   });
 
-  // Paso 3–8: Agregar -> validar, enviar y cerrar si todo está bien
+  // Agregar -> validar, enviar y cerrar si todo está bien
   addBtn.addEventListener("click", async () => {
-    // Validación manual
     const requiredFields = form.querySelectorAll(
       "input[required], select[required]"
     );
@@ -91,12 +89,12 @@
       return;
     }
 
-    // Paso 4: Crear FormData
+    // Crear FormData
     const formData = new FormData(form);
     console.log(formData.get("product-name"));
 
     try {
-      // Paso 5–6: Enviar al backend
+      // Enviar al backend el form data
       const response = await fetch("http://localhost:3000/products", {
         method: "POST",
         body: formData,
@@ -105,16 +103,16 @@
       const result = await response.json();
 
       if (result.success) {
-        // Paso 7: Éxito
-        alert("Producto agregado correctamente ✅");
+        // Mensaje exitoso
+        alert("Producto agregado correctamente.");
         modal.style.display = "none";
-        form.reset(); // Paso 8: limpiar
+        form.reset(); // Limpiar el formulario
       } else {
         alert("Error: " + result.message);
       }
     } catch (error) {
       console.error("Error al enviar producto:", error);
-      alert("Ocurrió un error al enviar el producto.");
+      alert("Ocurrió un error al registrar el producto.");
     }
   });
 </script>
