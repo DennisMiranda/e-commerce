@@ -1,26 +1,39 @@
 ---
+import ArrowDown from "../../icons/arrow-down.svg";
+import { getImage } from "astro:assets";
+
+const arrowDownIcon = await getImage({ src: ArrowDown });
 let actualState = 1;
+
+const resCategories = await fetch("http://localhost:3000/categories");
+const categories = await resCategories.json();
 ---
 
-<form class="bg-white w-full rounded p-6 flex flex-col">
+<form
+  id="productForm"
+  enctype="multipart/form-data"
+  class="bg-white w-full rounded p-6 flex flex-col"
+>
   <!--Category -->
   <div class="mb-4 w-full flex flex-col">
     <label
       class="text-left block text-gray-700 text-sm font-bold mb-2"
       for="category"
     >
-      Categoria:
+      Categoría:
     </label>
     <select
       name="select-category"
       id="category"
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      style={`background-image: url(${arrowDownIcon.src}); ;
+      background-repeat: no-repeat;
+      background-position: right 0.7rem top 50%;
+      background-size: 0.65rem auto;`}
     >
-      <option value="">Selecciona una categoría</option>
-      <option value="ropa">Skincare</option>
-      <option value="electronica">Maquillaje</option>
-      <option value="hogar">Cuidado Personal</option>
-      <option value="juguetes">Accesorios</option>
+      <option value="" class="text-gray-400">Selecciona una categoría</option>
+
+      {categories.map((cat: any) => <option value={cat.id}>{cat.name}</option>)}
     </select>
   </div>
 
@@ -36,6 +49,7 @@ let actualState = 1;
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       id="product-name"
       type="text"
+      name="product-name"
       required
     />
   </div>
@@ -44,7 +58,7 @@ let actualState = 1;
   <div class="mb-4 w-full flex flex-col">
     <label
       class="text-left block text-gray-700 text-sm font-bold mb-2"
-      for="product-name"
+      for="product-brand"
     >
       Marca:
     </label>
@@ -52,6 +66,7 @@ let actualState = 1;
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       id="product-brand"
       type="text"
+      name="product-brand"
       required
     />
   </div>
@@ -60,7 +75,7 @@ let actualState = 1;
   <div class="mb-4 w-full flex flex-col">
     <label
       class="text-left block text-gray-700 text-sm font-bold mb-2"
-      for="product-name"
+      for="product-description"
     >
       Descripción:
     </label>
@@ -68,6 +83,7 @@ let actualState = 1;
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       id="product-description"
       type="text"
+      name="product-description"
       required
     />
   </div>
@@ -83,9 +99,9 @@ let actualState = 1;
       <div>
         <input
           class="p-2"
-          id="product-description"
+          id="product-status"
           type="radio"
-          name="estado"
+          name="product-status"
           value="0"
           checked={actualState === 0}
         />
@@ -93,8 +109,10 @@ let actualState = 1;
       </div>
       <div>
         <input
+          class="p-2"
+          id="product-status"
           type="radio"
-          name="estado"
+          name="product-status"
           value="1"
           checked={actualState === 1}
         />
@@ -114,6 +132,7 @@ let actualState = 1;
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       id="product-price"
       type="number"
+      name="product-price"
       required
     />
   </div>
@@ -121,14 +140,15 @@ let actualState = 1;
   <div class="mb-4 w-full flex flex-col">
     <label
       class="text-left block text-gray-700 text-sm font-bold mb-2"
-      for="product-quantity"
+      for="product-stock"
     >
       Cantidad:
     </label>
     <input
       class="flex-1 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      id="product-quantity"
+      id="product-stock"
       type="number"
+      name="product-stock"
       required
     />
   </div>
@@ -144,7 +164,7 @@ let actualState = 1;
     <input
       id="product-image"
       type="file"
-      name="imagen"
+      name="product-image"
       accept="image/*"
       class="mt-1 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
            file:rounded-full file:border-0 file:text-sm file:font-semibold

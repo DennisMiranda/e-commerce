@@ -1,8 +1,7 @@
 <div
   id="modal-form"
   style="display:none;"
-  class="relative z-10"
-  aria-labelledby="modal-title"
+  aria-labelledby="modal-add-product"
   role="dialog"
   aria-modal="true"
 >
@@ -54,17 +53,66 @@
 </div>
 
 <script type="module">
-  const btnCancel = "cancel";
-  const btnAdd = "";
   const modalID = "modal-form";
-  const querySlectElement = "form";
+  const cancelBtnID = "cancel";
+  const addBtnID = "add";
 
   const modal = document.getElementById(modalID);
-  const cancelBtn = document.getElementById(btnCancel);
-  const form = modal.querySelector(querySlectElement);
+  const cancelBtn = document.getElementById(cancelBtnID);
+  const addBtn = document.getElementById(addBtnID);
+  const form = modal.querySelector("form");
 
+  // Cancelar -> cerrar modal y limpiar campos
   cancelBtn.addEventListener("click", () => {
     modal.style.display = "none";
-    form.reset(); // limpia todos los campos del formulario
+    form.reset();
+  });
+
+  // Agregar -> validar, enviar y cerrar si todo está bien
+  addBtn.addEventListener("click", async () => {
+    const requiredFields = form.querySelectorAll(
+      "input[required], select[required]"
+    );
+    let isValid = true;
+
+    requiredFields.forEach((field) => {
+      if (!field.value) {
+        field.classList.add("border-red-500");
+        isValid = false;
+      } else {
+        field.classList.remove("border-red-500");
+      }
+    });
+
+    if (!isValid) {
+      alert("Por favor completa todos los campos obligatorios.");
+      return;
+    }
+
+    // Crear FormData
+    const formData = new FormData(form);
+    console.log(formData.get("product-name"));
+
+    try {
+      // Enviar al backend el form data
+      const response = await fetch("http://localhost:3000/products", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Mensaje exitoso
+        alert("Producto agregado correctamente.");
+        modal.style.display = "none";
+        form.reset(); // Limpiar el formulario
+      } else {
+        alert("Error: " + result.message);
+      }
+    } catch (error) {
+      console.error("Error al enviar producto:", error);
+      alert("Ocurrió un error al registrar el producto.");
+    }
   });
 </script>
