@@ -5,3 +5,9 @@
   --color-text-primary: #67645e;
   --color-text-primary-hover: #4f4c47;
 }
+
+@layer utilities {
+  .ag-paging-row-summary-panel {
+    @apply hidden;
+  }
+}

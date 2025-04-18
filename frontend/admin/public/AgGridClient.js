@@ -68,6 +68,10 @@ document.addEventListener("DOMContentLoaded", function () {
         theme:
           agGrid.themeQuartz?.withParams?.({ wrapperBorder: false }) ||
           undefined,
+        pagination: true,
+        paginationPageSize: 10,
+        paginationPageSizeSelector: [10, 20, 50, 100],
+        localeText: window.localeText,
       };
       // Create Grid: Create new grid within the #myGrid div, using the Grid Options object
       const container = document.querySelector("#myGrid");
@@ -78,4 +82,19 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   loadTable();
+  // Detectar y reemplazar "Page Size" dinámicamente
+  const observer = new MutationObserver(() => {
+    const labels = document.querySelectorAll(".ag-paging-page-size .ag-label");
+    labels.forEach((label) => {
+      if (label.textContent.trim() === "Page Size:") {
+        label.textContent = "Mostrar:";
+        observer.disconnect(); // dejamos de observar una vez traducido
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
 });
