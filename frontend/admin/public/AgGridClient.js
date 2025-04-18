@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   const loadTable = async () => {
-    // Row Data Interface
-
     // Grid API: Access to Grid API methods
     let gridApi;
 
@@ -75,7 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       // Create Grid: Create new grid within the #myGrid div, using the Grid Options object
       const container = document.querySelector("#myGrid");
-      if (container) gridApi = agGrid.createGrid(container, gridOptions);
+      if (container) {
+        gridApi = agGrid.createGrid(container, gridOptions);
+        window.gridApi = gridApi;
+      }
     } catch (error) {
       console.log(error);
     }
