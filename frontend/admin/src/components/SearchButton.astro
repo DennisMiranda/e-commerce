@@ -1,17 +1,54 @@
 ---
 import { Icon } from "astro-icon/components";
+
+// Recibimos las props de este componente
+// const { endpoint, updateTable } = Astro.props;
 ---
 
 <!-- Search  button -->
 <div class="flex flex-1 gap-2.5">
   <input
+    id="searchInput"
     type="text"
     placeholder="Buscar productos..."
-    class="flex-1 px-4 py-2 border border-[var(--color-aside-bg)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-aside-bg)]"
+    class="flex-1 px-4 py-2 border border-aside-bg rounded-md focus:outline-none focus:ring-2 focus:ring-aside-bg"
   />
   <button
-    class="min-w-10 bg-[var(--color-aside-bg)] text-[var(--color-text-primary)] px-4 py-2 rounded-md hover:bg-[var(--color-text-primary)] hover:text-white text-xl"
+    id="searchButton"
+    class="min-w-10 bg-aside-bg text-text-primary px-4 py-2 rounded-md hover:bg-text-primary hover:text-white text-xl"
   >
     <Icon name="search" />
   </button>
 </div>
+<script is:inline>
+  const input = document.getElementById("searchInput");
+  const button = document.getElementById("searchButton");
+
+  let debounceTimer;
+  const debounceDelay = 500;
+
+  function triggerSearch() {
+    //Texto a buscar
+    const query = input.value.trim();
+
+    fetch(`http://localhost:3000/products?search=${encodeURIComponent(query)}`)
+      .then((res) => res.json())
+      .then((data) => updateTable(data))
+      .catch((err) => console.error("Error al buscar productos:", err));
+  }
+
+  // Debounce automático al escribir
+  input.addEventListener("input", () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(triggerSearch, debounceDelay);
+  });
+
+  // O manual al hacer clic
+  button.addEventListener("click", triggerSearch);
+
+  function updateTable(data) {
+    console.log("Resultados:", data, window.gridApi);
+
+    window?.gridApi?.setGridOption("rowData", data);
+  }
+</script>

@@ -107,6 +107,9 @@
         alert("Producto agregado correctamente.");
         modal.style.display = "none";
         form.reset(); // Limpiar el formulario
+        const rowData = window?.gridApi?.getGridOption("rowData");
+        rowData.push(result.data);
+        window?.gridApi?.setGridOption("rowData", rowData);
       } else {
         alert("Error: " + result.message);
       }
