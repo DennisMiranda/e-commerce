@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter ** dev",
-    "dev:frontend": "pnpm --filter ./frontend/* dev",
+    "dev:app": "pnpm --filter ./frontend/app dev",
+    "dev:admin": "pnpm --filter ./frontend/admin dev",
     "dev:backend": "pnpm --filter ./backend/* dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

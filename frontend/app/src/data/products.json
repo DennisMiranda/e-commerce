@@ -1,0 +1,18 @@
+[
+    {
+      "nombre": "Shampoo Hidratante",
+      "precio": "S/ 29.90",
+      "imagen": "/images/producto1.jpg"
+    },
+    {
+      "nombre": "Crema Facial",
+      "precio": "S/ 45.00",
+      "imagen": "/images/producto2.jpg"
+    },
+    {
+      "nombre": "Protector Solar",
+      "precio": "S/ 39.50",
+      "imagen": "/images/producto3.jpg"
+    }
+  ]
+  

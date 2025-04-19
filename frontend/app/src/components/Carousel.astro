@@ -1,0 +1,16 @@
+---
+const { items, renderItem } = Astro.props;
+---
+
+<div class="relative overflow-hidden group" data-carousel>
+  <div class="flex transition-transform duration-500" data-carousel-track>
+    {items.map((item, i) => (
+      <div class="w-full flex-shrink-0">{renderItem(item, i)}</div>
+    ))}
+  </div>
+
+  <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-black text-white px-3" data-carousel-prev>‹</button>
+  <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white px-3" data-carousel-next>›</button>
+
+  <script type="module" src="/scripts/carousel.js"></script>
+</div>
