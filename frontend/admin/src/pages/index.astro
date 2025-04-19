@@ -35,17 +35,30 @@ import FormAddProduct from "../components/AddProducts/FormAddProduct.astro";
       modal.dataset.id = "";
       modal.style.display = "block";
 
+      const scrollContainer = document.getElementById("modal-scroll-container");
+      if (scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+      const formTitle = modal.querySelector("#modal-title");
+      formTitle.textContent = "Registrar Producto";
+
       const form = modal.querySelector("form");
       if (form) form.reset();
     }
 
     function openEditModal(product) {
-      console.log(product);
-
       const modal = document.getElementById("modal-form");
       modal.dataset.mode = "edit";
       modal.dataset.id = product.id;
       modal.style.display = "block";
+
+      const scrollContainer = document.getElementById("modal-scroll-container");
+      if (scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+
+      const formTitle = modal.querySelector("#modal-title");
+      formTitle.textContent = "Editar Producto";
 
       const form = modal.querySelector("form");
       if (form) {
