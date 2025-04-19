@@ -1,5 +1,13 @@
+---
+const { title = "Registrar Producto" } = Astro.props;
+export let isOpen = false;
+export let mode = "add";
+export let product = null;
+---
+
 <div
   id="modal-form"
+  data-mode="add"
   style="display:none;"
   aria-labelledby="modal-add-product"
   role="dialog"
@@ -11,7 +19,10 @@
   >
   </div>
 
-  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+  <div
+    id="modal-scroll-container"
+    class="fixed inset-0 z-10 w-screen overflow-y-auto"
+  >
     <div
       class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
     >
@@ -25,7 +36,7 @@
                 class="text-2xl font-bold text-text-primary-hover"
                 id="modal-title"
               >
-                Registrar Producto
+                {title}
               </h3>
               <div class="w-full mt-2 text-sm text-text-primary">
                 <slot />
@@ -33,12 +44,14 @@
             </div>
           </div>
         </div>
+
+        <!-- Botones abajo del modal -->
         <div class="px-4 pb-3 sm:flex sm:flex-row-reverse sm:px-6">
           <button
             id="add"
             type="button"
             class="cursor-pointer inline-flex w-full justify-center rounded-md bg-text-primary px-2 py-2 text-sm font-semibold text-white shadow-xs hover:bg-text-primary-hover sm:ml-3 sm:w-auto"
-            >Agregar</button
+            >Guardar</button
           >
           <button
             id="cancel"
@@ -55,21 +68,33 @@
 <script type="module">
   const modalID = "modal-form";
   const cancelBtnID = "cancel";
-  const addBtnID = "add";
+  const submitBtnID = "add";
 
   const modal = document.getElementById(modalID);
   const cancelBtn = document.getElementById(cancelBtnID);
-  const addBtn = document.getElementById(addBtnID);
+  const submitBtn = document.getElementById(submitBtnID);
   const form = modal.querySelector("form");
+
+  // Detectar modo actual
+  const getMode = () => modal.dataset.mode || "add";
+  const getProductId = () => modal.dataset.id || "";
 
   // Cancelar -> cerrar modal y limpiar campos
   cancelBtn.addEventListener("click", () => {
     modal.style.display = "none";
     form.reset();
+    modal.dataset.mode = "add";
+    modal.dataset.id = "";
+
+    // Mostrar campo estatus de nuevo
+    const statusField = form.querySelector('[name="product-status"]');
+    if (statusField) {
+      statusField.closest(".mb-4").style.display = "block";
+    }
   });
 
   // Agregar -> validar, enviar y cerrar si todo está bien
-  addBtn.addEventListener("click", async () => {
+  submitBtn.addEventListener("click", async () => {
     const requiredFields = form.querySelectorAll(
       "input[required], select[required]"
     );
@@ -91,12 +116,22 @@
 
     // Crear FormData
     const formData = new FormData(form);
+    const mode = getMode();
+    const productId = getProductId();
+
+    const url =
+      mode === "edit"
+        ? `http://localhost:3000/products/${productId}`
+        : "http://localhost:3000/products";
+
+    const method = mode === "edit" ? "PUT" : "POST";
+
     console.log(formData.get("product-name"));
 
     try {
       // Enviar al backend el form data
-      const response = await fetch("http://localhost:3000/products", {
-        method: "POST",
+      const response = await fetch(url, {
+        method,
         body: formData,
       });
 
@@ -104,12 +139,30 @@
 
       if (result.success) {
         // Mensaje exitoso
-        alert("Producto agregado correctamente.");
+        alert(
+          mode === "edit"
+            ? "Producto actualizado correctamente."
+            : "Producto agregado correctamente."
+        );
         modal.style.display = "none";
         form.reset(); // Limpiar el formulario
+
+        //Actualizar la tabla
         const rowData = window?.gridApi?.getGridOption("rowData");
-        rowData.push(result.data);
+        if (mode === "edit") {
+          // Reemplazar producto actualizado
+          const index = rowData.findIndex((p) => p.id === result.data.id);
+          if (index !== -1) {
+            rowData[index] = result.data;
+          }
+        } else {
+          // Agregar nuevo producto
+          rowData.push(result.data);
+        }
+
         window?.gridApi?.setGridOption("rowData", rowData);
+        modal.dataset.mode = "add"; // Reset modo
+        modal.dataset.id = "";
       } else {
         alert("Error: " + result.message);
       }

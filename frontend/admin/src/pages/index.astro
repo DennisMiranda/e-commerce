@@ -23,8 +23,64 @@ import FormAddProduct from "../components/AddProducts/FormAddProduct.astro";
       <Table />
     </section>
   </main>
-</LayoutAdmin>
 
-<ModalForm>
-  <FormAddProduct />
-</ModalForm>
+  <ModalForm>
+    <FormAddProduct />
+  </ModalForm>
+
+  <script type="module">
+    function openAddModal() {
+      const modal = document.getElementById("modal-form");
+      modal.dataset.mode = "add";
+      modal.dataset.id = "";
+      modal.style.display = "block";
+
+      const scrollContainer = document.getElementById("modal-scroll-container");
+      if (scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+      const formTitle = modal.querySelector("#modal-title");
+      formTitle.textContent = "Registrar Producto";
+
+      const form = modal.querySelector("form");
+      if (form) form.reset();
+    }
+
+    function openEditModal(product) {
+      const modal = document.getElementById("modal-form");
+      modal.dataset.mode = "edit";
+      modal.dataset.id = product.id;
+      modal.style.display = "block";
+
+      const scrollContainer = document.getElementById("modal-scroll-container");
+      if (scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+
+      const formTitle = modal.querySelector("#modal-title");
+      formTitle.textContent = "Editar Producto";
+
+      const form = modal.querySelector("form");
+      if (form) {
+        form.reset();
+        form.querySelector('[name="product-name"]').value = product.name || "";
+        form.querySelector('[name="product-brand"]').value =
+          product.brand || "";
+        form.querySelector('[name="product-price"]').value =
+          product.price || "";
+        form.querySelector(
+          `[id="${product.status ? "product-status-active" : "product-status-inactive"}"]`
+        ).checked = true;
+        form.querySelector('[name="product-description"]').value =
+          product.description || "";
+        form.querySelector('[name="product-stock"]').value =
+          product.stock || "";
+        form.querySelector('[name="select-category"]').value =
+          product.categories_id || "";
+      }
+    }
+
+    window.openAddModal = openAddModal;
+    window.openEditModal = openEditModal;
+  </script>
+</LayoutAdmin>
