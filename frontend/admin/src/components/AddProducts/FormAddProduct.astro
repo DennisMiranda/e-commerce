@@ -3,10 +3,9 @@ import ArrowDown from "../../icons/arrow-down.svg";
 import { getImage } from "astro:assets";
 
 const arrowDownIcon = await getImage({ src: ArrowDown });
-let actualState = 1;
-
 const resCategories = await fetch("http://localhost:3000/categories");
 const categories = await resCategories.json();
+const { product, isEditMode } = Astro.props; // Recibe `isEditMode` para controlar la visibilidad del campo 'status'
 ---
 
 <form
@@ -50,6 +49,7 @@ const categories = await resCategories.json();
       id="product-name"
       type="text"
       name="product-name"
+      value={product ? product.name : ""}
       required
     />
   </div>
@@ -67,6 +67,7 @@ const categories = await resCategories.json();
       id="product-brand"
       type="text"
       name="product-brand"
+      value={product ? product.brand : ""}
       required
     />
   </div>
@@ -84,42 +85,11 @@ const categories = await resCategories.json();
       id="product-description"
       type="text"
       name="product-description"
+      value={product ? product.description : ""}
       required
     />
   </div>
-  <!--Product status -->
-  <div class="mb-4 w-full flex flex-col">
-    <label
-      class="text-left block text-gray-700 text-sm font-bold mb-2"
-      for="product-status"
-    >
-      Estatus:
-    </label>
-    <div class="flex justify-center gap-4">
-      <div>
-        <input
-          class="p-2"
-          id="product-status"
-          type="radio"
-          name="product-status"
-          value="0"
-          checked={actualState === 0}
-        />
-        <span>Inactivo</span>
-      </div>
-      <div>
-        <input
-          class="p-2"
-          id="product-status"
-          type="radio"
-          name="product-status"
-          value="1"
-          checked={actualState === 1}
-        />
-        <span> Activo</span>
-      </div>
-    </div>
-  </div>
+
   <!--Product price -->
   <div class="mb-4 w-full flex flex-col">
     <label
@@ -133,6 +103,7 @@ const categories = await resCategories.json();
       id="product-price"
       type="number"
       name="product-price"
+      value={product ? product.price : ""}
       required
     />
   </div>
@@ -149,9 +120,47 @@ const categories = await resCategories.json();
       id="product-stock"
       type="number"
       name="product-stock"
+      value={product ? product.stock : ""}
       required
     />
   </div>
+
+  <!--Product status -->
+  {
+    isEditMode ? null : (
+      <div class="mb-4 w-full flex flex-col">
+        <label
+          class="text-left block text-gray-700 text-sm font-bold mb-2"
+          for="product-status"
+        >
+          Estatus:
+        </label>
+        <div class="flex justify-center gap-4">
+          <div>
+            <input
+              class="p-2"
+              id="product-status-inactive"
+              type="radio"
+              name="product-status"
+              value="0"
+            />
+            <span>Inactivo</span>
+          </div>
+          <div>
+            <input
+              class="p-2"
+              id="product-status-active"
+              type="radio"
+              name="product-status"
+              value="1"
+              checked
+            />
+            <span> Activo</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   <!--Product image -->
   <div class="mb-4 w-full flex flex-col">
