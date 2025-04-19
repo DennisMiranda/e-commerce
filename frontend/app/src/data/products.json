@@ -1,18 +1,62 @@
 [
-    {
-      "nombre": "Shampoo Hidratante",
-      "precio": "S/ 29.90",
-      "imagen": "/images/producto1.jpg"
-    },
-    {
-      "nombre": "Crema Facial",
-      "precio": "S/ 45.00",
-      "imagen": "/images/producto2.jpg"
-    },
-    {
-      "nombre": "Protector Solar",
-      "precio": "S/ 39.50",
-      "imagen": "/images/producto3.jpg"
-    }
-  ]
-  
+  {
+    "nombre": "Crema Facial",
+    "imagen": "/images/producto1.webp",
+    "descripcion": "Crema Facial",
+    "precio": "S/ 29.90"
+  },
+  {
+    "nombre": "Crema Hidratante",
+    "imagen": "/images/producto2.webp",
+    "descripcion": "Crema Hidratante",
+    "precio": "S/ 45.00"
+  },
+  {
+    "nombre": "Gel limpiador",
+    "imagen": "/images/producto3.webp",
+    "descripcion": "Gel limpiador",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Crema Solar",
+    "imagen": "/images/producto4.webp",
+    "descripcion": "Crema Solar",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Mascarrilla L.",
+    "imagen": "/images/producto5.webp",
+    "descripcion": "Mascarrilla L.",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Crema Eucerin",
+    "imagen": "/images/producto6.webp",
+    "descripcion": "Crema Eucerin",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Serum Vichi",
+    "imagen": "/images/producto7.webp",
+    "descriptcion": "Serum Vichi",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Tonico Bioderma",
+    "imagen": "/images/producto8.webp",
+    "descripcion": "Tonico Bioderma",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Crema Hidratante",
+    "imagen": "/images/producto9.webp",
+    "descripcion": "Crema Hidratante",
+    "precio": "S/ 39.50"
+  },
+  {
+    "nombre": "Crema Anti-envejecimiento",
+    "descripcion": "Crema Anti-envejecimiento",
+    "imagen": "/images/producto10.webp",
+    "precio": "S/ 39.50"
+  }
+]
