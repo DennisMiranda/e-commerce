@@ -1,80 +1,402 @@
-<header class="bg-gray-800 text-white">
+---
+// Navbar.astro
 
-    <nav class="bg-[var(--color-aside-bg)] relative full">
-        <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
-          <div class="flex items-center space-x-8 rtl:space-x-reverse relative">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-              <span class="self-center text-2xl font-semibold whitespace-nowrap text-[var(--color-text-primary)]">E-Commerce</span>
-            </a>
-          </div>
-      
-          <div class="flex justify-center">
-            <input type="text" placeholder="¿Que buscas hoy?" class="bg-[var(--color-text-primary)] text-[var(--color-aside-bg-hover)] p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 w-120" />
-          </div>
-      
-          <div class="flex space-x-4 rtl:space-x-reverse">
-            <button class="flex flex-col items-center justify-center p-2 rounded-md bg-transparent hover:text-blue-400 text-[var(--color-text-primary)]">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-              </svg>
-              <span>Carrito</span>
+import { Icon } from "astro-icon/components";
+---
+
+<!-- Banner promocional -->
+<div class="bg-black text-white py-2 overflow-hidden">
+    <div class="flex justify-center items-center">
+        <p class="text-center text-sm font-medium tracking-wider">
+            ENJOY 20% OFF SITEWIDE WITH CODE EARTHDAY!
+        </p>
+    </div>
+</div>
+
+<!-- Header principal -->
+<header class="bg-white py-4 px-4 md:px-8 border-b">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <!-- Búsqueda (izquierda) -->
+        <div class="w-1/3 flex justify-start">
+            <button class="p-2 focus:outline-none">
+                <Icon name="busqueda" size={30} />
             </button>
-            <button class="flex flex-col items-center justify-center p-2 rounded-md bg-transparent hover:text-blue-400 text-[var(--color-text-primary)]">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-              </svg>
-              <span>Cuenta</span>
+        </div>
+
+        <!-- Logo (centro) -->
+        <div class="w-1/3 flex justify-center">
+            <h1 class="mented-logo text-3xl md:text-4xl">Ecommerce</h1>
+        </div>
+
+        <!-- Cuenta y carrito (derecha) -->
+        <div class="w-1/3 flex justify-end gap-4">
+            <button class="p-2 focus:outline-none">
+                <Icon name="cuentas" size={35} />
             </button>
-          </div>
+            <div class="relative">
+                <button class="p-2 focus:outline-none">
+                    <Icon name="carrito" size={30} />
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
         </div>
-      
-        <!-- Aquí va el div de Marcas debajo del navbar -->
-        <div class="bg-[var(--color-aside-bg)]">
-          <ul class="flex space-x-6">
-      
-            <!-- Repite este <li> para cada ancla -->
-            <li class="group relative">
-              <a href="#" class="block px-4 py-3 font-bold hover:text-gray-400">Marcas</a>
-              <!-- Menú desplegable -->
-              <div class="absolute top-full left-0 w-screen h-[300px] bg-gray-700 text-white hidden group-hover:flex z-50 px-10 py-6 pointer-events-auto">
-                <div class="flex gap-12 overflow-y-auto max-w-full w-auto">
-                  <div>
-                    <a href="#" class="block font-bold mb-2">Subcategoría 1</a>
-                    <a href="#" class="block hover:underline">Marca A</a>
-                    <a href="#" class="block hover:underline">Marca B</a>
-                  </div>
-                  <div>
-                    <a href="#" class="block font-bold mb-2">Subcategoría 2</a>
-                    <a href="#" class="block hover:underline">Marca C</a>
-                    <a href="#" class="block hover:underline">Marca D</a>
-                  </div>
-                  <!-- Agrega más bloques según lo necesites -->
-                </div>
-              </div>
-            </li>
-
-            <li class="group relative">
-                <a href="#" class="block px-4 py-3 font-bold hover:text-gray-400">Marcas</a>
-                <!-- Menú desplegable -->
-                <div class="absolute top-full left-0 w-screen h-[300px] bg-gray-700 text-white hidden group-hover:flex z-50 px-10 py-6 pointer-events-auto">
-                  <div class="flex gap-12 overflow-y-auto max-w-full w-auto">
-                    <div>
-                      <a href="#" class="block font-bold mb-2">Subcategoría 1</a>
-                      <a href="#" class="block hover:underline">Marca A</a>
-                      <a href="#" class="block hover:underline">Marca B</a>
-                    </div>
-                    <div>
-                      <a href="#" class="block font-bold mb-2">Subcategoría 2</a>
-                      <a href="#" class="block hover:underline">Marca C</a>
-                      <a href="#" class="block hover:underline">Marca D</a>
-                    </div>
-                    <!-- Agrega más bloques según lo necesites -->
-                  </div>
-                </div>
-              </li>
-
-          </ul>
-        </div>
-      </nav>
-      
+    </div>
 </header>
+
+<!-- Navbar -->
+<div class="max-w-6xl mx-auto bg-white shadow-md">
+    <!-- Contenedor principal -->
+    <div class="relative" id="navbar-container">
+        <!-- Botón de hamburguesa (visible solo en móvil) -->
+        <div class="md:hidden flex justify-between items-center p-4 border-b">
+            <div class="text-xl font-bold">Ecommerce</div>
+            <button
+                id="hamburger-button"
+                class="hamburger-icon focus:outline-none"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Menú móvil (visible solo en móvil) -->
+        <div id="mobile-menu" class="mobile-menu md:hidden">
+            <div class="p-4">
+                <!-- Los botones móviles se generarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+
+        <!-- Menú de escritorio (visible solo en desktop) -->
+        <div class="hidden md:block">
+            <ul class="flex justify-center gap-6 p-4">
+                <!-- Los botones de escritorio se generarán dinámicamente con JavaScript -->
+            </ul>
+
+            <!-- Los menús de escritorio se generarán dinámicamente con JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    const menuConfig = [
+        {
+            id: "products",
+            title: "products",
+            items: [
+                "Face",
+                "Lip",
+                "Cheek",
+                "Eyes",
+                "Brushes",
+                "Sets",
+                "Bestsellers",
+                "New Arrivals",
+                "Sale Items",
+                "Gift Cards",
+            ],
+        },
+
+        {
+            id: "fragancias",
+            title: "Fragancias",
+            items: [
+                "Perfumes",
+                "Eau de Toilette",
+                "Eau de Parfum",
+                "Colonias",
+                "Para Hombre",
+                "Para Mujer",
+                "Unisex",
+                "Sets de Regalo",
+                "Novedades",
+                "Ofertas",
+            ],
+        },
+        {
+            id: "jabones",
+            title: "Jabones",
+            items: [
+                "Jabones Naturales",
+                "Jabones Artesanales",
+                "Jabones Líquidos",
+                "Jabones en Barra",
+                "Exfoliantes",
+                "Antibacteriales",
+                "Hidratantes",
+                "Para Pieles Sensibles",
+                "Orgánicos",
+                "Veganos",
+            ],
+        },
+        {
+            id: "cosmeticos",
+            title: "Cosméticos",
+            items: [
+                "Maquillaje",
+                "Cremas",
+                "Mascarillas",
+                "Tónicos",
+                "Serums",
+                "Protector Solar",
+                "Desmaquillantes",
+                "Contorno de Ojos",
+                "Labiales",
+                "Bases",
+            ],
+        },
+        {
+            id: "accesorios",
+            title: "Accesorios",
+            items: [
+                "Esponjas",
+                "Brochas",
+                "Espejos",
+                "Neceseres",
+                "Pinzas",
+                "Aplicadores",
+                "Organizadores",
+                "Toallas",
+                "Bandas",
+                "Herramientas",
+            ],
+        },
+    ];
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbarContainer = document.getElementById("navbar-container");
+        const desktopMenu = navbarContainer.querySelector(".md\\:block");
+        const desktopButtonsList = desktopMenu.querySelector("ul");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const mobileMenuContent = mobileMenu.querySelector(".p-4");
+        const hamburgerButton = document.getElementById("hamburger-button");
+
+        // Función para generar menús de escritorio
+        function generateDesktopMenus() {
+            menuConfig.forEach((menu) => {
+                // Crear botón de escritorio
+                const listItem = document.createElement("li");
+                const button = document.createElement("button");
+                button.className =
+                    "text-lg font-bold cursor-pointer hover:text-gray-500 transition-colors flex items-center";
+                button.setAttribute("data-menu", `${menu.id}-menu`);
+                button.innerHTML = `
+                        ${menu.title}
+                        <span class="arrow-icon ml-1">▽</span>
+                    `;
+                listItem.appendChild(button);
+                desktopButtonsList.appendChild(listItem);
+
+                // Crear menú de escritorio
+                const menuElement = document.createElement("div");
+                menuElement.id = `${menu.id}-menu`;
+                menuElement.className =
+                    "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
+
+                // Crear lista de elementos del menú
+                const menuList = document.createElement("ul");
+                menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8";
+
+                menu.items.forEach((item) => {
+                    const menuItem = document.createElement("li");
+                    menuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+                    menuList.appendChild(menuItem);
+                });
+
+                menuElement.appendChild(menuList);
+                desktopMenu.appendChild(menuElement);
+            });
+        }
+
+        // Función para generar menús móviles
+        function generateMobileMenus() {
+            menuConfig.forEach((menu) => {
+                // Crear contenedor para cada categoría móvil
+                const mobileCategory = document.createElement("div");
+                mobileCategory.className = "border-b border-gray-200 py-2";
+
+                // Crear botón móvil con signo +
+                const mobileButton = document.createElement("button");
+                mobileButton.className =
+                    "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
+                mobileButton.setAttribute(
+                    "data-mobile-menu",
+                    `mobile-${menu.id}-menu`,
+                );
+                mobileButton.innerHTML = `
+                        <span class="font-bold">${menu.title}</span>
+                        <span class="plus-icon"></span>
+                    `;
+
+                // Crear submenú móvil
+                const mobileSubmenu = document.createElement("div");
+                mobileSubmenu.id = `mobile-${menu.id}-menu`;
+                mobileSubmenu.className = "mobile-submenu pl-4";
+
+                // Crear lista de elementos del submenú
+                const submenuList = document.createElement("ul");
+                submenuList.className = "py-2";
+
+                menu.items.forEach((item) => {
+                    const submenuItem = document.createElement("li");
+                    submenuItem.className = "py-1";
+                    submenuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+                    submenuList.appendChild(submenuItem);
+                });
+
+                mobileSubmenu.appendChild(submenuList);
+                mobileCategory.appendChild(mobileButton);
+                mobileCategory.appendChild(mobileSubmenu);
+                mobileMenuContent.appendChild(mobileCategory);
+            });
+        }
+        // Generar menús de escritorio y móvil
+        generateDesktopMenus();
+        generateMobileMenus();
+
+        // Configurar eventos para el menú de escritorio
+        const desktopButtons = document.querySelectorAll("button[data-menu]");
+        const desktopMenus = document.querySelectorAll(".menu-container");
+        const arrowIcons = document.querySelectorAll(".arrow-icon");
+
+        let activeDesktopMenu = null;
+        let activeDesktopButton = null;
+        let isDesktopMenuHovered = false;
+
+        // Función para mostrar un menú de escritorio específico
+        function showDesktopMenu(menuId, buttonElement) {
+            // Ocultar todos los menús primero y resetear iconos
+            desktopMenus.forEach((menu) => {
+                menu.classList.add("hidden");
+            });
+            arrowIcons.forEach((icon) => {
+                icon.classList.remove("open");
+            });
+
+            // Mostrar el menú seleccionado y rotar su icono
+            const targetMenu = document.getElementById(menuId);
+            if (targetMenu) {
+                targetMenu.classList.remove("hidden");
+                activeDesktopMenu = targetMenu;
+
+                // Rotar el icono del botón activo
+                const icon = buttonElement.querySelector(".arrow-icon");
+                if (icon) {
+                    icon.classList.add("open");
+                }
+            }
+        }
+
+        // Función para ocultar todos los menús de escritorio
+        function hideAllDesktopMenus() {
+            if (
+                !isDesktopMenuHovered &&
+                activeDesktopButton !== document.activeElement
+            ) {
+                desktopMenus.forEach((menu) => {
+                    menu.classList.add("hidden");
+                });
+                arrowIcons.forEach((icon) => {
+                    icon.classList.remove("open");
+                });
+                activeDesktopMenu = null;
+            }
+        }
+
+        // Agregar eventos a los botones de escritorio
+        desktopButtons.forEach((button) => {
+            // Evento mouseenter (hover)
+            button.addEventListener("mouseenter", function () {
+                const menuId = this.getAttribute("data-menu");
+                showDesktopMenu(menuId, this);
+                activeDesktopButton = this;
+            });
+
+            // Evento focus (para accesibilidad)
+            button.addEventListener("focus", function () {
+                const menuId = this.getAttribute("data-menu");
+                showDesktopMenu(menuId, this);
+                activeDesktopButton = this;
+            });
+
+            // Evento click para dispositivos táctiles
+            button.addEventListener("click", function () {
+                const menuId = this.getAttribute("data-menu");
+
+                // Si el menú ya está visible, ocultarlo
+                if (
+                    activeDesktopMenu &&
+                    activeDesktopMenu.id === menuId &&
+                    !activeDesktopMenu.classList.contains("hidden")
+                ) {
+                    activeDesktopMenu.classList.add("hidden");
+                    const icon = this.querySelector(".arrow-icon");
+                    if (icon) {
+                        icon.classList.remove("open");
+                    }
+                    activeDesktopMenu = null;
+                } else {
+                    // Si no, mostrar el menú
+                    showDesktopMenu(menuId, this);
+                }
+            });
+        });
+
+        // Agregar eventos a los menús de escritorio
+        desktopMenus.forEach((menu) => {
+            menu.addEventListener("mouseenter", function () {
+                isDesktopMenuHovered = true;
+            });
+
+            menu.addEventListener("mouseleave", function () {
+                isDesktopMenuHovered = false;
+                setTimeout(hideAllDesktopMenus, 100); // Pequeño retraso para evitar parpadeos
+            });
+        });
+
+        // Evento para ocultar menús cuando el mouse sale del área de navegación
+        desktopMenu.addEventListener("mouseleave", function () {
+            setTimeout(hideAllDesktopMenus, 100);
+        });
+
+        // Configurar eventos para el menú móvil
+        const mobileButtons = document.querySelectorAll(
+            "button[data-mobile-menu]",
+        );
+        const plusIcons = document.querySelectorAll(".plus-icon");
+
+        // Evento para el botón hamburguesa
+        hamburgerButton.addEventListener("click", function () {
+            this.classList.toggle("active");
+            mobileMenu.classList.toggle("open");
+        });
+
+        // Eventos para los botones móviles
+        mobileButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const menuId = this.getAttribute("data-mobile-menu");
+                const targetMenu = document.getElementById(menuId);
+                const plusIcon = this.querySelector(".plus-icon");
+
+                if (targetMenu) {
+                    targetMenu.classList.toggle("open");
+                    plusIcon.classList.toggle("open");
+                }
+            });
+        });
+
+        // Evento para ocultar menús de escritorio cuando se hace clic fuera
+        document.addEventListener("click", function (event) {
+            const isDesktopButton = Array.from(desktopButtons).some((button) =>
+                button.contains(event.target),
+            );
+            const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
+                menu.contains(event.target),
+            );
+
+            if (!isDesktopButton && !isDesktopMenu) {
+                hideAllDesktopMenus();
+            }
+        });
+    });
+</script>

@@ -3,8 +3,137 @@
 :root {
     --color-aside-bg: #212529;
     --color-text-primary: #f8f9fa;
-    --color-aside-bg-hover: #6c757d;  
+    --color-aside-bg-hover: #6c757d;
     --color-secondary: #343a40;
     --color-text-primary-hover: #f8f9fa;
 
+}
+
+/* Estilos para las flechas y transiciones */
+.arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+.arrow-icon.open {
+    transform: rotate(180deg);
+}
+
+/* Animación para el menú hamburguesa */
+.hamburger-icon span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: currentColor;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.hamburger-icon.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-icon.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Animación para el menú móvil */
+.mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.mobile-menu.open {
+    max-height: 1000px;
+    /* Valor alto para asegurar que todo el contenido sea visible */
+}
+
+/* Animación para los submenús móviles */
+.mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-submenu.open {
+    max-height: 500px;
+    /* Valor alto para asegurar que todo el contenido sea visible */
+}
+
+/* Estilos para el signo + */
+.plus-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.plus-icon:before,
+.plus-icon:after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+}
+
+.plus-icon:before {
+    width: 100%;
+    height: 2px;
+    top: 7px;
+    left: 0;
+}
+
+.plus-icon:after {
+    width: 2px;
+    height: 100%;
+    left: 7px;
+    top: 0;
+    transition: transform 0.3s ease;
+}
+
+.plus-icon.open:after {
+    transform: rotate(90deg);
+}
+
+/* Estilos para el logo Mented */
+.mented-logo {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* Animación para el banner promocional */
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.marquee-content {
+    animation: marquee 20s linear infinite;
+}
+
+/* Estilos para el contador del carrito */
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
 }

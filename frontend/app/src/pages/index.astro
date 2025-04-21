@@ -1,45 +1,24 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Carrusel from "../components/Carrusel.astro";
+import ProductCard from "../components/ProductCard.astro";
 ---
 
 <Layout>
-  <Carrusel>
-    
-      <div
-      class="diapositiva  w-full h-full bg-blue-200"
-    >
-      Diapositiva 1
-    </div>
-    <div
-      class="diapositiva  w-full h-full bg-green-200 hidden"
-    >
-      Diapositiva 2
-    </div>
-    <div
-      class="diapositiva  w-full h-full bg-red-200 hidden"
-    >
-      Diapositiva 3
-    </div>
-   
-   
-  </Carrusel>
-
-  <style is:global>
-    /* Asegura que las diapositivas dentro del contenedor ocupen el espacio */
-    .carrusel-diapositivas > .diapositiva {
-      position: absolute; /* Para que solo una sea visible a la vez y ocupe el contenedor */
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    /* Transiciones suaves */
-    .diapositiva {
-      transition: opacity 0.5s ease-in-out;
-    }
-    .diapositiva.hidden {
-      opacity: 0;
-    }
-  </style>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-hidden"
+  >
+    <ProductCard
+      name="Foundation"
+      image="/images/producto1.webp"
+      price="30.00"
+      link="/product/foundation"
+    />
+    <ProductCard
+      name="Foundation"
+      image="/images/producto1.webp"
+      price="30.00"
+      link="/product/foundation"
+    />
+    <h1 class="text-2xl font-bold mb-4">Contenido de la tienda</h1>
+  </div>
 </Layout>
