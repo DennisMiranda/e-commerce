@@ -75,7 +75,7 @@ class ProductsController {
     try {
       const productData = this.parseProduct(req.body);
 
-      const formattedBrand = this.formatBrand(product.brand);
+      const formattedBrand = this.formatBrand(productData.brand);
 
       //Buscar brand en la tabla y crear si no existe
       let resultBrand = await this.dbConnection
