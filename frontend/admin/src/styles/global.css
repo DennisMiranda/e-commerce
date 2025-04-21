@@ -4,6 +4,7 @@
   --color-aside-bg-hover: #e0dedb;
   --color-text-primary: #67645e;
   --color-text-primary-hover: #4f4c47;
+  --color-bg: #8b3dff;
 }
 
 @layer utilities {
