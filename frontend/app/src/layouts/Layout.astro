@@ -2,6 +2,8 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import RegisterModal from "../components/RegisterModal.astro";
+import LoginModal from "../components/LoginModal.astro";
 ---
 
 <!doctype html>
@@ -9,17 +11,17 @@ import Footer from "../components/Footer.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi Proyecto Astro</title>
+    <title>Ecommerce</title>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-100 ">
     <!-- Navbar como componente -->
     <Navbar />
 
     <main>
       <slot />
-
-      <!-- Footer como componente -->
-      <Footer />
     </main>
+
+    <!-- Footer como componente -->
+    <Footer />
   </body>
 </html>
