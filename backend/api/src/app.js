@@ -9,8 +9,8 @@ const port = 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:4322", // 🔁 frontend Astro
-    credentials: true, // 🔥 permite cookies
+    origin: "http://localhost:4321", //
+    credentials: true, //  permite cookies
   })
 );
 app.use(express.static("public"));
