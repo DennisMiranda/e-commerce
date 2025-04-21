@@ -1,74 +1,71 @@
 ---
-import astroLogo from "../assets/astro.svg";
+import { Icon } from "astro-icon/components";
 ---
 
+<!-- Header para móviles --><!-- Sidebar -->
 <aside
-  class="bg-[var(--color-aside-bg)] flex-none text-[var(--color-text-primary)] p-5 space-y-6 overflow-hidden hidden md:block"
+  id="sidebar"
+  class="bg-aside-bg barra-lateral flex-none bg-primary text-text-primary p-5 space-y-6 overflow-hidden hidden md:block"
 >
   <div class="nombre-pagina">
-    <i>
-      <img src={astroLogo.src} alt="Logo" class="h-10 w-auto mr-3" />
-    </i>
-    <span class="font-bold text-lg text-[var(--color-text-primary)]" id="title">
-      Ecommerce
+    <span class="font-bold text-2xl text-text-primary" id="titulo-pagina">
+      Aromas
     </span>
   </div>
-
-  <div class="flex text-secondary mt-6">
+  <div class="flex text-secondary">
     <div class="w-12 flex justify-center items-center">
-      <i class="text-md"></i>
+      <Icon name="user" class="text-5xl" />
     </div>
-    <!-- User Data-->
     <div class="flex flex-col flex-1">
-      <span id="username" class="nombre font-semibold">Nombre</span>
-      <span id="email" class="email text-sm">email</span>
+      <span id="username" class="font-semibold"></span>
+      <span id="email" class="text-sm"></span>
     </div>
   </div>
+  <div class="linea"></div>
 
-  <nav class="flex flex-col gap-4">
-    <ul>
-      <!-- Crud admin-->
+  <nav class="navegacion">
+    <ul class="text-secondary flex flex-col gap-4">
       <li>
-        <a href="./pages/index.astro">
-          <i class=""></i>
-          <span class="text-md">CRUD</span>
+        <a href="/" class="flex gap-2">
+          <Icon name="storage" class="text-2xl" />
+          <span class="text-menu text-md">Productos</span>
         </a>
       </li>
-      <!-- Purchase Order List-->
       <li>
-        <a href="">
-          <i class=""></i>
-          <span class="text-menu text-md">Ordenes de compra</span>
+        <a
+          href="/login"
+          class="w-full flex gap-2 text-secondary hover:text-text-primary"
+        >
+          <Icon name="logout" class="text-2xl" />
+          <span class="text-menu text-md">Salir</span>
         </a>
       </li>
     </ul>
-
-    <!--Exit Button-->
-    <div class="flex text-secondary mt-6">
-      <a
-        href="#"
-        class="w-full text-[var(--color-text-primary)] hover:text-white"
-      >
-        <i class="h-11 w-12.5 text-center fa-solid fa-right-from-bracket"></i>
-        <span class="text-menu text-md">Salir</span>
-      </a>
-    </div>
   </nav>
 </aside>
 
-<!--Sidebar Down-->
-<aside
-  class="fixed bottom-0 left-0 w-full bg-[var(--color-aside-bg)] md:hidden"
->
-  <nav
-    class="flex justify-around items-center py-3 text-[var(--color-text-primary)] text-xl"
-  >
-    <a href="#" class=""></a>
-    <a href="#" class=""></a>
-    <i>
-      <img src={astroLogo.src} alt="Logo" class="h-7 w-auto mr-3" />
-    </i>
-    <a href="#" class=""></a>
-    <a href="#" class=""></a>
-  </nav>
-</aside>
+<!-- Script para toggle -->
+<script is:inline>
+  const walletBtn = document.getElementById("wallet");
+  const sidebar = document.querySelector(".barra-lateral");
+  const spans = document.querySelectorAll("span");
+  const usernameLabel = document.getElementById("username");
+  const emailLabel = document.getElementById("email");
+
+  const user = JSON.parse(window.localStorage?.getItem("user") || "{}");
+
+  console.log(user);
+
+  usernameLabel.textContent = user.name;
+  emailLabel.innerText = user.email;
+
+  if (walletBtn && sidebar && spans) {
+    walletBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("mini-barra-lateral");
+
+      spans.forEach((span) => {
+        span.classList.toggle("oculto");
+      });
+    });
+  }
+</script>
