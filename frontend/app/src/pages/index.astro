@@ -4,21 +4,52 @@ import ProductCard from "../components/ProductCard.astro";
 ---
 
 <Layout>
+  <!-- Banner con efecto de zoom -->
+  <div class="w-full overflow-hidden">
+    <a href="tu-enlace-aqui" class="block">
+      <img
+        src="/images/banner.jpg"
+        alt="Banner"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out"
+        onload="this.classList.remove('scale-135', 'opacity-0')"
+      />
+    </a>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-4">Productos Destacados</h1>
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-hidden"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto justify-center"
   >
     <ProductCard
-      name="Foundation"
-      image="/images/producto1.webp"
-      price="30.00"
-      link="/product/foundation"
+      imageUrl="/images/producto1.webp"
+      price="$19.99"
+      oldPrice="$10"
+      title="Wireless Headphones"
+      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
     />
+
     <ProductCard
-      name="Foundation"
-      image="/images/producto1.webp"
-      price="30.00"
-      link="/product/foundation"
+      imageUrl="/images/producto1.webp"
+      price="$19.99"
+      oldPrice="$10"
+      title="Wireless Headphones"
+      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
     />
-    <h1 class="text-2xl font-bold mb-4">Contenido de la tienda</h1>
+
+    <ProductCard
+      imageUrl="/images/producto1.webp"
+      price="$19.99"
+      oldPrice="$10"
+      title="Wireless Headphones"
+      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
+    />
+
+    <ProductCard
+      imageUrl="/images/producto1.webp"
+      price="$19.99"
+      oldPrice="$10"
+      title="Wireless Headphones"
+      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
+    />
   </div>
 </Layout>
