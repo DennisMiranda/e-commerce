@@ -3,13 +3,14 @@ import express from "express";
 import categoriesRoutes from "./routes/categories.routes.js";
 import productRoutes from "./routes/products.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import { checkToken } from "./midleware/auth.midleware.js";
 
 const app = express();
 const port = 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:4321", //
+    origin: "http://localhost:4322",
     credentials: true, //  permite cookies
   })
 );
