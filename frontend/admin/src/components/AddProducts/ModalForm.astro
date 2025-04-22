@@ -126,18 +126,36 @@ export let product = null;
 
     const method = mode === "edit" ? "PUT" : "POST";
 
-    console.log(formData.get("product-name"));
+    const body = formData.entries().reduce((acc, [key, value]) => {
+      acc[key] = value;
+      return acc;
+    }, {});
 
+    console.log(body);
     try {
       // Enviar al backend el form data
       const response = await fetch(url, {
         method,
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       });
 
       const result = await response.json();
 
       if (result.success) {
+        const responseImage = await fetch(
+          `http://localhost:3000/products/${result.data.id}/image`,
+          {
+            method,
+            body: formData,
+          }
+        );
+
+        const resultImage = await responseImage.json();
+        console.log(resultImage);
+
         // Mensaje exitoso
         alert(
           mode === "edit"

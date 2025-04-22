@@ -1,4 +1,7 @@
+import multer from "multer";
+
 import { getConnection } from "../database/connection.js";
+import { getMulterStorage } from "../utils/multer.utils.js";
 
 class ProductsController {
   constructor() {
@@ -106,8 +109,6 @@ class ProductsController {
         brandId = brandMatch.id;
       }
 
-      const image = req.file.filename;
-
       const resultProductDb = await this.dbConnection
         .request()
         .input("name", productData.name)
@@ -115,7 +116,7 @@ class ProductsController {
         .input("status", productData.status)
         .input("price", productData.price)
         .input("stock", productData.stock)
-        .input("image", image)
+        .input("image", "")
         .input("categories_id", productData.category)
         .input("brands_id", brandId)
         .query(
@@ -226,6 +227,23 @@ class ProductsController {
         error: err.toString(),
       });
     }
+  };
+
+  updateProductImage = async (req, res) => {
+    const productId = req.params.id;
+    const image = req.file.filename;
+
+    await this.dbConnection
+      .request()
+      .input("id", productId)
+      .input("image", image)
+      .query(`UPDATE products SET image=@image WHERE id=@id`);
+
+    res.status(200).json({
+      success: true,
+      message: "Imagen guardada correctamente",
+      data: { image },
+    });
   };
 }
 
