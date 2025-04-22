@@ -16,7 +16,48 @@ import Layout from "../layouts/Layout.astro";
     </a>
   </div>
 
-  <!-- <h1 class="text-2xl font-bold mb-4">Productos Destacados</h1>
+  <section class="bg-black text-white py-12 w-full mx-0 my-4">
+    <div
+      class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8"
+    >
+      <!-- Texto -->
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl font-bold mb-4">PRODUCTOS DESTACADOS</h2>
+        <p class="mb-6">
+          "Explora nuestros productos destacados, elegidos por su calidad y
+          preferencia entre nuestros clientes. ¡Tus nuevos favoritos te
+          esperan!"
+        </p>
+        <a
+          href="#"
+          class="inline-block bg-white text-black px-6 py-2 font-semibold"
+          >GET STARTED</a
+        >
+      </div>
+
+      <!-- Imágenes superpuestas -->
+      <div
+        class="relative w-full md:w-1/2 h-auto flex justify-center items-center"
+      >
+        <div class="relative z-10 translate-x-4 translate-y-4 -mr-8">
+          <img
+            src="/images/producto5.webp"
+            alt="Imagen 1"
+            class="w-64 md:w-72"
+          />
+        </div>
+        <div class="relative z-0">
+          <img
+            src="/images/producto10.webp"
+            alt="Imagen 2"
+            class="w-64 md:w-72"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+<!-- <h1 class="text-2xl font-bold mb-4">Productos Destacados</h1>
   <div
     class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto justify-center"
   >
@@ -28,28 +69,4 @@ import Layout from "../layouts/Layout.astro";
       description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
     />
 
-    <ProductCard
-      imageUrl="/images/producto1.webp"
-      price="$19.99"
-      oldPrice="$10"
-      title="Wireless Headphones"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
-    />
-
-    <ProductCard
-      imageUrl="/images/producto1.webp"
-      price="$19.99"
-      oldPrice="$10"
-      title="Wireless Headphones"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
-    />
-
-    <ProductCard
-      imageUrl="/images/producto1.webp"
-      price="$19.99"
-      oldPrice="$10"
-      title="Wireless Headphones"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
-    />
   </div> -->
-</Layout>
