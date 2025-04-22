@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let gridApi;
 
     try {
-      const res = await fetch("http://localhost:3000/products");
+      const res = await fetch("http://localhost:3000/products", {
+        headers: {
+          "x-token": window.sessionStorage.getItem("token"),
+        },
+      });
       const products = await res.json();
 
       // Grid Options: Contains all of the grid configurations
@@ -43,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
           { field: "image", headerName: "Imagen", minWidth: 100 },
           {
             field: "actions",
-            headerName: "Acciones",
+            headerName: "Editar",
             pinned: "right",
             cellRenderer: (params) => {
               // Crear el contenedor para los botones
@@ -60,21 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.openEditModal(params.data); // Pasamos params.data al modal de edición
               });
 
-              // Crear botón de eliminación
-              const deleteButton = document.createElement("button");
-              deleteButton.className =
-                "delete-btn min-w-10 text-center bg-aside-bg text-text-primary px-3 py-2 rounded-md hover:bg-text-primary hover:text-white transition";
-              deleteButton.dataset.id = params.data.id;
-              deleteButton.innerHTML = `<img src="/icons/delete.svg" alt="Delete" width="16" height="16" />`;
-              deleteButton.addEventListener("click", () => {
-                // Aquí puedes manejar la eliminación o cualquier otra acción
-                console.log("Eliminando producto con ID:", params.data.id);
-              });
-
-              // Agregar los botones al contenedor
+              // Agregar el boton al contenedor
               container.appendChild(editButton);
-              container.appendChild(deleteButton);
-
               return container; // Devuelve el contenedor con ambos botones
             },
           },
@@ -99,10 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (container) {
         gridApi = agGrid.createGrid(container, gridOptions);
         window.gridApi = gridApi;
-        // Agregamos el evento de "firstDataRendered" manualmente (esto sí es compatible con AG Grid Community)
-        // gridApi.addEventListener("firstDataRendered", () => {
-        //   attachEditButtonListeners(); // Llamamos la función para añadir los listeners después de que se haya renderizado la primera vez.
-        // });
       }
     } catch (error) {
       console.log(error);

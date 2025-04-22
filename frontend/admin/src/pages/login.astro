@@ -69,6 +69,8 @@ import Layout from "../layouts/Welcome.astro";
             const data = await res.json();
 
             if (data.token) {
+              // Guardar el token en el session storage
+              window.sessionStorage.setItem("token", data.token);
               // Guardar el usuario en el localStorage
               window.localStorage.setItem("user", JSON.stringify(data.user));
 

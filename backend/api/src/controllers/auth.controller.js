@@ -96,3 +96,15 @@ export const loginAdmin = async (req, res) => {
       .json({ message: "Error al iniciar sesión", error: err.toString() });
   }
 };
+
+//Cerrar Sesion
+export const logout = (req, res) => {
+  // Elimina la cookie llamada "token"
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true, // true si estás en https
+    sameSite: "strict", // o "lax", según cómo configuraste la cookie
+  });
+
+  res.status(200).json({ message: "Sesión cerrada correctamente" });
+};
