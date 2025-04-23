@@ -7,9 +7,12 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()]
+  server: {
+    port: 4322,
   },
-
-  integrations: [icon()]
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  integrations: [icon()],
 });
+
