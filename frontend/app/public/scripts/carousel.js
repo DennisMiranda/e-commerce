@@ -40,14 +40,16 @@ document.querySelectorAll('[data-carousel]').forEach(carousel => {
     };
     carousel.querySelector('[data-carousel-next]').addEventListener('click', next);
     carousel.querySelector('[data-carousel-prev]').addEventListener('click', prev);
-    let interval = setInterval(next, 2000);
+    let interval = setInterval(next, 3000);
     carousel.addEventListener('mouseenter', () => clearInterval(interval));
-    carousel.addEventListener('mouseleave', () => interval = setInterval(next, 2000));
+    carousel.addEventListener('mouseleave', () => interval = setInterval(next, 3000));
 });
 
+
+// resetear contador luego de deslizar carrusel
 const resetInterval = () => {
     clearInterval(interval);
-    interval = setInterval(next, 2000);
+    interval = setInterval(next, 3000);
 };
 
 carousel.querySelector('[data-carousel-next]').addEventListener('click', () => {
