@@ -1,20 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProductCard from "../components/ProductCard.astro";
-import Carrusel from "../components/Carrusel.astro";
+import Carousel from "../components/Carousel.astro";
 ---
 
 <Layout>
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-hidden"
-  >
-    <Carrusel/>
-    <ProductCard
-      name="Foundation"
-      image="/images/producto1.webp"
-      price="30.00"
-      link="/product/foundation"
-    />
+    <Carousel/>
     <ProductCard
       name="Foundation"
       image="/images/producto1.webp"
