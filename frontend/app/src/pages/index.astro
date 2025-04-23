@@ -1,20 +1,39 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import VideoHero from "../components/VideoHero.astro";
 // import ProductCard from "../components/ProductCard.astro";
 ---
 
 <Layout>
   <!-- Banner con efecto de zoom -->
   <div class="w-full overflow-hidden">
-    <a href="tu-enlace-aqui" class="block">
+    <a href="#" class="block">
+      <!-- Imagen para Desktop -->
       <img
-        src="/images/banner.jpg"
-        alt="Banner"
-        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out"
+        src="/images/desktop.webp"
+        alt="Banner Desktop"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:block hidden"
+        onload="this.classList.remove('scale-135', 'opacity-0')"
+      />
+
+      <!-- Imagen para Móvil -->
+      <img
+        src="/images/mobile.webp"
+        alt="Banner Móvil"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:hidden block"
         onload="this.classList.remove('scale-135', 'opacity-0')"
       />
     </a>
   </div>
+
+  <!-- Hero con video a pantalla completa -->
+  <VideoHero
+    videoSrc="/videos/promocion.mp4"
+    heading="HECHO PARA TODOS LOS TONOS"
+    subheading="MAKEUP ESSENTIALS PARA  TODOS"
+    buttonText="Compra ahora"
+    buttonLink="#"
+  />
 
   <section class="bg-black text-white py-12 w-full mx-0 my-4">
     <div
