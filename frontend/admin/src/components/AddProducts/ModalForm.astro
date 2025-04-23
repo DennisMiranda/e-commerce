@@ -95,6 +95,15 @@ export let product = null;
 
   // Agregar -> validar, enviar y cerrar si todo está bien
   submitBtn.addEventListener("click", async () => {
+    const mode = getMode();
+    // Hacer requerido o no el campo de la imagen
+    const imageInput = document.getElementById("product-image");
+    if (mode === "add") {
+      imageInput.setAttribute("required", true);
+    } else {
+      imageInput.removeAttribute("required");
+    }
+
     const requiredFields = form.querySelectorAll(
       "input[required], select[required]"
     );
@@ -117,7 +126,6 @@ export let product = null;
 
     // Crear FormData
     const formData = new FormData(form);
-    const mode = getMode();
     const productId = getProductId();
 
     const url =
@@ -140,14 +148,13 @@ export let product = null;
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-        // body: formData, //Enviar formData
       });
 
       const result = await response.json();
 
       if (result.success) {
         // Si estamos en modo "editar", actualizamos la imagen
-        if (formData.has("product-image")) {
+        if (formData.get("product-image").size) {
           // Enviar la imagen por separado si se cambió
           const responseImage = await fetch(
             `http://localhost:3000/products/${result.data.id}/image`,
@@ -158,6 +165,7 @@ export let product = null;
           );
 
           const resultImage = await responseImage.json();
+          result.data.image = resultImage.data.image;
         }
 
         // Mensaje exitoso
