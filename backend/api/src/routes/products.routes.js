@@ -1,22 +1,27 @@
 import express from "express";
 import multer from "multer";
 import ProductsController from "../controllers/products.controller.js";
-import { getMulterStorage } from "../utils/multer.utils.js";
 
 const router = express.Router();
 const productController = new ProductsController();
 
-const upload = multer({ storage: getMulterStorage() });
+// Middleware de Multer para manejo de imágenes
+const upload = multer({ storage: multer.memoryStorage() });
 
 // GET: Obtener productos con búsqueda opcional
 router.get("/products", productController.getProducts);
-// POST: agregar producto con imagen
+
+// POST: agregar producto sin imagen, ya que la imagen la agregaremos en otro endpoint
 router.post("/products", productController.createProduct);
+
+// PUT: Actualizar producto
 router.put("/products/:id", productController.updateProduct);
+
+// POST: Subir imagen del producto a Cloudinary
 router.post(
   "/products/:id/image",
-  upload.single("product-image"),
-  productController.updateProductImage
+  upload.single("product-image"), // Este middleware maneja la subida de la imagen
+  productController.updateProductImage // Aquí actualizas la URL de la imagen en la base de datos
 );
 
 export default router;

@@ -1,7 +1,14 @@
 import multer from "multer";
-
 import { getConnection } from "../database/connection.js";
 import { getMulterStorage } from "../utils/multer.utils.js";
+import cloudinary from "cloudinary"; // Importar Cloudinary
+
+// Configura Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 class ProductsController {
   constructor() {
@@ -184,8 +191,6 @@ class ProductsController {
         brandId = brandMatch.id;
       }
 
-      const image = req.file.filename;
-
       await this.dbConnection
         .request()
         .input("id", productId)
@@ -194,7 +199,6 @@ class ProductsController {
         .input("status", productData.status)
         .input("price", productData.price)
         .input("stock", productData.stock)
-        .input("image", image)
         .input("categories_id", productData.category)
         .input("brands_id", brandId)
         .query(
@@ -205,7 +209,6 @@ class ProductsController {
         status=@status, 
         price=@price, 
         stock=@stock, 
-        image=@image, 
         categories_id=@categories_id, 
         brands_id=@brands_id
         WHERE id=@id
@@ -229,21 +232,53 @@ class ProductsController {
     }
   };
 
+  //IMAGEN EN CLOUDINARY
+  // Modificado: Subir la imagen a Cloudinary y actualizar la URL en la base de datos
   updateProductImage = async (req, res) => {
     const productId = req.params.id;
-    const image = req.file.filename;
 
-    await this.dbConnection
-      .request()
-      .input("id", productId)
-      .input("image", image)
-      .query(`UPDATE products SET image=@image WHERE id=@id`);
+    console.log(req.body, req.file);
 
-    res.status(200).json({
-      success: true,
-      message: "Imagen guardada correctamente",
-      data: { image },
-    });
+    try {
+      // Subir imagen a Cloudinary
+      const file = req.file; // El archivo que se sube
+      if (!file) {
+        return res.status(400).json({ message: "No image file provided." });
+      }
+
+      const b64 = Buffer.from(req.file.buffer).toString("base64");
+      let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+
+      const cloudinaryResult = await cloudinary.v2.uploader.upload(dataURI, {
+        public_id: `product_${productId}`, // Usar el ID del producto para el nombre de la imagen
+        asset_folder: "products", // Puedes configurar una carpeta específica para productos
+      });
+
+      // Obtener la URL de la imagen subida
+      const imageUrl = cloudinaryResult.secure_url;
+
+      console.log(cloudinaryResult);
+
+      // Actualizar la URL de la imagen en la base de datos
+      await this.dbConnection
+        .request()
+        .input("id", productId)
+        .input("image", imageUrl)
+        .query(`UPDATE products SET image=@image WHERE id=@id`);
+
+      res.status(200).json({
+        success: true,
+        message: "Image uploaded successfully",
+        data: { image: imageUrl }, // Devuelves la URL de la imagen
+      });
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      res.status(500).json({
+        success: false,
+        message: "Error uploading image to Cloudinary",
+        error: error.toString(),
+      });
+    }
   };
 }
 

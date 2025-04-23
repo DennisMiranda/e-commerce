@@ -100,6 +100,7 @@ export let product = null;
     );
     let isValid = true;
 
+    // Validación de campos requeridos
     requiredFields.forEach((field) => {
       if (!field.value) {
         field.classList.add("border-red-500");
@@ -124,14 +125,13 @@ export let product = null;
         ? `http://localhost:3000/products/${productId}`
         : "http://localhost:3000/products";
 
-    const method = mode === "edit" ? "PUT" : "POST";
+    const method = mode === "edit" ? "PUT" : "POST"; // Método de la petición
 
     const body = formData.entries().reduce((acc, [key, value]) => {
       acc[key] = value;
       return acc;
     }, {});
 
-    console.log(body);
     try {
       // Enviar al backend el form data
       const response = await fetch(url, {
@@ -140,21 +140,25 @@ export let product = null;
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
+        // body: formData, //Enviar formData
       });
 
       const result = await response.json();
 
       if (result.success) {
-        const responseImage = await fetch(
-          `http://localhost:3000/products/${result.data.id}/image`,
-          {
-            method,
-            body: formData,
-          }
-        );
+        // Si estamos en modo "editar", actualizamos la imagen
+        if (formData.has("product-image")) {
+          // Enviar la imagen por separado si se cambió
+          const responseImage = await fetch(
+            `http://localhost:3000/products/${result.data.id}/image`,
+            {
+              method: "POST", //Se podria poner:POST
+              body: formData,
+            }
+          );
 
-        const resultImage = await responseImage.json();
-        console.log(resultImage);
+          const resultImage = await responseImage.json();
+        }
 
         // Mensaje exitoso
         alert(
