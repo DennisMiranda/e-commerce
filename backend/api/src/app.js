@@ -10,7 +10,7 @@ const port = 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:4322",
+    origin: "http://localhost:4321",
     credentials: true, //  permite cookies
   })
 );

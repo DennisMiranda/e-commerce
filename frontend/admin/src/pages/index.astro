@@ -53,6 +53,11 @@ import FormAddProduct from "../components/AddProducts/FormAddProduct.astro";
       modal.dataset.id = product.id;
       modal.style.display = "block";
 
+      const imagePreview = document.getElementById("preview");
+
+      imagePreview.style.display = "block";
+      imagePreview.setAttribute("src", product.image);
+
       const scrollContainer = document.getElementById("modal-scroll-container");
       if (scrollContainer) {
         scrollContainer.scrollTop = 0;
