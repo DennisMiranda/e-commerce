@@ -4,17 +4,24 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<!-- Banner promocional -->
-<div class="bg-black text-white py-2 overflow-hidden">
+<!-- Banner promocional --><!-- Banner promocional -->
+<div class="bg-black text-white py-4 overflow-hidden">
     <div class="flex justify-center items-center">
-        <p class="text-center text-sm font-medium tracking-wider">
-            ENJOY 20% OFF SITEWIDE WITH CODE EARTHDAY!
-        </p>
+        <a
+            href="#"
+            class="group relative inline-block text-xs font-medium tracking-wider text-white"
+        >
+            <span
+                class="block text-center bg-[length:0%_2px] bg-left-bottom bg-gradient-to-r from-white to-white bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-300"
+            >
+                ¡DISFRUTA UN 20% DE DESCUENTO CON EL CÓDIGO NOMADA!
+            </span>
+        </a>
     </div>
 </div>
 
 <!-- Header principal -->
-<header class="bg-white py-4 px-4 md:px-8 border-b">
+<header class="bg-white py-4 px-4 md:px-8">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
         <!-- Búsqueda (izquierda) -->
         <div class="w-1/3 flex justify-start">
@@ -44,12 +51,11 @@ import { Icon } from "astro-icon/components";
 </header>
 
 <!-- Navbar -->
-<div class="max-w-6xl mx-auto bg-white shadow-md">
+<div class="max-w-6xl mx-auto bg-white">
     <!-- Contenedor principal -->
     <div class="relative" id="navbar-container">
         <!-- Botón de hamburguesa (visible solo en móvil) -->
-        <div class="md:hidden flex justify-between items-center p-4 border-b">
-            <div class="text-xl font-bold">Ecommerce</div>
+        <div class="md:hidden flex justify-between items-center p-4 ">
             <button
                 id="hamburger-button"
                 class="hamburger-icon focus:outline-none"
@@ -81,8 +87,8 @@ import { Icon } from "astro-icon/components";
 <script type="module">
     const menuConfig = [
         {
-            id: "products",
-            title: "products",
+            id: "skincare",
+            title: "Skincare",
             items: [
                 "Face",
                 "Lip",
@@ -98,8 +104,8 @@ import { Icon } from "astro-icon/components";
         },
 
         {
-            id: "fragancias",
-            title: "Fragancias",
+            id: "maquillaje",
+            title: "Maquillaje",
             items: [
                 "Perfumes",
                 "Eau de Toilette",
@@ -113,25 +119,10 @@ import { Icon } from "astro-icon/components";
                 "Ofertas",
             ],
         },
+
         {
-            id: "jabones",
-            title: "Jabones",
-            items: [
-                "Jabones Naturales",
-                "Jabones Artesanales",
-                "Jabones Líquidos",
-                "Jabones en Barra",
-                "Exfoliantes",
-                "Antibacteriales",
-                "Hidratantes",
-                "Para Pieles Sensibles",
-                "Orgánicos",
-                "Veganos",
-            ],
-        },
-        {
-            id: "cosmeticos",
-            title: "Cosméticos",
+            id: "cuidado-personal",
+            title: "Cuidado Personal",
             items: [
                 "Maquillaje",
                 "Cremas",
@@ -191,7 +182,7 @@ import { Icon } from "astro-icon/components";
                 const menuElement = document.createElement("div");
                 menuElement.id = `${menu.id}-menu`;
                 menuElement.className =
-                    "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
+                    "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10  border border-gray-300 max-w-full overflow-x-hidden menu-container";
 
                 // Crear lista de elementos del menú
                 const menuList = document.createElement("ul");
