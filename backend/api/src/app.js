@@ -26,4 +26,3 @@ app.listen(port, () => {
   console.log(`Servidor Express activo en http://localhost:${port}`);
 });
 
-export default app;
