@@ -237,8 +237,6 @@ class ProductsController {
   updateProductImage = async (req, res) => {
     const productId = req.params.id;
 
-    console.log(req.body, req.file);
-
     try {
       // Subir imagen a Cloudinary
       const file = req.file; // El archivo que se sube
