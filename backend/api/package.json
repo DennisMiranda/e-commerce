@@ -7,6 +7,7 @@
   "scripts": {
     "predev": "pnpm i",
     "dev": "nodemon src/app.js",
+    "test-db": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
