@@ -10,15 +10,15 @@ import VideoHero from "../components/VideoHero.astro";
     <a href="#" class="block">
       <!-- Imagen para Desktop -->
       <img
-        src="/images/desktop.webp"
-        alt="Banner Desktop"
+        src="/images/desktop1.webp"
+        alt="Banner Desktop1"
         class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:block hidden"
         onload="this.classList.remove('scale-135', 'opacity-0')"
       />
 
       <!-- Imagen para Móvil -->
       <img
-        src="/images/mobile.webp"
+        src="/images/mobile1.webp"
         alt="Banner Móvil"
         class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:hidden block"
         onload="this.classList.remove('scale-135', 'opacity-0')"
@@ -31,8 +31,8 @@ import VideoHero from "../components/VideoHero.astro";
     videoSrc="/videos/promocion.mp4"
     heading="HECHO PARA TODOS LOS TONOS"
     subheading="MAKEUP ESSENTIALS PARA  TODOS"
-    buttonText="Compra ahora"
-    buttonLink="#"
+    buttonText="Comprar ahora"
+    buttonLink="./productos"
   />
 
   <section class="bg-black text-white py-12 w-full mx-0 my-4">
@@ -60,32 +60,21 @@ import VideoHero from "../components/VideoHero.astro";
       >
         <div class="relative z-10 translate-x-4 translate-y-4 -mr-8">
           <img
-            src="/images/producto5.webp"
+            src="/images/imagen1.webp"
             alt="Imagen 1"
-            class="w-64 md:w-72"
+            class="w-48 sm:w-64 md:w-72"
           />
         </div>
         <div class="relative z-0">
           <img
-            src="/images/producto10.webp"
+            src="/images/imagen2.webp"
             alt="Imagen 2"
-            class="w-64 md:w-72"
+            class="w-48 sm:w-64 md:w-72"
           />
         </div>
       </div>
     </div>
   </section>
 </Layout>
-<!-- <h1 class="text-2xl font-bold mb-4">Productos Destacados</h1>
-  <div
-    class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto justify-center"
-  >
-    <ProductCard
-      imageUrl="/images/producto1.webp"
-      price="$19.99"
-      oldPrice="$10"
-      title="Wireless Headphones"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit..."
-    />
 
-  </div> -->
+
