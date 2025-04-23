@@ -1,15 +1,26 @@
-<footer
-  class="fixed bottom-0 left-0 w-full bg-[var(--color-aside-bg)] md:hidden"
->
-  <nav
-    class="flex justify-around items-center py-3 text-[var(--color-text-primary)] text-xl"
-  >
-    <a href="#" class=""></a>
-    <a href="#" class=""></a>
+---
+import { Icon } from "astro-icon/components";
+
+const { ecommerceName = "Aromas" } = Astro.props;
+---
+
+<footer class="w-full bg-aside-bg md:hidden">
+  <nav class="flex justify-around items-center py-3 text-text-primary text-xl">
+    <a href="/" class="flex gap-2">
+      <Icon name="storage" class="text-2xl" />
+      <span class="text-menu text-md">Productos</span>
+    </a>
     <i>
-      <img src="" alt="Logo" class="h-7 w-auto mr-3" />
+      <h1
+        class="text-2xl md:text-4xl font-bold text-text-primary mb-2 font-prompt"
+        style="font-family: 'Prompt', sans-serif;"
+      >
+        {ecommerceName}
+      </h1>
     </i>
-    <a href="#" class=""></a>
-    <a href="#" class=""></a>
+    <a href="/login" class="flex gap-2 text-secondary hover:text-text-primary">
+      <Icon name="logout" class="text-2xl" />
+      <span class="text-menu text-md">Salir</span>
+    </a>
   </nav>
 </footer>

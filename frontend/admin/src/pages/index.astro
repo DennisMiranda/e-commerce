@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import Header from "../components/Header.astro";
 import SearchButton from "../components/SearchButton.astro";
 import AddButton from "../components/AddButton.astro";
@@ -51,6 +52,11 @@ import FormAddProduct from "../components/AddProducts/FormAddProduct.astro";
       modal.dataset.mode = "edit";
       modal.dataset.id = product.id;
       modal.style.display = "block";
+
+      const imagePreview = document.getElementById("preview");
+
+      imagePreview.style.display = "block";
+      imagePreview.setAttribute("src", product.image);
 
       const scrollContainer = document.getElementById("modal-scroll-container");
       if (scrollContainer) {

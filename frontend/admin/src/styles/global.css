@@ -4,10 +4,18 @@
   --color-aside-bg-hover: #e0dedb;
   --color-text-primary: #67645e;
   --color-text-primary-hover: #4f4c47;
+  --color-bg: #8b3dff;
 }
 
 @layer utilities {
   .ag-paging-row-summary-panel {
     @apply hidden;
   }
+}
+
+/* Quitar los botones del input[type=number] */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

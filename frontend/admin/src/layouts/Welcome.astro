@@ -1,0 +1,84 @@
+---
+import "./src/styles/global.css";
+
+import bg from "../assets/images/makeup.png";
+import { getImage } from "astro:assets";
+
+const bgImage = await getImage({ src: bg });
+
+const {
+  title = "¡Bienvenido!",
+  ecommerceName = "Aromas",
+  description = "Sistema de registro de productos de belleza y cuidado personal",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="h-screen w-screen m-0">
+    <div class="flex flex-col md:flex-row h-full w-full">
+      <!--  Bienvenida con fondo y overlay en móviles y escritorio -->
+      <div
+        class="relative w-full md:w-1/2 h-64 md:h-full flex items-center justify-center overflow-hidden"
+      >
+        <!-- Imagen de fondo -->
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          style={`background-image: url('${bgImage.src}');`}
+        >
+        </div>
+
+        <!-- Capa  -->
+        <div class="absolute inset-0 bg-gray-300/60"></div>
+
+        <!-- Contenido -->
+        <div class="relative z-10 text-center max-w-md m-auto px-8">
+          <h1
+            class="text-2xl md:text-4xl font-bold text-text-primary-hover mb-2 font-prompt"
+            style="font-family: 'Prompt', sans-serif;"
+          >
+            {ecommerceName}
+          </h1>
+          <h1
+            class="text-2xl
+            md:text-4xl
+            font-bold
+            text-text-primary-hover
+            mb-2"
+          >
+            {title}
+          </h1>
+          <p class="text-text-primary-hover text-sm md:text-lg font-semibold">
+            {description}
+          </p>
+        </div>
+      </div>
+
+      <!--  Sección del login -->
+      <div
+        class="flex md:w-1/2 md:items-center justify-center md:p-6 h-full bg-white"
+      >
+        <slot />
+      </div>
+    </div>
+  </body>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</html>

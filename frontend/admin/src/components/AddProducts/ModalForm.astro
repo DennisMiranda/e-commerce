@@ -95,11 +95,21 @@ export let product = null;
 
   // Agregar -> validar, enviar y cerrar si todo está bien
   submitBtn.addEventListener("click", async () => {
+    const mode = getMode();
+    // Hacer requerido o no el campo de la imagen
+    const imageInput = document.getElementById("product-image");
+    if (mode === "add") {
+      imageInput.setAttribute("required", true);
+    } else {
+      imageInput.removeAttribute("required");
+    }
+
     const requiredFields = form.querySelectorAll(
       "input[required], select[required]"
     );
     let isValid = true;
 
+    // Validación de campos requeridos
     requiredFields.forEach((field) => {
       if (!field.value) {
         field.classList.add("border-red-500");
@@ -116,7 +126,6 @@ export let product = null;
 
     // Crear FormData
     const formData = new FormData(form);
-    const mode = getMode();
     const productId = getProductId();
 
     const url =
@@ -124,20 +133,41 @@ export let product = null;
         ? `http://localhost:3000/products/${productId}`
         : "http://localhost:3000/products";
 
-    const method = mode === "edit" ? "PUT" : "POST";
+    const method = mode === "edit" ? "PUT" : "POST"; // Método de la petición
 
-    console.log(formData.get("product-name"));
+    const body = formData.entries().reduce((acc, [key, value]) => {
+      acc[key] = value;
+      return acc;
+    }, {});
 
     try {
       // Enviar al backend el form data
       const response = await fetch(url, {
         method,
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       });
 
       const result = await response.json();
 
       if (result.success) {
+        // Si estamos en modo "editar", actualizamos la imagen
+        if (formData.get("product-image").size) {
+          // Enviar la imagen por separado si se cambió
+          const responseImage = await fetch(
+            `http://localhost:3000/products/${result.data.id}/image`,
+            {
+              method: "POST", //Se podria poner:POST
+              body: formData,
+            }
+          );
+
+          const resultImage = await responseImage.json();
+          result.data.image = resultImage.data.image;
+        }
+
         // Mensaje exitoso
         alert(
           mode === "edit"
