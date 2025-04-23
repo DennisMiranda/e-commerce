@@ -1,0 +1,22 @@
+---
+// VideoHero.astro
+import VideoPlayer from "./VideoPlayer.astro";
+const { videoSrc, heading, subheading, buttonText, buttonLink } = Astro.props;
+---
+
+<section class="relative w-full h-screen overflow-hidden">
+  <VideoPlayer src={videoSrc} />
+
+  <div
+    class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4"
+  >
+    <h1 class="text-4xl md:text-6xl font-bold max-w-xl">{heading}</h1>
+    <p class="text-lg mt-4">{subheading}</p>
+    <a
+      href={buttonLink}
+      class="mt-6 px-9 py-5 bg-white text-black font-bold text-lg  hover:bg-gray-300 transition"
+    >
+      {buttonText}
+    </a>
+  </div>
+</section>
