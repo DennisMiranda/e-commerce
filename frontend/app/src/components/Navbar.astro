@@ -2,6 +2,7 @@
 // Navbar.astro
 
 import { Icon } from "astro-icon/components";
+import ModalForm from "./ModalForm.astro";
 ---
 
 <!-- Banner promocional -->
@@ -15,7 +16,7 @@ import { Icon } from "astro-icon/components";
 
 <!-- Header principal -->
 <header class="bg-white py-4 px-4 md:px-8 border-b">
-  <!-- Búsqeda, nombre y botones principal -->
+  <!-- Búsqueda, nombre y botones principal -->
   <div class="mx-auto flex items-center justify-between">
     <!-- Búsqueda (izquierda) -->
     <div
@@ -41,7 +42,7 @@ import { Icon } from "astro-icon/components";
 
     <!-- Cuenta y carrito (derecha) -->
     <div class="w-1/3 flex justify-end gap-4">
-      <button class="p-2 focus:outline-none cursor-pointer">
+      <button id="login-button" class="p-2 focus:outline-none cursor-pointer">
         <Icon name="user" size={35} />
       </button>
       <div class="relative">
@@ -84,6 +85,8 @@ import { Icon } from "astro-icon/components";
       </div>
     </div>
   </div>
+
+  <ModalForm />
 
   <script type="module">
     const menuConfig = [
