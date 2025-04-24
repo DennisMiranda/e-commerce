@@ -2,42 +2,42 @@
 // Navbar.astro
 
 import { Icon } from "astro-icon/components";
+import ModalForm from "./ModalForm.astro";
 ---
 
-<!-- Banner promocional --><!-- Banner promocional -->
-<div class="bg-black text-white py-4 overflow-hidden">
-    <div class="flex justify-center items-center">
-        <a
-            href="#"
-            class="group relative inline-block text-xs font-medium tracking-wider text-white"
-        >
-            <span
-                class="block text-center bg-[length:0%_2px] bg-left-bottom bg-gradient-to-r from-white to-white bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-300"
-            >
-                ¡DISFRUTA UN 20% DE DESCUENTO CON EL CÓDIGO EARTHDAY!
-            </span>
-        </a>
-    </div>
+<!-- Banner promocional -->
+<div class="bg-black text-white py-2 overflow-hidden">
+  <div class="flex justify-center items-center">
+    <p class="text-center text-sm font-medium tracking-wider">
+      ENJOY 20% OFF SITEWIDE WITH CODE EARTHDAY!
+    </p>
+  </div>
 </div>
 
 <!-- Header principal -->
-<header class="bg-white py-4 px-4 md:px-8">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-        <!-- Búsqueda (izquierda) -->
-        <div class="w-1/3 flex justify-start">
-            <button class="p-2 focus:outline-none">
-                <Icon name="busqueda" size={30} />
-            </button>
-        </div>
+<header class="bg-white py-4 px-4 md:px-8 border-b">
+  <!-- Búsqueda, nombre y botones principal -->
+  <div class="mx-auto flex items-center justify-between">
+    <!-- Búsqueda (izquierda) -->
+    <div
+      class="w-1/3 flex items-center justify-end rounded-full border border-border-primary relative"
+    >
+      <input
+        type="text"
+        placeholder="Buscar"
+        class="flex-grow w-full focus:outline-none text-text-secondary placeholder-gray-700 p-2 pl-2"
+      />
+      <Icon name="busqueda" class="absolute mr-2 w-10 text-2xl" />
+    </div>
 
-        <!-- Logo (centro) -->
-        <div class="w-1/3 flex justify-center">
-            <a href="/" class="mented-logo text-5xl md:text-6xl">Aroma</a>
-        </div>
+    <!-- Logo (centro) -->
+    <div class="w-1/3 flex justify-center">
+      <a href="/" class="mented-logo text-5xl md:text-6xl">Aroma</a>
+    </div>
 
     <!-- Cuenta y carrito (derecha) -->
     <div class="w-1/3 flex justify-end gap-4">
-      <button class="p-2 focus:outline-none cursor-pointer">
+      <button id="login-button" class="p-2 focus:outline-none cursor-pointer">
         <Icon name="user" size={35} />
       </button>
       <div class="relative">
@@ -49,21 +49,18 @@ import { Icon } from "astro-icon/components";
     </div>
   </div>
 
-<!-- Navbar -->
-<div class="max-w-6xl mx-auto bg-white">
+  <!-- Navbar -->
+  <div class="max-w-6xl mx-auto bg-white">
     <!-- Contenedor principal -->
     <div class="relative" id="navbar-container">
-        <!-- Botón de hamburguesa (visible solo en móvil) -->
-        <div class="md:hidden flex justify-between items-center p-4">
-            <button
-                id="hamburger-button"
-                class="hamburger-icon focus:outline-none"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+      <!-- Botón de hamburguesa (visible solo en móvil) -->
+      <div class="md:hidden flex justify-between items-center p-4">
+        <button id="hamburger-button" class="hamburger-icon focus:outline-none">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
 
       <!-- Menú móvil (visible solo en móvil) -->
       <div id="mobile-menu" class="mobile-menu md:hidden">
@@ -83,74 +80,76 @@ import { Icon } from "astro-icon/components";
     </div>
   </div>
 
+  <ModalForm />
+
   <script type="module">
     const menuConfig = [
-        {
-            id: "skincare",
-            title: "Skincare",
-            items: [
-                "Face",
-                "Lip",
-                "Cheek",
-                "Eyes",
-                "Brushes",
-                "Sets",
-                "Bestsellers",
-                "New Arrivals",
-                "Sale Items",
-                "Gift Cards",
-            ],
-        },
+      {
+        id: "skincare",
+        title: "Skincare",
+        items: [
+          "Face",
+          "Lip",
+          "Cheek",
+          "Eyes",
+          "Brushes",
+          "Sets",
+          "Bestsellers",
+          "New Arrivals",
+          "Sale Items",
+          "Gift Cards",
+        ],
+      },
 
-        {
-            id: "maquillaje",
-            title: "Maquillaje",
-            items: [
-                "Perfumes",
-                "Eau de Toilette",
-                "Eau de Parfum",
-                "Colonias",
-                "Para Hombre",
-                "Para Mujer",
-                "Unisex",
-                "Sets de Regalo",
-                "Novedades",
-                "Ofertas",
-            ],
-        },
+      {
+        id: "maquillaje",
+        title: "Maquillaje",
+        items: [
+          "Perfumes",
+          "Eau de Toilette",
+          "Eau de Parfum",
+          "Colonias",
+          "Para Hombre",
+          "Para Mujer",
+          "Unisex",
+          "Sets de Regalo",
+          "Novedades",
+          "Ofertas",
+        ],
+      },
 
-        {
-            id: "cuidado-personal",
-            title: "Cuidado Personal",
-            items: [
-                "Maquillaje",
-                "Cremas",
-                "Mascarillas",
-                "Tónicos",
-                "Serums",
-                "Protector Solar",
-                "Desmaquillantes",
-                "Contorno de Ojos",
-                "Labiales",
-                "Bases",
-            ],
-        },
-        {
-            id: "accesorios",
-            title: "Accesorios",
-            items: [
-                "Esponjas",
-                "Brochas",
-                "Espejos",
-                "Neceseres",
-                "Pinzas",
-                "Aplicadores",
-                "Organizadores",
-                "Toallas",
-                "Bandas",
-                "Herramientas",
-            ],
-        },
+      {
+        id: "cuidado-personal",
+        title: "Cuidado Personal",
+        items: [
+          "Maquillaje",
+          "Cremas",
+          "Mascarillas",
+          "Tónicos",
+          "Serums",
+          "Protector Solar",
+          "Desmaquillantes",
+          "Contorno de Ojos",
+          "Labiales",
+          "Bases",
+        ],
+      },
+      {
+        id: "accesorios",
+        title: "Accesorios",
+        items: [
+          "Esponjas",
+          "Brochas",
+          "Espejos",
+          "Neceseres",
+          "Pinzas",
+          "Aplicadores",
+          "Organizadores",
+          "Toallas",
+          "Bandas",
+          "Herramientas",
+        ],
+      },
     ];
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -177,11 +176,11 @@ import { Icon } from "astro-icon/components";
           listItem.appendChild(button);
           desktopButtonsList.appendChild(listItem);
 
-                // Crear menú de escritorio
-                const menuElement = document.createElement("div");
-                menuElement.id = `${menu.id}-menu`;
-                menuElement.className =
-                    "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10  border border-gray-300 max-w-full overflow-x-hidden menu-container";
+          // Crear menú de escritorio
+          const menuElement = document.createElement("div");
+          menuElement.id = `${menu.id}-menu`;
+          menuElement.className =
+            "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10  border border-gray-300 max-w-full overflow-x-hidden menu-container";
 
           // Crear lista de elementos del menú
           const menuList = document.createElement("ul");
@@ -211,7 +210,7 @@ import { Icon } from "astro-icon/components";
             "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
           mobileButton.setAttribute(
             "data-mobile-menu",
-            `mobile-${menu.id}-menu`
+            `mobile-${menu.id}-menu`,
           );
           mobileButton.innerHTML = `
                         <span class="font-bold">${menu.title}</span>
@@ -351,7 +350,7 @@ import { Icon } from "astro-icon/components";
 
       // Configurar eventos para el menú móvil
       const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]"
+        "button[data-mobile-menu]",
       );
       const plusIcons = document.querySelectorAll(".plus-icon");
 
@@ -378,10 +377,10 @@ import { Icon } from "astro-icon/components";
       // Evento para ocultar menús de escritorio cuando se hace clic fuera
       document.addEventListener("click", function (event) {
         const isDesktopButton = Array.from(desktopButtons).some((button) =>
-          button.contains(event.target)
+          button.contains(event.target),
         );
         const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
-          menu.contains(event.target)
+          menu.contains(event.target),
         );
 
         if (!isDesktopButton && !isDesktopMenu) {
