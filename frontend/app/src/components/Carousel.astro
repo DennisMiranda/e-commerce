@@ -10,7 +10,7 @@ const images = await Astro.glob('../assets/images/carousel/*.jpg');
     {images.map((image) => (
       <img
         src={image.default.src}
-        class="w-full h-[600px] object-cover flex-shrink-0"
+        class="w-full max-h-[600px] object-cover flex-shrink-0"
         alt="Imagen del carrusel"
         loading="lazy"
       />
