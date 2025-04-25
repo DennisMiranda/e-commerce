@@ -8,14 +8,21 @@ import ModalForm from "./ModalForm.astro";
 <!-- Banner promocional -->
 <div class="bg-black text-white py-2 overflow-hidden">
   <div class="flex justify-center items-center">
-    <p class="text-center text-sm font-medium tracking-wider">
-      ENJOY 20% OFF SITEWIDE WITH CODE EARTHDAY!
-    </p>
+    <a
+      href="#"
+      class="group relative inline-block text-xs font-medium tracking-wider text-white"
+    >
+      <span
+        class="block text-center bg-[length:0%_2px] bg-left-bottom bg-gradient-to-r from-white to-white bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-300"
+      >
+        ¡DISFRUTA UN 20% DE DESCUENTO CON EL CÓDIGO EARTHDAY!
+      </span>
+    </a>
   </div>
 </div>
 
 <!-- Header principal -->
-<header class="bg-white py-4 px-4 md:px-8 border-b">
+<header class="bg-white py-4 px-4 md:px-8">
   <!-- Búsqueda, nombre y botones principal -->
   <div class="mx-auto flex items-center justify-between">
     <!-- Búsqueda (izquierda) -->
@@ -32,12 +39,11 @@ import ModalForm from "./ModalForm.astro";
 
     <!-- Logo (centro) -->
     <div class="w-1/3 flex justify-center">
-      <h1
+      <a
+        href="/"
         class="mented-logo text-3xl md:text-4xl font-light"
-        style="font-family: 'Cal Sans', sans-serif;"
+        style="font-family: 'Cal Sans', sans-serif;">Aroma</a
       >
-        Aroma
-      </h1>
     </div>
 
     <!-- Cuenta y carrito (derecha) -->
@@ -59,8 +65,8 @@ import ModalForm from "./ModalForm.astro";
     <!-- Contenedor principal -->
     <div class="relative" id="navbar-container">
       <!-- Botón de hamburguesa (visible solo en móvil) -->
-      <div class="md:hidden flex justify-between items-center p-4 border-b">
-        <div class="text-xl font-bold">Ecommerce</div>
+      <div class="md:hidden flex justify-between items-center p-4">
+        <!-- <div class="text-xl font-bold">Ecommerce</div> -->
         <button id="hamburger-button" class="hamburger-icon focus:outline-none">
           <span></span>
           <span></span>
@@ -86,13 +92,12 @@ import ModalForm from "./ModalForm.astro";
     </div>
   </div>
 
-  <ModalForm />
 
   <script type="module">
     const menuConfig = [
       {
-        id: "products",
-        title: "products",
+        id: "skincare",
+        title: "Skincare",
         items: [
           "Face",
           "Lip",
@@ -108,8 +113,8 @@ import ModalForm from "./ModalForm.astro";
       },
 
       {
-        id: "fragancias",
-        title: "Fragancias",
+        id: "maquillaje",
+        title: "Maquillaje",
         items: [
           "Perfumes",
           "Eau de Toilette",
@@ -124,8 +129,8 @@ import ModalForm from "./ModalForm.astro";
         ],
       },
       {
-        id: "jabones",
-        title: "Jabones",
+        id: "cuidado-personal",
+        title: "Cuidado Personal",
         items: [
           "Jabones Naturales",
           "Jabones Artesanales",
@@ -140,8 +145,8 @@ import ModalForm from "./ModalForm.astro";
         ],
       },
       {
-        id: "cosmeticos",
-        title: "Cosméticos",
+        id: "accesorios",
+        title: "Accesorios",
         items: [
           "Maquillaje",
           "Cremas",
@@ -153,22 +158,6 @@ import ModalForm from "./ModalForm.astro";
           "Contorno de Ojos",
           "Labiales",
           "Bases",
-        ],
-      },
-      {
-        id: "accesorios",
-        title: "Accesorios",
-        items: [
-          "Esponjas",
-          "Brochas",
-          "Espejos",
-          "Neceseres",
-          "Pinzas",
-          "Aplicadores",
-          "Organizadores",
-          "Toallas",
-          "Bandas",
-          "Herramientas",
         ],
       },
     ];
@@ -231,7 +220,7 @@ import ModalForm from "./ModalForm.astro";
             "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
           mobileButton.setAttribute(
             "data-mobile-menu",
-            `mobile-${menu.id}-menu`
+            `mobile-${menu.id}-menu`,
           );
           mobileButton.innerHTML = `
                         <span class="font-bold">${menu.title}</span>
@@ -371,7 +360,7 @@ import ModalForm from "./ModalForm.astro";
 
       // Configurar eventos para el menú móvil
       const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]"
+        "button[data-mobile-menu]",
       );
       const plusIcons = document.querySelectorAll(".plus-icon");
 
@@ -398,10 +387,10 @@ import ModalForm from "./ModalForm.astro";
       // Evento para ocultar menús de escritorio cuando se hace clic fuera
       document.addEventListener("click", function (event) {
         const isDesktopButton = Array.from(desktopButtons).some((button) =>
-          button.contains(event.target)
+          button.contains(event.target),
         );
         const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
-          menu.contains(event.target)
+          menu.contains(event.target),
         );
 
         if (!isDesktopButton && !isDesktopMenu) {
