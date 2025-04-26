@@ -1,27 +1,78 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ProductCard from "../components/ProductCard.astro";
-
+import VideoHero from "../components/VideoHero.astro";
+// import ProductCard from "../components/ProductCard.astro";
 ---
 
 <Layout>
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-hidden"
-  >
-    <ProductCard
-      name="Foundation"
-      image="/images/producto1.webp"
-      price="30.00"
-      link="/product/foundation"
-    />
-    <ProductCard
-      name="Foundation"
-      image="/images/producto1.webp"
-      price="30.00"
-      link="/product/foundation"
-    />
-    <h1 class="text-2xl font-bold mb-4">Contenido de la tienda</h1>
-    
-  </div>
-</Layout>
+  <!-- Banner con efecto de zoom -->
+  <div class="w-full overflow-hidden">
+    <a href="#" class="block">
+      <!-- Imagen para Desktop -->
+      <img
+        src="/images/desktop1.webp"
+        alt="Banner Desktop1"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:block hidden"
+        onload="this.classList.remove('scale-135', 'opacity-0')"
+      />
 
+      <!-- Imagen para Móvil -->
+      <img
+        src="/images/mobile1.webp"
+        alt="Banner Móvil"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:hidden block"
+        onload="this.classList.remove('scale-135', 'opacity-0')"
+      />
+    </a>
+  </div>
+
+  <!-- Hero con video a pantalla completa -->
+  <VideoHero
+    videoSrc="/videos/promocion.mp4"
+    heading="HECHO PARA TODOS LOS TONOS"
+    subheading="MAKEUP ESSENTIALS PARA  TODOS"
+    buttonText="Comprar ahora"
+    buttonLink="./productos"
+  />
+
+  <section class="bg-black text-white py-12 w-full mx-0 my-4">
+    <div
+      class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8"
+    >
+      <!-- Texto -->
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-3xl font-bold mb-4">PRODUCTOS DESTACADOS</h2>
+        <p class="mb-6">
+          "Explora nuestros productos destacados, elegidos por su calidad y
+          preferencia entre nuestros clientes. ¡Tus nuevos favoritos te
+          esperan!"
+        </p>
+        <a
+          href="#"
+          class="inline-block bg-white text-black px-6 py-2 font-semibold"
+          >IR A LA TIENDA</a
+        >
+      </div>
+
+      <!-- Imágenes superpuestas -->
+      <div
+        class="relative w-full md:w-1/2 h-auto flex justify-center items-center"
+      >
+        <div class="relative z-10 translate-x-4 translate-y-4 -mr-8">
+          <img
+            src="/images/imagen1.webp"
+            alt="Imagen 1"
+            class="w-48 sm:w-64 md:w-72"
+          />
+        </div>
+        <div class="relative z-0">
+          <img
+            src="/images/imagen2.webp"
+            alt="Imagen 2"
+            class="w-48 sm:w-64 md:w-72"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

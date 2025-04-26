@@ -1,0 +1,264 @@
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: auto;
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 425px;
+    width: 90%;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .collapsible-content.open {
+    max-height: 500px;
+  }
+
+  .rotate-icon {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
+</style>
+<!-- Login Modal -->
+<div id="login-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="text-xl font-bold mb-2">Ingresa a tu cuenta</h2>
+    <p class="text-gray-600 mb-4">
+      Ingresa tus datos para acceder a tu cuenta.
+    </p>
+
+    <!-- Login Form -->
+    <form id="login-form" class="space-y-4">
+      <div>
+        <label
+          for="login-email"
+          class="block text-sm font-medium text-gray-700 mb-1">Correo</label
+        >
+        <input
+          id="login-email"
+          type="email"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <div>
+        <label
+          for="login-password"
+          class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label
+        >
+        <input
+          id="login-password"
+          type="password"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-black text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
+      >
+        Ingresar
+      </button>
+    </form>
+    <div class="text-center text-sm mt-2">
+      ¿Aún no tienes cuenta?
+      <button id="register-link" class="text-blue-600 hover:underline"
+        >Registrate</button
+      >
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div id="register-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="text-xl font-bold mb-2">Crea una cuenta</h2>
+    <p class="text-gray-600 mb-4">Ingresa tus datos para crear una cuenta.</p>
+
+    <!-- Register Form -->
+    <form id="register-form" class="space-y-4">
+      <div>
+        <label
+          for="register-name"
+          class="block text-sm font-medium text-gray-700 mb-1">Nombre</label
+        >
+        <input
+          id="register-name"
+          type="text"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <div>
+        <label
+          for="register-lastname"
+          class="block text-sm font-medium text-gray-700 mb-1">Apellido</label
+        >
+        <input
+          id="register-lastname"
+          type="text"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <div>
+        <label
+          for="register-email"
+          class="block text-sm font-medium text-gray-700 mb-1">Correo</label
+        >
+        <input
+          id="register-email"
+          type="email"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <div>
+        <label
+          for="register-password"
+          class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label
+        >
+        <input
+          id="register-password"
+          type="password"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-black text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
+      >
+        Registrar
+      </button>
+    </form>
+    <div class="text-center text-sm mt-2">
+      ¿Tienes una cuenta?
+      <button id="login-link" class="text-blue-600 hover:underline"
+        >Ingresa</button
+      >
+    </div>
+  </div>
+</div>
+<script>
+  // Modal functionality
+  const loginButton = document.getElementById("login-button");
+  const loginModal = document.getElementById("login-modal");
+  const registerModal = document.getElementById("register-modal");
+  const registerLink = document.getElementById("register-link");
+  const loginLink = document.getElementById("login-link");
+  const closeButtons = document.querySelectorAll(".close");
+
+  // Open login modal
+  loginButton.addEventListener("click", function () {
+    loginModal.style.display = "block";
+  });
+
+  // Switch to register modal
+  registerLink.addEventListener("click", function () {
+    loginModal.style.display = "none";
+    registerModal.style.display = "block";
+  });
+
+  // Switch to login modal
+  loginLink.addEventListener("click", function () {
+    registerModal.style.display = "none";
+    loginModal.style.display = "block";
+  });
+
+  // Close modals with X button
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      loginModal.style.display = "none";
+      registerModal.style.display = "none";
+    });
+  });
+
+  // Close modals when clicking outside
+  window.addEventListener("click", function (event) {
+    if (event.target === loginModal) {
+      loginModal.style.display = "none";
+    }
+    if (event.target === registerModal) {
+      registerModal.style.display = "none";
+    }
+  });
+
+  //---------------------------
+  //LOGIN FUNCTION//
+  const formLogin = document.getElementById("login-form") as HTMLFormElement;
+
+  if (formLogin) {
+    formLogin.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = (document.getElementById("login-email") as HTMLInputElement)
+        .value;
+      const password = (
+        document.getElementById("login-password") as HTMLInputElement
+      ).value;
+
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        credentials: "include", // IMPORTANTE: permite cookies cross-origin
+        headers: { "content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.token) {
+        // Guardar el token en el session storage
+        window.sessionStorage.setItem("token", data.token);
+        // Guardar el usuario en el localStorage
+        window.localStorage.setItem("user", JSON.stringify(data.user));
+
+        alert("Bienvenido!");
+        window.location.href = "/";
+      } else {
+        alert(data.error || "Error al iniciar sesion");
+      }
+    });
+  }
+
+  //---------------------------
+  //REGISTER FUNCTION//
+  const formRegister = document.getElementById("register-form");
+  formRegister.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("register-name").value;
+    const lastname = document.getElementById("register-lastname").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+
+    const res = await fetch("http://localhost:3000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, lastname, email, password }),
+    });
+    const data = await res.json();
+    alert(data.message || data.error);
+  });
+</script>

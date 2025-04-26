@@ -1,0 +1,243 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Checkout Form</title>
+    </head>
+    <body class="bg-gray-50 p-6">
+        <div class="w-1/3 flex justify-center">
+            <a
+                href="/"
+                class="mented-logo text-3xl md:text-4xl font-bold"
+                style="font-family: 'Cal Sans', sans-serif;">Aroma</a
+            >
+        </div>
+        <form
+            id="checkout-form"
+            class="max-w-2xl mx-auto space-y-8 bg-white p-8 rounded shadow"
+        >
+            <!-- Contact -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Contact</h2>
+                    <a href="#" class="text-blue-600 text-sm">Log in</a>
+                </div>
+                <input
+                    type="text"
+                    placeholder="Email or mobile phone number"
+                    class="w-full border p-2 rounded"
+                />
+                <div class="flex items-start space-x-2">
+                    <input type="checkbox" id="email-news" class="mt-1" />
+                    <label for="email-news" class="text-sm"
+                        >Email me with news and offers</label
+                    >
+                </div>
+            </div>
+
+            <!-- Delivery -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-semibold">Delivery</h2>
+                <select class="w-full border p-2 rounded">
+                    <option selected>Country/Region</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="MX">Mexico</option>
+                </select>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                        type="text"
+                        placeholder="First name"
+                        class="border p-2 rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Last name"
+                        class="border p-2 rounded"
+                    />
+                </div>
+                <input
+                    type="text"
+                    placeholder="Company (optional)"
+                    class="border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Address"
+                    class="border p-2 rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Apartment, suite, etc. (optional)"
+                    class="border p-2 rounded"
+                />
+                <div class="grid grid-cols-3 gap-4">
+                    <input
+                        type="text"
+                        placeholder="City"
+                        class="border p-2 rounded"
+                    />
+                    <select class="border p-2 rounded">
+                        <option selected>State</option>
+                        <option value="CA">California</option>
+                        <option value="NY">New York</option>
+                        <option value="TX">Texas</option>
+                    </select>
+                    <input
+                        type="text"
+                        placeholder="ZIP code"
+                        class="border p-2 rounded"
+                    />
+                </div>
+                <input
+                    type="tel"
+                    placeholder="Phone"
+                    class="border p-2 rounded"
+                />
+                <div class="flex items-start space-x-2">
+                    <input type="checkbox" id="text-news" class="mt-1" />
+                    <label for="text-news" class="text-sm"
+                        >Text me with news and offers</label
+                    >
+                </div>
+                <input
+                    type="tel"
+                    placeholder="Mobile phone number"
+                    class="border p-2 rounded"
+                />
+                <p class="text-xs text-gray-500">
+                    By signing up via text... <a href="#" class="underline"
+                        >Privacy policy</a
+                    > and
+                    <a href="#" class="underline">Terms of service</a>.
+                </p>
+            </div>
+
+            <!-- Shipping -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-semibold">Shipping method</h2>
+                <p class="text-gray-600 text-sm">
+                    Enter your shipping address to view available shipping
+                    methods.
+                </p>
+            </div>
+
+            <!-- Payment -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-semibold">Payment</h2>
+                <p class="text-sm text-gray-600">
+                    All transactions are secure and encrypted.
+                </p>
+
+                <div class="space-y-4">
+                    <label
+                        class="flex items-center space-x-2 border rounded p-4"
+                    >
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="credit-card"
+                            checked
+                        />
+                        <span>Credit Card</span>
+                    </label>
+                    <div class="space-y-4 ml-6">
+                        <input
+                            type="text"
+                            placeholder="Card number"
+                            class="border p-2 rounded w-full"
+                        />
+                        <div class="grid grid-cols-2 gap-4">
+                            <input
+                                type="text"
+                                placeholder="Expiration date (MM/YY)"
+                                class="border p-2 rounded"
+                            />
+                            <input
+                                type="text"
+                                placeholder="Security code"
+                                class="border p-2 rounded"
+                            />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Name on card"
+                            class="border p-2 rounded w-full"
+                        />
+                        <div class="flex items-start space-x-2">
+                            <input type="checkbox" id="billing-same" checked />
+                            <label for="billing-same" class="text-sm"
+                                >Use shipping address as billing address</label
+                            >
+                        </div>
+                    </div>
+
+                    <label
+                        class="flex items-center space-x-2 border rounded p-4"
+                    >
+                        <input type="radio" name="payment" value="paypal" />
+                        <span>PayPal</span>
+                    </label>
+
+                    <label
+                        class="flex items-center space-x-2 border rounded p-4"
+                    >
+                        <input type="radio" name="payment" value="shop-pay" />
+                        <span
+                            ><strong class="text-purple-600">Shop</strong><span
+                                class="text-purple-600">Pay</span
+                            ></span
+                        >
+                    </label>
+
+                    <label
+                        class="flex items-center space-x-2 border rounded p-4"
+                    >
+                        <input type="radio" name="payment" value="afterpay" />
+                        <span>Afterpay</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Remember me -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-semibold">Remember me</h2>
+                <div class="border rounded p-4 space-y-4">
+                    <div class="flex items-start space-x-2">
+                        <input type="checkbox" id="save-info" />
+                        <label for="save-info" class="text-sm"
+                            >Save my information for a faster checkout</label
+                        >
+                    </div>
+                    <input
+                        type="tel"
+                        placeholder="Mobile phone number"
+                        class="border p-2 rounded w-full"
+                    />
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+                >Pay Now</button
+            >
+        </form>
+
+        <script type="module">
+            document.addEventListener("DOMContentLoaded", () => {
+                const form = document.getElementById("checkout-form");
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    alert("Payment processing would happen here");
+                });
+            });
+        </script>
+    </body>
+</html>

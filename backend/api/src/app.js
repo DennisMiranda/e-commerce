@@ -7,10 +7,16 @@ import { checkToken } from "./midleware/auth.midleware.js";
 
 const app = express();
 const port = 3000;
-
+const allowedOrigins = ["http://localhost:4321", "http://localhost:4322"];
 app.use(
   cors({
-    origin: "http://localhost:4322",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, origin); // Permitir el origen
+      } else {
+        callback(new Error("No permitido por CORS")); // Bloquear el origen
+      }
+    },
     credentials: true, //  permite cookies
   })
 );
