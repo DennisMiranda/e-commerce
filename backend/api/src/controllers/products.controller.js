@@ -22,32 +22,45 @@ class ProductsController {
   }
 
   /**
-   * Busca productos por id o por nombre
+   * Busca productos por id o por nombre //Actualizado Permite combinar múltiples filtros (id, name, status)
    */
   async searchProducts({ id, name, status }) {
-    let query = `SELECT p.id, p.name, p.description, p.status, p.price, p.stock, p.image, p.categories_id,
-                c.name as category, b.name as brand
-                FROM products AS p
-                INNER JOIN categories AS c ON p.categories_id = c.id
-                INNER JOIN brands AS b ON p.brands_id = b.id
-                `;
+    let query = `
+      SELECT p.id, p.name, p.description, p.status, p.price, p.stock, p.image, p.categories_id,
+             c.name as category, b.name as brand
+      FROM products AS p
+      INNER JOIN categories AS c ON p.categories_id = c.id
+      INNER JOIN brands AS b ON p.brands_id = b.id
+      WHERE 1=1
+    `;
+
+    const request = this.dbConnection.request();
+
     if (id) {
-      query += ` WHERE p.id = ${id}`;
-    } else if (name) {
-      const sanitizedSearch = name.replace(/'/g, "''");
-      query += ` WHERE (p.id LIKE '%${sanitizedSearch}%'
-                OR p.name LIKE '%${sanitizedSearch}%'
-                OR p.description LIKE '%${sanitizedSearch}%'
-                OR c.name LIKE '%${sanitizedSearch}%'
-                OR b.name LIKE '%${sanitizedSearch}%')`;
+      query += ` AND p.id = @id`;
+      request.input('id', id);
+    }
+
+    if (name) {
+      query += ` AND (
+        p.name LIKE '%' + @name + '%'
+        OR p.description LIKE '%' + @name + '%'
+        OR c.name LIKE '%' + @name + '%'
+        OR b.name LIKE '%' + @name + '%'
+      )`;
+      request.input('name', name);
     }
 
     if (status !== undefined) {
-      query += ` AND p.status = ${status}`;
+      query += ` AND p.status = @status`;
+      request.input('status', status);
     }
-    const result = await this.dbConnection.request().query(query);
+
+    const result = await request.query(query);
     return result.recordset;
   }
+
+
 
   /**
    * Transforma los datos del formulario a un objeto product.
