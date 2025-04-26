@@ -5,7 +5,7 @@ import ProductCard from "../components/ProductCard.astro";
 
 const url = new URL(Astro.request.url);
 const params = url.searchParams;
-const q = params.get("q");
+const q = params.get("q") || "";
 
 const res = await fetch(`http://localhost:3000/app/products?search=${q}`);
 const products = await res.json();
