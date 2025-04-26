@@ -49,7 +49,10 @@ import ModalForm from "./ModalForm.astro";
 
     <!-- Cuenta y carrito -->
     <div class="w-1/3 flex justify-end gap-4">
-      <button id="login-button" class="p-2 focus:outline-none cursor-pointer">
+      <button
+        id="login-button"
+        class="p-2 focus:outline-none cursor-pointer hidden md:block"
+      >
         <Icon name="user" size={35} />
       </button>
       <div class="relative">
@@ -222,7 +225,7 @@ import ModalForm from "./ModalForm.astro";
             "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
           mobileButton.setAttribute(
             "data-mobile-menu",
-            `mobile-${menu.id}-menu`
+            `mobile-${menu.id}-menu`,
           );
           mobileButton.innerHTML = `
                         <span class="font-bold">${menu.title}</span>
@@ -362,7 +365,7 @@ import ModalForm from "./ModalForm.astro";
 
       // Configurar eventos para el menú móvil
       const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]"
+        "button[data-mobile-menu]",
       );
       const plusIcons = document.querySelectorAll(".plus-icon");
 
@@ -389,10 +392,10 @@ import ModalForm from "./ModalForm.astro";
       // Evento para ocultar menús de escritorio cuando se hace clic fuera
       document.addEventListener("click", function (event) {
         const isDesktopButton = Array.from(desktopButtons).some((button) =>
-          button.contains(event.target)
+          button.contains(event.target),
         );
         const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
-          menu.contains(event.target)
+          menu.contains(event.target),
         );
 
         if (!isDesktopButton && !isDesktopMenu) {
