@@ -24,7 +24,7 @@ class ProductsController {
   /**
    * Busca productos por id o por nombre
    */
-  async searchProducts({ id, name }) {
+  async searchProducts({ id, name, status }) {
     let query = `SELECT p.id, p.name, p.description, p.status, p.price, p.stock, p.image, p.categories_id,
                 c.name as category, b.name as brand
                 FROM products AS p
@@ -35,13 +35,16 @@ class ProductsController {
       query += ` WHERE p.id = ${id}`;
     } else if (name) {
       const sanitizedSearch = name.replace(/'/g, "''");
-      query += ` WHERE p.id LIKE '%${sanitizedSearch}%'
+      query += ` WHERE (p.id LIKE '%${sanitizedSearch}%'
                 OR p.name LIKE '%${sanitizedSearch}%'
                 OR p.description LIKE '%${sanitizedSearch}%'
                 OR c.name LIKE '%${sanitizedSearch}%'
-                OR b.name LIKE '%${sanitizedSearch}%'`;
+                OR b.name LIKE '%${sanitizedSearch}%')`;
     }
 
+    if (status !== undefined) {
+      query += ` AND p.status = ${status}`;
+    }
     const result = await this.dbConnection.request().query(query);
     return result.recordset;
   }
@@ -74,6 +77,18 @@ class ProductsController {
       const { search } = req.query;
 
       const productos = await this.searchProducts({ name: search });
+      res.send(productos);
+    } catch (error) {
+      console.error("Error al obtener productos:", error);
+      res.status(500).json({ error: "Error al obtener productos" });
+    }
+  };
+
+  getProductsApp = async (req, res) => {
+    try {
+      const { search } = req.query;
+
+      const productos = await this.searchProducts({ name: search, status: 1 });
       res.send(productos);
     } catch (error) {
       console.error("Error al obtener productos:", error);

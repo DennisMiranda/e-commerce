@@ -11,6 +11,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 // GET: Obtener productos con búsqueda opcional
 router.get("/products", productController.getProducts);
 
+// GET: Obtener producto para Ecommerce App
+router.get("/app/products", productController.getProductsApp);
+
 // POST: agregar producto sin imagen, ya que la imagen la agregaremos en otro endpoint
 router.post("/products", productController.createProduct);
 
