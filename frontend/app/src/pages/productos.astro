@@ -11,11 +11,8 @@ let products = [];
 
 try {
   const res = await fetch(`http://localhost:3000/app/products?search=${q}`);
-  if (res.ok) {
-    products = await res.json();
-  } else {
-    console.error("Error al obtener productos:", res.statusText);
-  }
+  const { data } = await res.json();
+  products = data;
 } catch (error) {
   console.error("Error al cargar productos:", error);
 }
