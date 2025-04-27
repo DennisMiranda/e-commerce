@@ -15,7 +15,7 @@ import ModalForm from "./ModalForm.astro";
       <span
         class="block text-center bg-[length:0%_2px] bg-left-bottom bg-gradient-to-r from-white to-white bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-300"
       >
-        ¡DISFRUTA UN 20% DE DESCUENTO CON EL CÓDIGO EARTHDAY!
+        ¡DISFRUTA UN 20% DE DESCUENTO CON EL CÓDIGO 11MAY!
       </span>
     </a>
   </div>
@@ -25,9 +25,9 @@ import ModalForm from "./ModalForm.astro";
 <header class="bg-white pt-4 px-4 md:px-8">
   <!-- Búsqueda, nombre y botones principal -->
   <div class="mx-auto flex items-center justify-between">
-    <!-- Búsqueda (izquierda) -->
+    <!-- Búsqueda desktop -->
     <div
-      class="w-1/3 flex items-center justify-end rounded-full border border-border-primary relative"
+      class="w-1/3 hidden md:flex items-center justify-end rounded-full border border-border-primary relative"
     >
       <input
         id="search-input"
@@ -39,7 +39,7 @@ import ModalForm from "./ModalForm.astro";
     </div>
 
     <!-- Logo (centro) -->
-    <div class="w-1/3 flex justify-center">
+    <div class="w-1/3 flex md:justify-center">
       <a
         href="/"
         class="mented-logo text-3xl md:text-4xl font-light"
@@ -49,6 +49,13 @@ import ModalForm from "./ModalForm.astro";
 
     <!-- Cuenta y carrito -->
     <div class="w-1/3 flex justify-end gap-4">
+      <!-- Búsqueda iconos mobile -->
+      <button
+        id="mobile-search-btn"
+        class="md:hidden block p-2 focus:outline-none cursor-pointer"
+      >
+        <Icon name="busqueda" size={30} />
+      </button>
       <button
         id="login-button"
         class="p-2 focus:outline-none cursor-pointer hidden md:block"
@@ -95,325 +102,353 @@ import ModalForm from "./ModalForm.astro";
       </div>
     </div>
   </div>
+</header>
+<dialog
+  id="mobile-search-dialog"
+  class="w-full m-auto mt-8 rounded-full p-4 bg-white shadow-lg"
+  closedby="any"
+>
+  <div class="w-full flex">
+    <input
+      id="mobile-search-dialog-input"
+      type="text"
+      placeholder="Buscar"
+      class="flex-grow focus:outline-none text-text-secondary placeholder-gray-700"
+    />
+    <button id="mobile-search-dialog-close" class="text-2xl cursor-pointer">
+      <Icon name="close" />
+    </button>
+  </div>
+</dialog>
 
-  <ModalForm />
+<ModalForm />
 
-  <script type="module">
-    const menuConfig = [
-      {
-        id: "skincare",
-        title: "Skincare",
-        items: [
-          "Face",
-          "Lip",
-          "Cheek",
-          "Eyes",
-          "Brushes",
-          "Sets",
-          "Bestsellers",
-          "New Arrivals",
-          "Sale Items",
-          "Gift Cards",
-        ],
-      },
+<script type="module">
+  const menuConfig = [
+    {
+      id: "skincare",
+      title: "Skincare",
+      items: [
+        "Face",
+        "Lip",
+        "Cheek",
+        "Eyes",
+        "Brushes",
+        "Sets",
+        "Bestsellers",
+        "New Arrivals",
+        "Sale Items",
+        "Gift Cards",
+      ],
+    },
 
-      {
-        id: "maquillaje",
-        title: "Maquillaje",
-        items: [
-          "Perfumes",
-          "Eau de Toilette",
-          "Eau de Parfum",
-          "Colonias",
-          "Para Hombre",
-          "Para Mujer",
-          "Unisex",
-          "Sets de Regalo",
-          "Novedades",
-          "Ofertas",
-        ],
-      },
-      {
-        id: "cuidado-personal",
-        title: "Cuidado Personal",
-        items: [
-          "Jabones Naturales",
-          "Jabones Artesanales",
-          "Jabones Líquidos",
-          "Jabones en Barra",
-          "Exfoliantes",
-          "Antibacteriales",
-          "Hidratantes",
-          "Para Pieles Sensibles",
-          "Orgánicos",
-          "Veganos",
-        ],
-      },
-      {
-        id: "accesorios",
-        title: "Accesorios",
-        items: [
-          "Maquillaje",
-          "Cremas",
-          "Mascarillas",
-          "Tónicos",
-          "Serums",
-          "Protector Solar",
-          "Desmaquillantes",
-          "Contorno de Ojos",
-          "Labiales",
-          "Bases",
-        ],
-      },
-    ];
+    {
+      id: "maquillaje",
+      title: "Maquillaje",
+      items: [
+        "Perfumes",
+        "Eau de Toilette",
+        "Eau de Parfum",
+        "Colonias",
+        "Para Hombre",
+        "Para Mujer",
+        "Unisex",
+        "Sets de Regalo",
+        "Novedades",
+        "Ofertas",
+      ],
+    },
+    {
+      id: "cuidado-personal",
+      title: "Cuidado Personal",
+      items: [
+        "Jabones Naturales",
+        "Jabones Artesanales",
+        "Jabones Líquidos",
+        "Jabones en Barra",
+        "Exfoliantes",
+        "Antibacteriales",
+        "Hidratantes",
+        "Para Pieles Sensibles",
+        "Orgánicos",
+        "Veganos",
+      ],
+    },
+    {
+      id: "accesorios",
+      title: "Accesorios",
+      items: [
+        "Maquillaje",
+        "Cremas",
+        "Mascarillas",
+        "Tónicos",
+        "Serums",
+        "Protector Solar",
+        "Desmaquillantes",
+        "Contorno de Ojos",
+        "Labiales",
+        "Bases",
+      ],
+    },
+  ];
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const navbarContainer = document.getElementById("navbar-container");
-      const desktopMenu = navbarContainer.querySelector(".md\\:block");
-      const desktopButtonsList = desktopMenu.querySelector("ul");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const mobileMenuContent = mobileMenu.querySelector(".p-4");
-      const hamburgerButton = document.getElementById("hamburger-button");
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbarContainer = document.getElementById("navbar-container");
+    const desktopMenu = navbarContainer.querySelector(".md\\:block");
+    const desktopButtonsList = desktopMenu.querySelector("ul");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const mobileMenuContent = mobileMenu.querySelector(".p-4");
+    const hamburgerButton = document.getElementById("hamburger-button");
 
-      // Función para generar menús de escritorio
-      function generateDesktopMenus() {
-        menuConfig.forEach((menu) => {
-          // Crear botón de escritorio
-          const listItem = document.createElement("li");
-          const button = document.createElement("button");
-          button.className =
-            "text-lg font-bold cursor-pointer hover:text-gray-500 transition-colors flex items-center";
-          button.setAttribute("data-menu", `${menu.id}-menu`);
-          button.innerHTML = `
+    // Función para generar menús de escritorio
+    function generateDesktopMenus() {
+      menuConfig.forEach((menu) => {
+        // Crear botón de escritorio
+        const listItem = document.createElement("li");
+        const button = document.createElement("button");
+        button.className =
+          "text-lg font-bold cursor-pointer hover:text-gray-500 transition-colors flex items-center";
+        button.setAttribute("data-menu", `${menu.id}-menu`);
+        button.innerHTML = `
                         ${menu.title}
                         <span class="arrow-icon ml-1">▽</span>
                     `;
-          listItem.appendChild(button);
-          desktopButtonsList.appendChild(listItem);
+        listItem.appendChild(button);
+        desktopButtonsList.appendChild(listItem);
 
-          // Crear menú de escritorio
-          const menuElement = document.createElement("div");
-          menuElement.id = `${menu.id}-menu`;
-          menuElement.className =
-            "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
+        // Crear menú de escritorio
+        const menuElement = document.createElement("div");
+        menuElement.id = `${menu.id}-menu`;
+        menuElement.className =
+          "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
 
-          // Crear lista de elementos del menú
-          const menuList = document.createElement("ul");
-          menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8";
+        // Crear lista de elementos del menú
+        const menuList = document.createElement("ul");
+        menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8";
 
-          menu.items.forEach((item) => {
-            const menuItem = document.createElement("li");
-            menuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
-            menuList.appendChild(menuItem);
-          });
-
-          menuElement.appendChild(menuList);
-          desktopMenu.appendChild(menuElement);
+        menu.items.forEach((item) => {
+          const menuItem = document.createElement("li");
+          menuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+          menuList.appendChild(menuItem);
         });
-      }
 
-      // Función para generar menús móviles
-      function generateMobileMenus() {
-        menuConfig.forEach((menu) => {
-          // Crear contenedor para cada categoría móvil
-          const mobileCategory = document.createElement("div");
-          mobileCategory.className = "border-b border-gray-200 py-2";
+        menuElement.appendChild(menuList);
+        desktopMenu.appendChild(menuElement);
+      });
+    }
 
-          // Crear botón móvil con signo +
-          const mobileButton = document.createElement("button");
-          mobileButton.className =
-            "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
-          mobileButton.setAttribute(
-            "data-mobile-menu",
-            `mobile-${menu.id}-menu`
-          );
-          mobileButton.innerHTML = `
+    // Función para generar menús móviles
+    function generateMobileMenus() {
+      menuConfig.forEach((menu) => {
+        // Crear contenedor para cada categoría móvil
+        const mobileCategory = document.createElement("div");
+        mobileCategory.className = "border-b border-gray-200 py-2";
+
+        // Crear botón móvil con signo +
+        const mobileButton = document.createElement("button");
+        mobileButton.className =
+          "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
+        mobileButton.setAttribute("data-mobile-menu", `mobile-${menu.id}-menu`);
+        mobileButton.innerHTML = `
                         <span class="font-bold">${menu.title}</span>
                         <span class="plus-icon"></span>
                     `;
 
-          // Crear submenú móvil
-          const mobileSubmenu = document.createElement("div");
-          mobileSubmenu.id = `mobile-${menu.id}-menu`;
-          mobileSubmenu.className = "mobile-submenu pl-4";
+        // Crear submenú móvil
+        const mobileSubmenu = document.createElement("div");
+        mobileSubmenu.id = `mobile-${menu.id}-menu`;
+        mobileSubmenu.className = "mobile-submenu pl-4";
 
-          // Crear lista de elementos del submenú
-          const submenuList = document.createElement("ul");
-          submenuList.className = "py-2";
+        // Crear lista de elementos del submenú
+        const submenuList = document.createElement("ul");
+        submenuList.className = "py-2";
 
-          menu.items.forEach((item) => {
-            const submenuItem = document.createElement("li");
-            submenuItem.className = "py-1";
-            submenuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
-            submenuList.appendChild(submenuItem);
-          });
-
-          mobileSubmenu.appendChild(submenuList);
-          mobileCategory.appendChild(mobileButton);
-          mobileCategory.appendChild(mobileSubmenu);
-          mobileMenuContent.appendChild(mobileCategory);
+        menu.items.forEach((item) => {
+          const submenuItem = document.createElement("li");
+          submenuItem.className = "py-1";
+          submenuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+          submenuList.appendChild(submenuItem);
         });
+
+        mobileSubmenu.appendChild(submenuList);
+        mobileCategory.appendChild(mobileButton);
+        mobileCategory.appendChild(mobileSubmenu);
+        mobileMenuContent.appendChild(mobileCategory);
+      });
+    }
+    // Generar menús de escritorio y móvil
+    generateDesktopMenus();
+    generateMobileMenus();
+
+    // Configurar eventos para el menú de escritorio
+    const desktopButtons = document.querySelectorAll("button[data-menu]");
+    const desktopMenus = document.querySelectorAll(".menu-container");
+    const arrowIcons = document.querySelectorAll(".arrow-icon");
+
+    let activeDesktopMenu = null;
+    let activeDesktopButton = null;
+    let isDesktopMenuHovered = false;
+
+    // Función para mostrar un menú de escritorio específico
+    function showDesktopMenu(menuId, buttonElement) {
+      // Ocultar todos los menús primero y resetear iconos
+      desktopMenus.forEach((menu) => {
+        menu.classList.add("hidden");
+      });
+      arrowIcons.forEach((icon) => {
+        icon.classList.remove("open");
+      });
+
+      // Mostrar el menú seleccionado y rotar su icono
+      const targetMenu = document.getElementById(menuId);
+      if (targetMenu) {
+        targetMenu.classList.remove("hidden");
+        activeDesktopMenu = targetMenu;
+
+        // Rotar el icono del botón activo
+        const icon = buttonElement.querySelector(".arrow-icon");
+        if (icon) {
+          icon.classList.add("open");
+        }
       }
-      // Generar menús de escritorio y móvil
-      generateDesktopMenus();
-      generateMobileMenus();
+    }
 
-      // Configurar eventos para el menú de escritorio
-      const desktopButtons = document.querySelectorAll("button[data-menu]");
-      const desktopMenus = document.querySelectorAll(".menu-container");
-      const arrowIcons = document.querySelectorAll(".arrow-icon");
-
-      let activeDesktopMenu = null;
-      let activeDesktopButton = null;
-      let isDesktopMenuHovered = false;
-
-      // Función para mostrar un menú de escritorio específico
-      function showDesktopMenu(menuId, buttonElement) {
-        // Ocultar todos los menús primero y resetear iconos
+    // Función para ocultar todos los menús de escritorio
+    function hideAllDesktopMenus() {
+      if (
+        !isDesktopMenuHovered &&
+        activeDesktopButton !== document.activeElement
+      ) {
         desktopMenus.forEach((menu) => {
           menu.classList.add("hidden");
         });
         arrowIcons.forEach((icon) => {
           icon.classList.remove("open");
         });
-
-        // Mostrar el menú seleccionado y rotar su icono
-        const targetMenu = document.getElementById(menuId);
-        if (targetMenu) {
-          targetMenu.classList.remove("hidden");
-          activeDesktopMenu = targetMenu;
-
-          // Rotar el icono del botón activo
-          const icon = buttonElement.querySelector(".arrow-icon");
-          if (icon) {
-            icon.classList.add("open");
-          }
-        }
+        activeDesktopMenu = null;
       }
+    }
 
-      // Función para ocultar todos los menús de escritorio
-      function hideAllDesktopMenus() {
+    // Agregar eventos a los botones de escritorio
+    desktopButtons.forEach((button) => {
+      // Evento mouseenter (hover)
+      button.addEventListener("mouseenter", function () {
+        const menuId = this.getAttribute("data-menu");
+        showDesktopMenu(menuId, this);
+        activeDesktopButton = this;
+      });
+
+      // Evento focus (para accesibilidad)
+      button.addEventListener("focus", function () {
+        const menuId = this.getAttribute("data-menu");
+        showDesktopMenu(menuId, this);
+        activeDesktopButton = this;
+      });
+
+      // Evento click para dispositivos táctiles
+      button.addEventListener("click", function () {
+        const menuId = this.getAttribute("data-menu");
+
+        // Si el menú ya está visible, ocultarlo
         if (
-          !isDesktopMenuHovered &&
-          activeDesktopButton !== document.activeElement
+          activeDesktopMenu &&
+          activeDesktopMenu.id === menuId &&
+          !activeDesktopMenu.classList.contains("hidden")
         ) {
-          desktopMenus.forEach((menu) => {
-            menu.classList.add("hidden");
-          });
-          arrowIcons.forEach((icon) => {
+          activeDesktopMenu.classList.add("hidden");
+          const icon = this.querySelector(".arrow-icon");
+          if (icon) {
             icon.classList.remove("open");
-          });
+          }
           activeDesktopMenu = null;
-        }
-      }
-
-      // Agregar eventos a los botones de escritorio
-      desktopButtons.forEach((button) => {
-        // Evento mouseenter (hover)
-        button.addEventListener("mouseenter", function () {
-          const menuId = this.getAttribute("data-menu");
+        } else {
+          // Si no, mostrar el menú
           showDesktopMenu(menuId, this);
-          activeDesktopButton = this;
-        });
-
-        // Evento focus (para accesibilidad)
-        button.addEventListener("focus", function () {
-          const menuId = this.getAttribute("data-menu");
-          showDesktopMenu(menuId, this);
-          activeDesktopButton = this;
-        });
-
-        // Evento click para dispositivos táctiles
-        button.addEventListener("click", function () {
-          const menuId = this.getAttribute("data-menu");
-
-          // Si el menú ya está visible, ocultarlo
-          if (
-            activeDesktopMenu &&
-            activeDesktopMenu.id === menuId &&
-            !activeDesktopMenu.classList.contains("hidden")
-          ) {
-            activeDesktopMenu.classList.add("hidden");
-            const icon = this.querySelector(".arrow-icon");
-            if (icon) {
-              icon.classList.remove("open");
-            }
-            activeDesktopMenu = null;
-          } else {
-            // Si no, mostrar el menú
-            showDesktopMenu(menuId, this);
-          }
-        });
-      });
-
-      // Agregar eventos a los menús de escritorio
-      desktopMenus.forEach((menu) => {
-        menu.addEventListener("mouseenter", function () {
-          isDesktopMenuHovered = true;
-        });
-
-        menu.addEventListener("mouseleave", function () {
-          isDesktopMenuHovered = false;
-          setTimeout(hideAllDesktopMenus, 100); // Pequeño retraso para evitar parpadeos
-        });
-      });
-
-      // Evento para ocultar menús cuando el mouse sale del área de navegación
-      desktopMenu.addEventListener("mouseleave", function () {
-        setTimeout(hideAllDesktopMenus, 100);
-      });
-
-      // Configurar eventos para el menú móvil
-      const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]"
-      );
-      const plusIcons = document.querySelectorAll(".plus-icon");
-
-      // Evento para el botón hamburguesa
-      hamburgerButton.addEventListener("click", function () {
-        this.classList.toggle("active");
-        mobileMenu.classList.toggle("open");
-      });
-
-      // Eventos para los botones móviles
-      mobileButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-          const menuId = this.getAttribute("data-mobile-menu");
-          const targetMenu = document.getElementById(menuId);
-          const plusIcon = this.querySelector(".plus-icon");
-
-          if (targetMenu) {
-            targetMenu.classList.toggle("open");
-            plusIcon.classList.toggle("open");
-          }
-        });
-      });
-
-      // Evento para ocultar menús de escritorio cuando se hace clic fuera
-      document.addEventListener("click", function (event) {
-        const isDesktopButton = Array.from(desktopButtons).some((button) =>
-          button.contains(event.target)
-        );
-        const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
-          menu.contains(event.target)
-        );
-
-        if (!isDesktopButton && !isDesktopMenu) {
-          hideAllDesktopMenus();
         }
       });
     });
 
-    // Buscador
-    const searchInput = document.getElementById("search-input");
-    searchInput.addEventListener("keydown", (event) => {
+    // Agregar eventos a los menús de escritorio
+    desktopMenus.forEach((menu) => {
+      menu.addEventListener("mouseenter", function () {
+        isDesktopMenuHovered = true;
+      });
+
+      menu.addEventListener("mouseleave", function () {
+        isDesktopMenuHovered = false;
+        setTimeout(hideAllDesktopMenus, 100); // Pequeño retraso para evitar parpadeos
+      });
+    });
+
+    // Evento para ocultar menús cuando el mouse sale del área de navegación
+    desktopMenu.addEventListener("mouseleave", function () {
+      setTimeout(hideAllDesktopMenus, 100);
+    });
+
+    // Configurar eventos para el menú móvil
+    const mobileButtons = document.querySelectorAll("button[data-mobile-menu]");
+    const plusIcons = document.querySelectorAll(".plus-icon");
+
+    // Evento para el botón hamburguesa
+    hamburgerButton.addEventListener("click", function () {
+      this.classList.toggle("active");
+      mobileMenu.classList.toggle("open");
+    });
+
+    // Eventos para los botones móviles
+    mobileButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const menuId = this.getAttribute("data-mobile-menu");
+        const targetMenu = document.getElementById(menuId);
+        const plusIcon = this.querySelector(".plus-icon");
+
+        if (targetMenu) {
+          targetMenu.classList.toggle("open");
+          plusIcon.classList.toggle("open");
+        }
+      });
+    });
+
+    // Evento para ocultar menús de escritorio cuando se hace clic fuera
+    document.addEventListener("click", function (event) {
+      const isDesktopButton = Array.from(desktopButtons).some((button) =>
+        button.contains(event.target)
+      );
+      const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
+        menu.contains(event.target)
+      );
+
+      if (!isDesktopButton && !isDesktopMenu) {
+        hideAllDesktopMenus();
+      }
+    });
+  });
+
+  // Buscador
+  const searchInput = document.getElementById("search-input");
+  const dialogInput = document.getElementById("mobile-search-dialog-input");
+  [searchInput, dialogInput].forEach((item) => {
+    item.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        const searchTerm = searchInput.value.trim();
+        const searchTerm = event.target.value.trim();
         if (searchTerm) {
           // Redirigir a la página de búsqueda con el término ingresado
           window.location.href = `/productos?q=${encodeURIComponent(searchTerm)}`;
         }
       }
     });
-  </script>
-</header>
+  });
+
+  const mobileSearchBtn = document.getElementById("mobile-search-btn");
+  const mobileSearchDialog = document.getElementById("mobile-search-dialog");
+  mobileSearchBtn.addEventListener("click", () => {
+    mobileSearchDialog.showModal();
+  });
+
+  const mobileSearchDialogClose = document.getElementById(
+    "mobile-search-dialog-close"
+  );
+  mobileSearchDialogClose.addEventListener("click", () => {
+    mobileSearchDialog.close();
+  });
+</script>
