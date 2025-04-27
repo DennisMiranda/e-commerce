@@ -38,7 +38,7 @@ class ProductsController {
 
     if (id) {
       query += ` AND p.id = @id`;
-      request.input('id', id);
+      request.input("id", id);
     }
 
     if (name) {
@@ -48,19 +48,17 @@ class ProductsController {
         OR c.name LIKE '%' + @name + '%'
         OR b.name LIKE '%' + @name + '%'
       )`;
-      request.input('name', name);
+      request.input("name", name);
     }
 
     if (status !== undefined) {
       query += ` AND p.status = @status`;
-      request.input('status', status);
+      request.input("status", status);
     }
 
     const result = await request.query(query);
     return result.recordset;
   }
-
-
 
   /**
    * Transforma los datos del formulario a un objeto product.
@@ -102,7 +100,7 @@ class ProductsController {
       const { search } = req.query;
 
       const productos = await this.searchProducts({ name: search, status: 1 });
-      res.send(productos);
+      res.send({ success: true, data: productos });
     } catch (error) {
       console.error("Error al obtener productos:", error);
       res.status(500).json({ error: "Error al obtener productos" });
