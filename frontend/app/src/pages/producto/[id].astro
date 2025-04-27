@@ -1,0 +1,21 @@
+---
+// Obtener el ID de la URL
+const { id } = Astro.params;
+
+// Hacer fetch al backend para traer los datos del producto
+const response = await fetch(`http://localhost:3000/product/${id}`);
+const product = await response.json();
+---
+
+<html>
+    <head>
+        <title>{product.name}</title>
+    </head>
+    <body class="p-8">
+        <h1 class="text-3xl font-bold mb-4">{product.name}</h1>
+        <p class="mb-2 text-gray-700">{product.description}</p>
+        <p class="mb-2 font-semibold">Precio: ${product.price}</p>
+        <img src={product.image} alt={product.name} class="w-full max-w-md" />
+        <!-- Puedes agregar más campos como stock, categoría, etc. -->
+    </body>
+</html>

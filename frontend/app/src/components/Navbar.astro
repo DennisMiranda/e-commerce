@@ -170,11 +170,16 @@ import ModalForm from "./ModalForm.astro";
     fetch("http://localhost:3000/categories")
       .then((response) => response.json())
       .then((data) => {
-        const menuConfig = data.map((category) => ({
-          id: category.name.toLowerCase().replace(/\s+/g, ""),
-          title: category.name,
-          items: category.products.slice(0, 10).map((product) => product.name),
-        }));
+        const menuConfig = data.map((category) => {
+          return {
+            id: category.name.toLowerCase().replace(/\s+/g, ""),
+            items: category.products.slice(0, 10).map((product) => ({
+              id: product.id, // Asegúrate que el ID del producto está presente
+              name: product.name, // Y también su nombre
+            })),
+            title: category.name,
+          };
+        });
 
         generateDesktopMenus(menuConfig);
         generateMobileMenus(menuConfig);
@@ -200,9 +205,13 @@ import ModalForm from "./ModalForm.astro";
 
         const menuList = document.createElement("ul");
         menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8";
-        menu.items.forEach((item) => {
+        menu.items.forEach((product) => {
           const menuItem = document.createElement("li");
-          menuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+          menuItem.innerHTML = `
+        <a href="/producto/${product.id}" class="block hover:text-blue-600">
+      ${product.name}
+    </a>
+  `;
           menuList.appendChild(menuItem);
         });
 
