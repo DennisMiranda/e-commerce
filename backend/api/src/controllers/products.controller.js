@@ -304,6 +304,25 @@ class ProductsController {
       });
     }
   };
+
+  //Top 6 productos nuevos
+  getTopNewProductsApp = async (req, res) => {
+    try {
+      const productos = await this.dbConnection.request().query(
+        `SELECT TOP 6 p.id, p.name, p.description, p.status, p.price, p.stock, p.image, p.categories_id,
+          c.name as category, b.name as brand
+          FROM products AS p
+          INNER JOIN categories AS c ON p.categories_id = c.id
+          INNER JOIN brands AS b ON p.brands_id = b.id
+          WHERE p.status = 1
+          ORDER BY p.create_date DESC`
+      );
+      res.send(productos.recordset);
+    } catch (error) {
+      console.error("Error al obtener productos:", error);
+      res.status(500).json({ error: "Error al obtener productos" });
+    }
+  };
 }
 
 export default ProductsController;
