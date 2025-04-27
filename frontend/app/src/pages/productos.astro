@@ -7,8 +7,18 @@ const url = new URL(Astro.request.url);
 const params = url.searchParams;
 const q = params.get("q") || "";
 
-const res = await fetch(`http://localhost:3000/app/products?search=${q}`);
-const products = await res.json();
+let products = [];
+
+try {
+  const res = await fetch(`http://localhost:3000/app/products?search=${q}`);
+  if (res.ok) {
+    products = await res.json();
+  } else {
+    console.error("Error al obtener productos:", res.statusText);
+  }
+} catch (error) {
+  console.error("Error al cargar productos:", error);
+}
 ---
 
 <Layout>
