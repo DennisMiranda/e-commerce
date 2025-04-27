@@ -22,7 +22,7 @@ import ModalForm from "./ModalForm.astro";
 </div>
 
 <!-- Header principal -->
-<header class="bg-white py-4 px-4 md:px-8">
+<header class="bg-white pt-4 px-4 md:px-8">
   <!-- Búsqueda, nombre y botones principal -->
   <div class="mx-auto flex items-center justify-between">
     <!-- Búsqueda (izquierda) -->
@@ -65,7 +65,7 @@ import ModalForm from "./ModalForm.astro";
   </div>
 
   <!-- Navbar -->
-  <div class="max-w-6xl mx-auto bg-white shadow-md">
+  <div class="w-full mx-auto bg-white">
     <!-- Contenedor principal -->
     <div class="relative" id="navbar-container">
       <!-- Botón de hamburguesa (visible solo en móvil) -->
@@ -225,7 +225,7 @@ import ModalForm from "./ModalForm.astro";
             "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
           mobileButton.setAttribute(
             "data-mobile-menu",
-            `mobile-${menu.id}-menu`,
+            `mobile-${menu.id}-menu`
           );
           mobileButton.innerHTML = `
                         <span class="font-bold">${menu.title}</span>
@@ -365,7 +365,7 @@ import ModalForm from "./ModalForm.astro";
 
       // Configurar eventos para el menú móvil
       const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]",
+        "button[data-mobile-menu]"
       );
       const plusIcons = document.querySelectorAll(".plus-icon");
 
@@ -392,10 +392,10 @@ import ModalForm from "./ModalForm.astro";
       // Evento para ocultar menús de escritorio cuando se hace clic fuera
       document.addEventListener("click", function (event) {
         const isDesktopButton = Array.from(desktopButtons).some((button) =>
-          button.contains(event.target),
+          button.contains(event.target)
         );
         const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
-          menu.contains(event.target),
+          menu.contains(event.target)
         );
 
         if (!isDesktopButton && !isDesktopMenu) {
