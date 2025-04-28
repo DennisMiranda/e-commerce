@@ -1,0 +1,168 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/global.css";
+
+export async function getStaticPaths() {
+    const response = await fetch("http://localhost:3000/products");
+    const products = await response.json();
+
+    return products.map((product) => ({
+        params: { id: product.id.toString() },
+    }));
+}
+
+const { id } = Astro.params;
+
+let product = null;
+let error = null;
+
+try {
+    const response = await fetch(`http://localhost:3000/products/${id}`);
+    if (!response.ok) {
+        throw new Error("Producto no encontrado");
+    }
+    product = await response.json();
+} catch (err) {
+    error = err.message;
+}
+---
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{product ? product.data.name : "Producto no encontrado"}</title>
+</head>
+
+<Layout>
+    <div class="container mx-auto px-4 py-8">
+        <section class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- Product Image -->
+                <div
+                    class="relative aspect-square bg-white flex items-center justify-center"
+                >
+                    <img
+                        src={product ? product.data.image : '/images/default.jpg'}  
+                        alt={product ? product.data.name : 'Producto no encontrado'}
+                        class="object-contain w-full h-full"
+                    />
+                </div>
+
+                <!-- Product Details -->
+                <div class="flex flex-col space-y-6">
+                    <h1 class="text-4xl font-bold">
+                        {product ? product.data.name : 'Producto no encontrado'}  <!-- Nombre del producto -->
+                    </h1>
+
+                    <!-- Reviews -->
+                    <div class="flex items-center">
+                        <div class="flex text-yellow-400">
+                            <span class="text-yellow-400">★★★★★</span>
+                        </div>
+                        <span class="ml-2 text-gray-600">81 reviews</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="text-2xl font-medium">
+                        $<span id="price">{product ? product.data.price.toFixed(2) : '0.00'}</span>  <!-- Precio -->
+                    </div>
+
+                    <!-- Quantity Selector -->
+                    <div class="space-y-2">
+                        <label for="quantity" class="block text-lg font-medium">
+                            Quantity
+                        </label>
+                        <div class="flex items-center">
+                            <button
+                                id="decrease-btn"
+                                class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-l"
+                                aria-label="Decrease quantity"
+                            >
+                                <span class="text-xl">−</span>
+                            </button>
+                            <input
+                                type="text"
+                                id="quantity"
+                                value="1"
+                                class="w-12 h-10 text-center border-y border-gray-300 focus:outline-none"
+                                aria-label="Quantity"
+                            />
+                            <button
+                                id="increase-btn"
+                                class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-r"
+                                aria-label="Increase quantity"
+                            >
+                                <span class="text-xl">+</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <button
+                        id="add-to-cart-btn"
+                        class="w-full bg-black text-white py-4 uppercase tracking-wider font-medium hover:bg-gray-800 transition-colors cursor-pointer"
+                    >
+                        Add to Cart
+                    </button>
+
+                    <button
+                        id="add-to-cart-btn"
+                        class="w-full bg-black text-white py-4 uppercase tracking-wider font-medium hover:bg-gray-800 transition-colors cursor-pointer"
+                        onclick="window.location.href='/pagos';"
+                    >
+                        Checkout
+                    </button>
+
+                    <!-- Product Description -->
+                    <div class="text-gray-700">
+                        <p>
+                            {product ? product.data.description : 'Descripción no disponible'}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module">
+        document.addEventListener("DOMContentLoaded", function () {
+            const quantityInput = document.getElementById("quantity");
+            const decreaseBtn = document.getElementById("decrease-btn");
+            const increaseBtn = document.getElementById("increase-btn");
+            const addToCartBtn = document.getElementById("add-to-cart-btn");
+            const priceElement = document.getElementById("price");
+
+            const unitPrice = product ? product.data.price : 0.00;
+
+            // Decrease quantity
+            decreaseBtn.addEventListener("click", function () {
+                let currentQuantity = parseInt(quantityInput.value);
+                if (currentQuantity > 1) {
+                    quantityInput.value = currentQuantity - 1;
+                }
+            });
+
+            // Increase quantity
+            increaseBtn.addEventListener("click", function () {
+                let currentQuantity = parseInt(quantityInput.value);
+                quantityInput.value = currentQuantity + 1;
+            });
+
+            // Handle manual input
+            quantityInput.addEventListener("change", function () {
+                let value = parseInt(this.value);
+                if (isNaN(value) || value < 1) {
+                    this.value = 1;
+                }
+            });
+
+            // Add to cart
+            addToCartBtn.addEventListener("click", function () {
+                const quantity = parseInt(quantityInput.value);
+                const totalPrice = (unitPrice * quantity).toFixed(2);
+                alert(
+                    `Added ${quantity} item(s) to cart. Total: $${totalPrice}`,
+                );
+            });
+        });
+    </script>
+</Layout>

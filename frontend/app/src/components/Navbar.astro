@@ -158,77 +158,7 @@ import ModalForm from "./ModalForm.astro";
   </div>
 </dialog>
 
-<ModalForm />
-
 <script type="module">
-  const menuConfig = [
-    {
-      id: "skincare",
-      title: "Skincare",
-      items: [
-        "Face",
-        "Lip",
-        "Cheek",
-        "Eyes",
-        "Brushes",
-        "Sets",
-        "Bestsellers",
-        "New Arrivals",
-        "Sale Items",
-        "Gift Cards",
-      ],
-    },
-
-    {
-      id: "maquillaje",
-      title: "Maquillaje",
-      items: [
-        "Perfumes",
-        "Eau de Toilette",
-        "Eau de Parfum",
-        "Colonias",
-        "Para Hombre",
-        "Para Mujer",
-        "Unisex",
-        "Sets de Regalo",
-        "Novedades",
-        "Ofertas",
-      ],
-    },
-    {
-      id: "cuidado-personal",
-      title: "Cuidado Personal",
-      items: [
-        "Jabones Naturales",
-        "Jabones Artesanales",
-        "Jabones Líquidos",
-        "Jabones en Barra",
-        "Exfoliantes",
-        "Antibacteriales",
-        "Hidratantes",
-        "Para Pieles Sensibles",
-        "Orgánicos",
-        "Veganos",
-      ],
-    },
-    {
-      id: "accesorios",
-      title: "Accesorios",
-      items: [
-        "Maquillaje",
-        "Cremas",
-        "Mascarillas",
-        "Tónicos",
-        "Serums",
-        "Protector Solar",
-        "Desmaquillantes",
-        "Contorno de Ojos",
-        "Labiales",
-        "Bases",
-      ],
-    },
-  ];
-
   document.addEventListener("DOMContentLoaded", function () {
     const navbarContainer = document.getElementById("navbar-container");
     const desktopMenu = navbarContainer.querySelector(".md\\:block");
@@ -237,35 +167,51 @@ import ModalForm from "./ModalForm.astro";
     const mobileMenuContent = mobileMenu.querySelector(".p-4");
     const hamburgerButton = document.getElementById("hamburger-button");
 
-    // Función para generar menús de escritorio
-    function generateDesktopMenus() {
+    fetch("http://localhost:3000/categories")
+      .then((response) => response.json())
+      .then((data) => {
+        const menuConfig = data.map((category) => {
+          return {
+            id: category.name.toLowerCase().replace(/\s+/g, ""),
+            items: category.products.slice(0, 10).map((product) => ({
+              id: product.id, // Asegúrate que el ID del producto está presente
+              name: product.name, // Y también su nombre
+            })),
+            title: category.name,
+          };
+        });
+
+        generateDesktopMenus(menuConfig);
+        generateMobileMenus(menuConfig);
+        setupEvents(menuConfig);
+      })
+      .catch((error) => console.error("Error fetching categories:", error));
+
+    function generateDesktopMenus(menuConfig) {
       menuConfig.forEach((menu) => {
-        // Crear botón de escritorio
         const listItem = document.createElement("li");
         const button = document.createElement("button");
         button.className =
           "text-lg font-bold cursor-pointer hover:text-gray-500 transition-colors flex items-center";
         button.setAttribute("data-menu", `${menu.id}-menu`);
-        button.innerHTML = `
-                        ${menu.title}
-                        <span class="arrow-icon ml-1">▽</span>
-                    `;
+        button.innerHTML = `${menu.title}<span class="arrow-icon ml-1">▽</span>`;
         listItem.appendChild(button);
         desktopButtonsList.appendChild(listItem);
 
-        // Crear menú de escritorio
         const menuElement = document.createElement("div");
         menuElement.id = `${menu.id}-menu`;
         menuElement.className =
           "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
 
-        // Crear lista de elementos del menú
         const menuList = document.createElement("ul");
         menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8";
-
-        menu.items.forEach((item) => {
+        menu.items.forEach((product) => {
           const menuItem = document.createElement("li");
-          menuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+          menuItem.innerHTML = `
+        <a href="/producto/${product.id}" class="block hover:text-blue-600  font-sans">
+      ${product.name}
+    </a>
+  `;
           menuList.appendChild(menuItem);
         });
 
@@ -274,36 +220,27 @@ import ModalForm from "./ModalForm.astro";
       });
     }
 
-    // Función para generar menús móviles
-    function generateMobileMenus() {
+    function generateMobileMenus(menuConfig) {
       menuConfig.forEach((menu) => {
-        // Crear contenedor para cada categoría móvil
         const mobileCategory = document.createElement("div");
         mobileCategory.className = "border-b border-gray-200 py-2";
 
-        // Crear botón móvil con signo +
         const mobileButton = document.createElement("button");
         mobileButton.className =
           "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
         mobileButton.setAttribute("data-mobile-menu", `mobile-${menu.id}-menu`);
-        mobileButton.innerHTML = `
-                        <span class="font-bold">${menu.title}</span>
-                        <span class="plus-icon"></span>
-                    `;
+        mobileButton.innerHTML = `<span class="font-bold">${menu.title}</span><span class="plus-icon"></span>`;
 
-        // Crear submenú móvil
         const mobileSubmenu = document.createElement("div");
         mobileSubmenu.id = `mobile-${menu.id}-menu`;
         mobileSubmenu.className = "mobile-submenu pl-4";
 
-        // Crear lista de elementos del submenú
         const submenuList = document.createElement("ul");
         submenuList.className = "py-2";
-
         menu.items.forEach((item) => {
           const submenuItem = document.createElement("li");
           submenuItem.className = "py-1";
-          submenuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+          submenuItem.innerHTML = `<a href="/producto/${item.id}" class="block hover:text-blue-600 font-sans">${item.name}</a>`;
           submenuList.appendChild(submenuItem);
         });
 
@@ -313,152 +250,100 @@ import ModalForm from "./ModalForm.astro";
         mobileMenuContent.appendChild(mobileCategory);
       });
     }
-    // Generar menús de escritorio y móvil
-    generateDesktopMenus();
-    generateMobileMenus();
 
-    // Configurar eventos para el menú de escritorio
-    const desktopButtons = document.querySelectorAll("button[data-menu]");
-    const desktopMenus = document.querySelectorAll(".menu-container");
-    const arrowIcons = document.querySelectorAll(".arrow-icon");
+    function setupEvents() {
+      const desktopButtons = document.querySelectorAll("button[data-menu]");
+      const desktopMenus = document.querySelectorAll(".menu-container");
+      const arrowIcons = document.querySelectorAll(".arrow-icon");
+      let activeDesktopMenu = null;
+      let isDesktopMenuHovered = false;
 
-    let activeDesktopMenu = null;
-    let activeDesktopButton = null;
-    let isDesktopMenuHovered = false;
-
-    // Función para mostrar un menú de escritorio específico
-    function showDesktopMenu(menuId, buttonElement) {
-      // Ocultar todos los menús primero y resetear iconos
-      desktopMenus.forEach((menu) => {
-        menu.classList.add("hidden");
-      });
-      arrowIcons.forEach((icon) => {
-        icon.classList.remove("open");
-      });
-
-      // Mostrar el menú seleccionado y rotar su icono
-      const targetMenu = document.getElementById(menuId);
-      if (targetMenu) {
-        targetMenu.classList.remove("hidden");
-        activeDesktopMenu = targetMenu;
-
-        // Rotar el icono del botón activo
-        const icon = buttonElement.querySelector(".arrow-icon");
-        if (icon) {
-          icon.classList.add("open");
-        }
-      }
-    }
-
-    // Función para ocultar todos los menús de escritorio
-    function hideAllDesktopMenus() {
-      if (
-        !isDesktopMenuHovered &&
-        activeDesktopButton !== document.activeElement
-      ) {
-        desktopMenus.forEach((menu) => {
-          menu.classList.add("hidden");
+      desktopButtons.forEach((button) => {
+        button.addEventListener("mouseenter", function () {
+          showDesktopMenu(this.getAttribute("data-menu"), this);
         });
-        arrowIcons.forEach((icon) => {
-          icon.classList.remove("open");
+        button.addEventListener("focus", function () {
+          showDesktopMenu(this.getAttribute("data-menu"), this);
         });
-        activeDesktopMenu = null;
-      }
-    }
-
-    // Agregar eventos a los botones de escritorio
-    desktopButtons.forEach((button) => {
-      // Evento mouseenter (hover)
-      button.addEventListener("mouseenter", function () {
-        const menuId = this.getAttribute("data-menu");
-        showDesktopMenu(menuId, this);
-        activeDesktopButton = this;
-      });
-
-      // Evento focus (para accesibilidad)
-      button.addEventListener("focus", function () {
-        const menuId = this.getAttribute("data-menu");
-        showDesktopMenu(menuId, this);
-        activeDesktopButton = this;
-      });
-
-      // Evento click para dispositivos táctiles
-      button.addEventListener("click", function () {
-        const menuId = this.getAttribute("data-menu");
-
-        // Si el menú ya está visible, ocultarlo
-        if (
-          activeDesktopMenu &&
-          activeDesktopMenu.id === menuId &&
-          !activeDesktopMenu.classList.contains("hidden")
-        ) {
-          activeDesktopMenu.classList.add("hidden");
-          const icon = this.querySelector(".arrow-icon");
-          if (icon) {
-            icon.classList.remove("open");
+        button.addEventListener("click", function () {
+          const menuId = this.getAttribute("data-menu");
+          if (activeDesktopMenu && activeDesktopMenu.id === menuId) {
+            activeDesktopMenu.classList.add("hidden");
+            this.querySelector(".arrow-icon").classList.remove("open");
+            activeDesktopMenu = null;
+          } else {
+            showDesktopMenu(menuId, this);
           }
-          activeDesktopMenu = null;
-        } else {
-          // Si no, mostrar el menú
-          showDesktopMenu(menuId, this);
-        }
-      });
-    });
-
-    // Agregar eventos a los menús de escritorio
-    desktopMenus.forEach((menu) => {
-      menu.addEventListener("mouseenter", function () {
-        isDesktopMenuHovered = true;
+        });
       });
 
-      menu.addEventListener("mouseleave", function () {
-        isDesktopMenuHovered = false;
-        setTimeout(hideAllDesktopMenus, 100); // Pequeño retraso para evitar parpadeos
-      });
-    });
+      function showDesktopMenu(menuId, buttonElement) {
+        desktopMenus.forEach((menu) => menu.classList.add("hidden"));
+        arrowIcons.forEach((icon) => icon.classList.remove("open"));
 
-    // Evento para ocultar menús cuando el mouse sale del área de navegación
-    desktopMenu.addEventListener("mouseleave", function () {
-      setTimeout(hideAllDesktopMenus, 100);
-    });
-
-    // Configurar eventos para el menú móvil
-    const mobileButtons = document.querySelectorAll("button[data-mobile-menu]");
-    const plusIcons = document.querySelectorAll(".plus-icon");
-
-    // Evento para el botón hamburguesa
-    hamburgerButton.addEventListener("click", function () {
-      this.classList.toggle("active");
-      mobileMenu.classList.toggle("open");
-    });
-
-    // Eventos para los botones móviles
-    mobileButtons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const menuId = this.getAttribute("data-mobile-menu");
         const targetMenu = document.getElementById(menuId);
-        const plusIcon = this.querySelector(".plus-icon");
-
         if (targetMenu) {
-          targetMenu.classList.toggle("open");
-          plusIcon.classList.toggle("open");
+          targetMenu.classList.remove("hidden");
+          activeDesktopMenu = targetMenu;
+          buttonElement.querySelector(".arrow-icon").classList.add("open");
+        }
+      }
+
+      desktopMenus.forEach((menu) => {
+        menu.addEventListener(
+          "mouseenter",
+          () => (isDesktopMenuHovered = true),
+        );
+        menu.addEventListener("mouseleave", () => {
+          isDesktopMenuHovered = false;
+          setTimeout(hideAllDesktopMenus, 100);
+        });
+      });
+
+      function hideAllDesktopMenus() {
+        if (!isDesktopMenuHovered) {
+          desktopMenus.forEach((menu) => menu.classList.add("hidden"));
+          arrowIcons.forEach((icon) => icon.classList.remove("open"));
+          activeDesktopMenu = null;
+        }
+      }
+
+      desktopMenu.addEventListener("mouseleave", () =>
+        setTimeout(hideAllDesktopMenus, 100),
+      );
+
+      // Mobile
+      hamburgerButton.addEventListener("click", function () {
+        this.classList.toggle("active");
+        mobileMenu.classList.toggle("open");
+      });
+
+      const mobileButtons = document.querySelectorAll(
+        "button[data-mobile-menu]",
+      );
+      mobileButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const menuId = this.getAttribute("data-mobile-menu");
+          const targetMenu = document.getElementById(menuId);
+          const plusIcon = this.querySelector(".plus-icon");
+
+          if (targetMenu) {
+            targetMenu.classList.toggle("open");
+            plusIcon.classList.toggle("open");
+          }
+        });
+      });
+
+      // Cerrar menú cuando clic fuera
+      document.addEventListener("click", (event) => {
+        if (
+          ![...desktopButtons].some((btn) => btn.contains(event.target)) &&
+          ![...desktopMenus].some((menu) => menu.contains(event.target))
+        ) {
+          hideAllDesktopMenus();
         }
       });
-    });
-
-    // Evento para ocultar menús de escritorio cuando se hace clic fuera
-    document.addEventListener("click", function (event) {
-      const isDesktopButton = Array.from(desktopButtons).some((button) =>
-        button.contains(event.target)
-      );
-      const isDesktopMenu = Array.from(desktopMenus).some((menu) =>
-        menu.contains(event.target)
-      );
-
-      if (!isDesktopButton && !isDesktopMenu) {
-        hideAllDesktopMenus();
-      }
-    });
+    }
   });
 
   // Buscador
@@ -483,7 +368,7 @@ import ModalForm from "./ModalForm.astro";
   });
 
   const mobileSearchDialogClose = document.getElementById(
-    "mobile-search-dialog-close"
+    "mobile-search-dialog-close",
   );
   mobileSearchDialogClose.addEventListener("click", () => {
     mobileSearchDialog.close();
