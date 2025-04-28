@@ -1,0 +1,36 @@
+---
+const { imageUrl, price, title, description, total, quantity, id, date } =
+  Astro.props;
+---
+
+<!--- Card --->
+<div
+  class="flex items-start gap-5 bg-white rounded-lg shadow-md p-4 shadow-gray-300 max-w-3xl"
+>
+  <!-- Imagen producto -->
+  <div class="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
+    <img src={imageUrl} alt={title} class="w-full h-full object-cover" />
+  </div>
+
+  <!-- Detalle producto -->
+  <div class="flex flex-col flex-grow gap-1 mr-4">
+    <div class="text-gray-600 flex justify-between">
+      <p class="text-sm">N° orden: {id}</p>
+      <p class="text-sm">Fecha: {date}</p>
+    </div>
+    <h3 class="text-lg font-semibold text-gray-800">
+      {title}
+    </h3>
+    <p class="text-sm text-gray-500">
+      {description}
+    </p>
+
+    <div
+      class="flex justify-between items-center flex-wrap gap-2 mt-2 text-sm text-gray-600"
+    >
+      <span>Cantidad: <strong>{quantity}</strong></span>
+      <span>Precio: <strong>S/. {price}</strong></span>
+      <span>Total: <strong>S/. {total}</strong></span>
+    </div>
+  </div>
+</div>
