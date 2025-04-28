@@ -107,6 +107,36 @@ class ProductsController {
     }
   };
 
+  /**
+  * Obtener un producto por ID.
+  */
+  getProductById = async (req, res) => {
+    const productId = req.params.id;
+
+    try {
+      const result = await this.dbConnection
+        .request()
+        .input("id", productId)
+        .query(`
+          SELECT p.id, p.name, p.description, p.status, p.price, p.stock, p.image, p.categories_id,
+                 c.name as category, b.name as brand
+          FROM products AS p
+          INNER JOIN categories AS c ON p.categories_id = c.id
+          INNER JOIN brands AS b ON p.brands_id = b.id
+          WHERE p.id = @id
+        `);
+
+      if (result.recordset.length === 0) {
+        return res.status(404).json({ error: "Producto no encontrado" });
+      }
+
+      res.status(200).json({ success: true, data: result.recordset[0] });
+    } catch (error) {
+      console.error("Error al obtener producto:", error);
+      res.status(500).json({ error: "Error al obtener producto" });
+    }
+  };
+
   createProduct = async (req, res) => {
     try {
       const productData = this.parseProduct(req.body);

@@ -208,7 +208,7 @@ import ModalForm from "./ModalForm.astro";
         menu.items.forEach((product) => {
           const menuItem = document.createElement("li");
           menuItem.innerHTML = `
-        <a href="/producto/${product.id}" class="block hover:text-blue-600">
+        <a href="/producto/${product.id}" class="block hover:text-blue-600  font-sans">
       ${product.name}
     </a>
   `;
@@ -240,7 +240,7 @@ import ModalForm from "./ModalForm.astro";
         menu.items.forEach((item) => {
           const submenuItem = document.createElement("li");
           submenuItem.className = "py-1";
-          submenuItem.innerHTML = `<a href="#" class="block hover:text-blue-600">${item}</a>`;
+          submenuItem.innerHTML = `<a href="/producto/${item.id}" class="block hover:text-blue-600 font-sans">${item.name}</a>`;
           submenuList.appendChild(submenuItem);
         });
 

@@ -17,8 +17,6 @@ const config = {
 export const getConnection = async () => {
   try {
     const pool = await sql.connect(config);
-    // Log para verificar que la conexión fue exitosa
- console.log('Conexión a la base de datos establecida correctamente.')
     return pool;
   } catch (error) {
     console.error(error);

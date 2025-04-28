@@ -16,6 +16,9 @@ router.get("/app/products", productController.getProductsApp);
 // GET: Obtener top 6 de nuevos producto agregados a Ecommerce App
 router.get("/app/products/top", productController.getTopNewProductsApp);
 
+// GET: Obtener producto específico por ID
+router.get("/products/:id", productController.getProductById);
+
 // POST: agregar producto sin imagen, ya que la imagen la agregaremos en otro endpoint
 router.post("/products", productController.createProduct);
 
