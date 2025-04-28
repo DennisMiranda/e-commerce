@@ -125,6 +125,10 @@ import ModalForm from "./ModalForm.astro";
       <!-- Menú móvil (visible solo en móvil) -->
       <div id="mobile-menu" class="mobile-menu md:hidden">
         <div class="p-4">
+          <span mb-4
+            ><button id="login-button-movil">Iniciar Sesión</button></span
+          >
+
           <!-- Los botones móviles se generarán dinámicamente con JavaScript -->
         </div>
       </div>
@@ -140,6 +144,7 @@ import ModalForm from "./ModalForm.astro";
     </div>
   </div>
 </header>
+<ModalForm />
 <dialog
   id="mobile-search-dialog"
   class="w-full m-auto mt-8 rounded-full p-4 bg-white shadow-lg"
@@ -292,7 +297,7 @@ import ModalForm from "./ModalForm.astro";
       desktopMenus.forEach((menu) => {
         menu.addEventListener(
           "mouseenter",
-          () => (isDesktopMenuHovered = true),
+          () => (isDesktopMenuHovered = true)
         );
         menu.addEventListener("mouseleave", () => {
           isDesktopMenuHovered = false;
@@ -309,7 +314,7 @@ import ModalForm from "./ModalForm.astro";
       }
 
       desktopMenu.addEventListener("mouseleave", () =>
-        setTimeout(hideAllDesktopMenus, 100),
+        setTimeout(hideAllDesktopMenus, 100)
       );
 
       // Mobile
@@ -319,7 +324,7 @@ import ModalForm from "./ModalForm.astro";
       });
 
       const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]",
+        "button[data-mobile-menu]"
       );
       mobileButtons.forEach((button) => {
         button.addEventListener("click", function () {
@@ -368,7 +373,7 @@ import ModalForm from "./ModalForm.astro";
   });
 
   const mobileSearchDialogClose = document.getElementById(
-    "mobile-search-dialog-close",
+    "mobile-search-dialog-close"
   );
   mobileSearchDialogClose.addEventListener("click", () => {
     mobileSearchDialog.close();
