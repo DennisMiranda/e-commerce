@@ -1,0 +1,42 @@
+---
+export const prerender = false;
+import Layout from "../layouts/Layout.astro";
+import OrdersCard from "../components/OrdersCard.astro";
+
+let orders = [];
+
+try {
+  const res = await fetch(`http://localhost:3000/app/orders`);
+  const { data } = await res.json();
+  orders = data;
+} catch (error) {
+  console.error("Error al cargar productos:", error);
+}
+---
+
+<Layout>
+  <!---Historial de órdenes de compra de usuarios -->
+  <div class="flex flex-col min-h-96">
+    <div class="text-center p-4">
+      <h1 class="text-xl font-bold">Historial de Compras</h1>
+    </div>
+
+    <!--- Contenedor de card --->
+    <div class="px-6 mb-6 mt-6 flex justify-center">
+      {
+        orders.map((orders) => (
+          <OrdersCard
+            imageUrl={orders.image}
+            price={orders.sell_price}
+            title={orders.name}
+            description={orders.description}
+            total={orders.total}
+            quantity={orders.quantity}
+            id={orders.id}
+            date={orders.create_date.split("T")[0]}
+          />
+        ))
+      }
+    </div>
+  </div>
+</Layout>
