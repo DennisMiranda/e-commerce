@@ -24,15 +24,14 @@ try {
   </div>
 
   <div
-    class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto justify-center"
+    class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 max-w-screen-xl mx-auto justify-center"
   >
     {
       products.map((product) => (
         <ProductCard
-          href="/detalle"
+          href={`/producto/${product.id}`}
           imageUrl={product.image}
-          price= `S/. ${product.price}`
-          oldPrice="$10"
+          price={`S/. ${product.price}`}
           title={product.name}
           description={product.description}
         />

@@ -14,7 +14,7 @@ const {
 
 <a
   href={href}
-  class="group relative block w-full sm:max-w-[300px] md:max-w-[340px] lg:max-w-[380px] min-h-[520px] overflow-hidden"
+  class="group relative block w-full sm:max-w-[300px] md:max-w-[340px] lg:max-w-[380px] overflow-hidden"
 >
   <button
     class="absolute end-4 top-4 z-3 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
@@ -23,18 +23,13 @@ const {
     <Icon name="corazon" size={20} />
   </button>
 
-  <div class="flex justify-center h-40">
+  <div class="flex justify-center h-40 mt-6">
     <img
       src={imageUrl}
       alt={imageAlt}
       class="w-2/3 object-contain transition duration-500 group-hover:scale-105"
     />
   </div>
-  <!-- <img
-    src={imageUrl}
-    alt={imageAlt}
-    class="h-auto w-auto object-contain transition duration-500 group-hover:scale-105 sm:h-72 sm:w-auto"
-/> -->
 
   <div class="relative border border-gray-100 p-6">
     <p class="text-gray-700">
@@ -48,18 +43,18 @@ const {
 
     <p class="mt-1.5 line-clamp-1 text-gray-700">{description}</p>
 
-    <form class="mt-4 flex gap-4">
+    <div class="mt-4 flex gap-4 flex-col md:flex-row">
       <button
         class="block w-full rounded-l bg-gray-200 px-4 py-3 text-sm font-medium text-gray-900 transition hover:scale-105"
       >
-        Add to Cart
+        Agregar
       </button>
       <button
         type="button"
         class="block w-full rounded-sm bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:scale-105"
       >
-        Buy Now
+        Comprar
       </button>
-    </form>
+    </div>
   </div>
 </a>
