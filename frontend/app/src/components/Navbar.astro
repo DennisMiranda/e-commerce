@@ -209,7 +209,7 @@ import ModalForm from "./ModalForm.astro";
           "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
 
         const menuList = document.createElement("ul");
-        menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8";
+        menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8 space-y-2";
         menu.items.forEach((product) => {
           const menuItem = document.createElement("li");
           menuItem.innerHTML = `
