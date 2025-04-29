@@ -14,7 +14,7 @@ const {
 
 <a
   href={href}
-  class="group relative block w-full sm:max-w-[300px] md:max-w-[340px] lg:max-w-[380px] min-h-[520px] overflow-hidden"
+  class="group relative block w-full sm:max-w-[300px] md:max-w-[340px] lg:max-w-[380px] overflow-hidden"
 >
   <button
     class="absolute end-4 top-4 z-3 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75"
@@ -23,7 +23,7 @@ const {
     <Icon name="corazon" size={20} />
   </button>
 
-  <div class="flex justify-center h-40">
+  <div class="flex justify-center h-40 mt-6">
     <img
       src={imageUrl}
       alt={imageAlt}
@@ -43,7 +43,7 @@ const {
 
     <p class="mt-1.5 line-clamp-1 text-gray-700">{description}</p>
 
-    <form class="mt-4 flex gap-4">
+    <div class="mt-4 flex gap-4 flex-col md:flex-row">
       <button
         class="block w-full rounded-l bg-gray-200 px-4 py-3 text-sm font-medium text-gray-900 transition hover:scale-105"
       >
@@ -55,6 +55,6 @@ const {
       >
         Comprar
       </button>
-    </form>
+    </div>
   </div>
 </a>
