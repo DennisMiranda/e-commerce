@@ -1,6 +1,5 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import "../../styles/global.css";
 
 export async function getStaticPaths() {
   const response = await fetch("http://localhost:3000/products");
@@ -87,9 +86,11 @@ try {
                 type="text"
                 id="quantity"
                 value="1"
+                data-price={product ? product.data.price : "0"}
                 class="w-12 h-10 text-center border-y border-gray-300 focus:outline-none"
                 aria-label="Quantity"
               />
+
               <button
                 id="increase-btn"
                 class="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-r"
@@ -109,7 +110,7 @@ try {
           </button>
 
           <button
-            id="add-to-cart-btn"
+            id="buy-btn"
             class="w-full bg-black text-white py-4 uppercase tracking-wider font-medium hover:bg-gray-800 transition-colors cursor-pointer rounded-md"
             onclick="window.location.href='/pagos';"
           >
@@ -128,6 +129,8 @@ try {
   </div>
 
   <script type="module">
+    import { updateCartCount } from "/scripts/cart.js";
+
     document.addEventListener("DOMContentLoaded", function () {
       const quantityInput = document.getElementById("quantity");
       const decreaseBtn = document.getElementById("decrease-btn");
@@ -135,7 +138,7 @@ try {
       const addToCartBtn = document.getElementById("add-to-cart-btn");
       const priceElement = document.getElementById("price");
 
-      const unitPrice = product ? product.data.price : 0.0;
+      const unitPrice = parseFloat(quantityInput.dataset.price);
 
       // Decrease quantity
       decreaseBtn.addEventListener("click", function () {
@@ -162,8 +165,16 @@ try {
       // Add to cart
       addToCartBtn.addEventListener("click", function () {
         const quantity = parseInt(quantityInput.value);
-        const totalPrice = (unitPrice * quantity).toFixed(2);
-        alert(`Added ${quantity} item(s) to cart. Total: $${totalPrice}`);
+        const productId = "{id}"; // el ID del producto actual
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+        // Reemplaza la cantidad directamente
+        cart[productId] = quantity;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        updateCartCount(); // Actualiza el ícono del carrito
       });
     });
   </script>

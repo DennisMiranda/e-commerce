@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 const products = [
     {
         id: 1,
@@ -36,10 +37,12 @@ const products = [
         <!-- Botón X de cierre -->
         <button
             onclick="window.closeCartModal()"
-            class="absolute top-2 right-2 text-lg font-bold text-gray-700 hover:text-gray-900"
+            class="absolute top-2 right-2 p-2 text-gray-700 hover:text-gray-900"
+            aria-label="Cerrar"
         >
-            ×
+            <Icon name="cerrar" size={30} />
         </button>
+
         <h2 class="text-xl font-bold mb-4">Cart</h2>
 
         {
