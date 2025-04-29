@@ -1,0 +1,19 @@
+---
+//Button orders
+import { Icon } from "astro-icon/components";
+
+const token = Astro.cookies.get("token")?.value;
+const isAuthenticated = !!token;
+---
+
+{
+  isAuthenticated && (
+    <a
+      href="/orders"
+      id="myorders-button"
+      class="p-2 focus:outline-none cursor-pointer hidden md:block"
+    >
+      <Icon name="myorders" size={35} />
+    </a>
+  )
+}

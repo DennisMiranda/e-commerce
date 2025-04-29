@@ -4,7 +4,17 @@ import { getConnection } from "../database/connection.js";
 import env from "dotenv";
 env.config();
 
-//Es una petición POST - req=request
+export const decryptToken = (token) => {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded;
+  } catch (err) {
+    console.error("Error al verificar el token:", err);
+    return null;
+  }
+};
+
+//Es una petición POST - REGISTER
 export const register = async (req, res) => {
   const { name, lastname, email, password } = req.body;
   const dbConnection = await getConnection();

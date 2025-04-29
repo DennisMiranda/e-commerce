@@ -4,7 +4,6 @@ import categoriesRoutes from "./routes/categories.routes.js";
 import productRoutes from "./routes/products.routes.js";
 import ordersRoutes from "./routes/orders.routes.js";
 import authRoutes from "./routes/auth.routes.js";
-import { checkToken } from "./midleware/auth.midleware.js";
 
 const app = express();
 const port = 3000;

@@ -3,10 +3,16 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import OrdersCard from "../components/OrdersCard.astro";
 
+const token = Astro.cookies.get("token")?.value;
+
 let orders = [];
 
 try {
-  const res = await fetch(`http://localhost:3000/app/orders`);
+  const res = await fetch(`http://localhost:3000/app/orders`, {
+    headers: {
+      Authorization: token,
+    },
+  });
   const { data } = await res.json();
   orders = data;
 } catch (error) {
