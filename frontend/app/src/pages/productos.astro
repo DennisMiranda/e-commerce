@@ -29,10 +29,9 @@ try {
     {
       products.map((product) => (
         <ProductCard
-          href="/detalle"
+          href={`/producto/${product.id}`}
           imageUrl={product.image}
-          price= `S/. ${product.price}`
-          oldPrice="$10"
+          price={`S/. ${product.price}`}
           title={product.name}
           description={product.description}
         />
