@@ -1,0 +1,152 @@
+---
+// src/pages/cart.astro
+import Layout from "../layouts/Layout.astro"; // Asume que tienes un Layout básico
+---
+
+<Layout title="Shopping Cart">
+    <div class="container mx-auto p-4 max-w-2xl">
+        <h1 class="text-2xl font-bold mb-6 text-center">Shopping Cart</h1>
+
+        <div id="cart-content" class="space-y-4">
+            <!-- El contenido del carrito se renderizará aquí por JS -->
+            <p class="text-center text-gray-500">Loading cart items...</p>
+        </div>
+
+        <!-- Subtotal y botón Checkout se mostrarán cuando haya items -->
+        <div id="cart-summary" class="mt-6 hidden">
+            <div class="text-right font-bold text-lg mb-4">
+                Subtotal: <span id="cart-subtotal">$0.00</span>
+            </div>
+            <button
+                id="checkout-button"
+                class="w-full bg-black text-white p-3 rounded hover:bg-gray-800 transition-colors duration-200"
+            >
+                CHECKOUT
+            </button>
+        </div>
+    </div>
+</Layout>
+
+<script type="module">
+    // Espera a que el DOM esté listo
+    document.addEventListener("DOMContentLoaded", () => {
+        const cartContent = document.getElementById("cart-content");
+        const cartSummary = document.getElementById("cart-summary");
+        const subtotalElement = document.getElementById("cart-subtotal");
+        const checkoutButton = document.getElementById("checkout-button");
+
+        let products = []; // Variable para mantener el estado del carrito
+
+        // Función para renderizar el carrito
+        function renderCart() {
+            // Limpia el contenido actual
+            cartContent.innerHTML = "";
+
+            // Obtiene los productos de localStorage
+            const storedCart = localStorage.getItem("cart");
+            products = storedCart ? JSON.parse(storedCart) : [];
+
+            if (products.length === 0) {
+                cartContent.innerHTML =
+                    '<p class="text-center text-gray-700">Your cart is empty.</p>';
+                cartSummary.classList.add("hidden"); // Oculta resumen si está vacío
+            } else {
+                let currentSubtotal = 0;
+                // Crea y añade cada item del producto al DOM
+                products.forEach((item) => {
+                    const itemElement = document.createElement("div");
+                    itemElement.className =
+                        "border-b pb-4 flex gap-4 items-center";
+                    itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded">
+            <div class="flex-1">
+              <p class="font-semibold">${item.name}</p>
+              <p class="text-sm text-gray-600">$${item.price.toFixed(2)}</p>
+              <p class="text-sm text-gray-500">Color: ${item.color}</p>
+              <div class="flex items-center mt-2">
+                <button data-id="${item.id}" data-change="-1" class="qty-change px-2 py-1 border rounded text-gray-700 hover:bg-gray-100"> − </button>
+                <span class="px-3 font-medium">${item.qty}</span>
+                <button data-id="${item.id}" data-change="1" class="qty-change px-2 py-1 border rounded text-gray-700 hover:bg-gray-100"> + </button>
+                <button data-id="${item.id}" class="remove-item text-red-500 hover:text-red-700 ml-4 text-sm">Remove</button>
+              </div>
+            </div>
+             <div class="text-right font-semibold">
+                 $${(item.price * item.qty).toFixed(2)}
+             </div>
+          `;
+                    cartContent.appendChild(itemElement);
+                    currentSubtotal += item.price * item.qty;
+                });
+
+                // Actualiza y muestra el subtotal y botón
+                subtotalElement.textContent = `$${currentSubtotal.toFixed(2)}`;
+                cartSummary.classList.remove("hidden");
+            }
+
+            // Añade event listeners a los nuevos botones después de renderizar
+            addEventListeners();
+        }
+
+        // Función para actualizar la cantidad
+        function updateQuantity(productId, change) {
+            const productIndex = products.findIndex((p) => p.id === productId);
+            if (productIndex > -1) {
+                products[productIndex].qty += change;
+                if (products[productIndex].qty <= 0) {
+                    // Elimina el producto si la cantidad es 0 o menos
+                    products.splice(productIndex, 1);
+                }
+                saveCartAndRender();
+            }
+        }
+
+        // Función para eliminar un item
+        function removeItem(productId) {
+            products = products.filter((p) => p.id !== productId);
+            saveCartAndRender();
+        }
+
+        // Función para guardar en localStorage y re-renderizar
+        function saveCartAndRender() {
+            localStorage.setItem("cart", JSON.stringify(products));
+            renderCart(); // Vuelve a dibujar el carrito con los datos actualizados
+        }
+
+        // Función para añadir event listeners a los botones
+        function addEventListeners() {
+            // Botones de cantidad +/-
+            document.querySelectorAll(".qty-change").forEach((button) => {
+                // Elimina listener antiguo para evitar duplicados si renderCart se llama múltiples veces
+                button.replaceWith(button.cloneNode(true));
+            });
+            document.querySelectorAll(".qty-change").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const id = parseInt(button.dataset.id);
+                    const change = parseInt(button.dataset.change);
+                    updateQuantity(id, change);
+                });
+            });
+
+            // Botones de eliminar
+            document.querySelectorAll(".remove-item").forEach((button) => {
+                button.replaceWith(button.cloneNode(true));
+            });
+            document.querySelectorAll(".remove-item").forEach((button) => {
+                button.addEventListener("click", () => {
+                    const id = parseInt(button.dataset.id);
+                    removeItem(id);
+                });
+            });
+        }
+
+        // Event listener para el botón Checkout
+        checkoutButton.addEventListener("click", () => {
+            // Podrías querer guardar el estado final del carrito aquí si hubo cambios
+            // localStorage.setItem('cart', JSON.stringify(products)); // Ya se guarda en update/remove
+            window.location.href = "/pagos"; // Redirige a la página de checkout
+        });
+
+        // Renderiza el carrito inicial al cargar la página
+        renderCart();
+    });
+</script>
