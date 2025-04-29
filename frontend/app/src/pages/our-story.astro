@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <section class="bg-white px-12 w-full ">
+    <div
+      class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8">
+      <!-- Texto -->
+      <div class="w-full md:w-1/2 text-center md:text-left">
+        <h2 class="text-orange-200 text-7xl font-bold mb-4">01</h2>
+        <h3 class="text-3xl font-bold mb-4">QUIÉNES SOMOS</h3>
+        <p class="mb-6">
+          "Somos una empresa joven y dinámica convencida que el consumo de productos de belleza ha evolucionado. La consumidora de hoy busca una asesoría confiable, una recomendación imparcial, pero a la vez cercana que la oriente a impulsar su propia belleza.
+          Si alguna vez dudaste qué cosméticos son los más adecuados para ti, has llegado al lugar correcto.
+        </p>
+      </div>
+
+      <!-- Imágenes superpuestas -->
+      <div
+        class="relative w-full md:w-1/2 h-auto flex justify-center items-center"
+      >
+        <div class="relative z-10 translate-x-4 -mr-8">
+        
+        <div class="relative z-0">
+          <img
+            src="/images/imagen3.png"
+            alt="Imagen 2"
+            class="h-150 md:w-150"
+          />
+        </div>
+        </div>
+      </div>
+    </section>  
+    
+    <!-- 2 -->
+    <section class="bg-black flex flex-col md:flex-row justify-center min-h-p-8 w-full">
+      <!-- Imágenes superpuestas -->
+      <div
+        class="max-w-7xl flex-1 flex justify-center">
+        <div class="relative z-10 translate-x-4 -mr-8">
+          
+         <img
+              src="/images/imagen4.png"
+              alt="Imagen 2"
+              class=" md:w-150"
+            />
+          </div>
+          </div>
+      <div
+        class="flex-1 mt-8 md:mt-0 md:pl-12 text-center gap-8">
+        <!-- Texto -->
+        <div class="w-full p-28  text-center md:text-left">
+          <h2 class="text-orange-200 text-7xl font-bold mb-4">02</h2>
+          <h3 class="text-3xl font-bold mb-4 text-white">QUÉ HACEMOS</h3>
+          <p class="text-white mb-6">
+            Seleccionamos cuidadosamente los productos cosméticos de diferentes marcas y ponemos a prueba cada uno de ellos. Realizamos un análisis de los productos para poder determinar si dan los resultados esperados. Por ello, si un producto es bueno lo sabrás. Así es como tratamos de asegurar que tengas los mejores a tu alcance.
+          </p>
+        </div>
+      </div>
+  
+
+      </section> 
+  
+    <section class="bg-white p-40 w-full ">
+      <div
+        class="max-w-7xl mx-auto px-4 md:flex-row items-center gap-8">
+        <!-- Texto -->
+        <div class="flex-1 mt-8 md:mt-0 md:pl-12">
+          <h2 class="text-orange-200 text-7xl font-bold mb-4">03</h2>
+          <h3 class="text-3xl font-bold mb-4">POR QUÉ LO HACEMOS</h3>
+          <p class="mb-6">
+            Porque diversos estudios revelan que sólo 14% de las promesas de los productos de belleza son honestos y estamos en contra de eso. Es simple; amamos ayudarte. Por ello, creamos un servicio que promueva tu experiencia en el uso de cosméticos. No es suficiente brindarte algo que te haga ver bien, sino, también que sea lo mejor para ti. Te invitamos a ser parte de esta experiencia.
+          </p>
+        </div>
+  
+    </section>    
+  
+  </Layout>

@@ -1,0 +1,115 @@
+---
+import Layout from "../layouts/Layout.astro";
+import VideoHero from "../components/VideoHero.astro";
+import TopProducts from "../components/TopProducts.astro";
+// import ProductCard from "../components/ProductCard.astro";
+---
+
+<Layout>
+  <!-- Banner con efecto de zoom -->
+  <div class="w-full overflow-hidden">
+    <a href="#" class="block">
+      <!-- Imagen para Desktop -->
+      <img
+        src="/images/banner2.png"
+        alt="Banner Desktop1"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:block hidden"
+        onload="this.classList.remove('scale-135', 'opacity-0')"
+      />
+      <!-- Imagen para Móvil -->
+      <img
+        src="/images/banner2.png"
+        alt="Banner Móvil"
+        class="w-full scale-135 opacity-0 transition-all duration-[2500ms] ease-out md:hidden block"
+        onload="this.classList.remove('scale-135', 'opacity-0')"
+      />
+    </a>
+  </div>
+
+  <section class="bg-white text-black py-12 w-full mb-4">
+    <div
+      class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8"
+    >
+      <!-- Texto -->
+      <div class="flex-1 mt-8 md:mt-0 md:pl-12">
+        <h2 class="text-4xl font-bold mb-4 text-center">ÚNETE A NUESTRO EQUIPO</h2>
+        <br><br>
+        <p class="mb-6 leading-7">
+            Aroma es una marca de belleza premium respaldada por capital de riesgo que transforma la industria con productos y marketing que celebran la belleza de la diversidad. Aroma comenzó en un apartamento de una habitación en Lima; tenemos comienzos humildes y una visión global, y necesitamos compañeros de equipo con la humildad y los grandes sueños que coincidan. 
+            <br><br>
+            En Aroma nos entregamos por completo al trabajo, porque cambiar el panorama de la belleza y el mundo junto con él requiere más que inteligencia; requiere pasión, agallas y carácter. Estamos construyendo un equipo diverso al que le encanta ayudar a nuestra comunidad a sentirse bella.
+
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-orange-50 flex flex-col md:flex-row items-center justify-between px-8">
+    <!-- Imágenes superpuestas -->
+    <div
+      class="max-w-7xl flex-1 flex justify-center">
+        <div class="relative z-10 translate-x-4 -mr-8">
+        
+       <img
+            src="/images/imagen5.png"
+            alt="Imagen 5"
+            class="h-110 md:w-100 rounded-b-full"
+          />
+        </div>
+    </div>
+           
+    <!-- Texto y beneficios -->
+    <div class="w-full md:w-1/2 p-8 bg-white text-yellow-800 rounded-2xl space-y-6 shadow-lg">
+        <h2 class="text-3xl text-center pb-6 font-bold mb-4 text-yellow-800">Descubre los <span class="font-bold">beneficios</span></h2>
+  
+        <div class="flex items-start gap-4 border-b border-dashed pb-4">
+          <div class="bg-orange-100 p-3 rounded-full">
+            <span>🌟</span>
+          </div>
+          <p class="text-center">Accede al Programa de Inicio con ofertas y productos gratis.</p>
+        </div>
+  
+        <div class="flex items-start gap-4 border-b border-dashed pb-4">
+          <div class="bg-orange-100 p-3 rounded-full">
+            <span>💸</span>
+          </div>
+          <p>
+            Gana hasta el 40% de lo que vendas.<br />
+            
+          </p>
+        </div>
+  
+        <div class="flex items-start gap-4 pb-4">
+          <div class="bg-orange-100 p-3 rounded-full">
+            <span>🎁</span>
+          </div>
+          <p>Sé parte del programa de bonificación por tus ventas.</p>
+        </div>
+    </div>
+  </section> 
+
+  <section class="bg-white text-black py-12 w-full mb-4">
+    <div
+      class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8"
+    >
+      <!-- Texto -->
+      <div class="flex-1 mt-8 md:mt-0 md:pl-12">
+        <h2 class="text-4xl font-bold mb-4 pt-6 text-center">CÓMO FORMAR PARTE DE NUESTRO EQUIPO?</h2>
+        <br><br>
+        <p class="mb-6 leading-7">
+            La clave del éxito de Aroma es nuestra plantilla activa y con ganas de trabajar. Si quieres formar parte de esta gran familia, envíanos tu CV a cvaroma@aroma.pe. Por favor, no olvides aclarar:
+            <br>
+            <li>Ciudad donde vives</li>
+            <li>Estudios, experiencia laboral, todo lo que desees agregar acerca de tí</li>
+            <li>Datos de contacto</li>
+            <li>Si tienes perfil en Linkedin, copia la URL</li>
+            <li>Si adjuntas un archivo, revisa por favor que pese menos de 2MB.</li>
+
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+
+</Layout>
