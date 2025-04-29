@@ -5,6 +5,7 @@ import { Icon } from "astro-icon/components";
 import ModalForm from "./ModalForm.astro";
 import ButtonOrders from "./Navbar/ButtonOrders.astro";
 import ButtonLogin from "./Navbar/ButtonLogin.astro";
+import CartModal from "./Navbar/CartModal.astro";
 ---
 
 <!-- Banner promocional -->
@@ -64,48 +65,14 @@ import ButtonLogin from "./Navbar/ButtonLogin.astro";
 
       <!-- MODIFICACION DEL CARRITO -->
       <div class="relative group">
-        <button
-          id="cartButton"
-          onclick="window.location.href='/cartModal'"
-          class="p-2 focus:outline-none"
-        >
+        <button onclick="window.openCartModal()" class="p-2 focus:outline-none">
           <Icon name="cart" size={30} />
           <span class="cart-count">0</span>
-        </button>
-        <!-- MODAL QUE APARECE AL PASAR EL MOUSE -->
-        <div
-          id="cartModal"
-          class="absolute right-0 top-full mt-2 w-80 bg-white shadow-lg rounded-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity z-50"
-        >
-          <h3
-            class="text-lg font-bold mb-2 text-pink-800 border-gray-300 border-b"
-          >
-            Carrito de compras
-          </h3>
-          <div class="flex items-center gap-4 border-gray-300 border-b">
-            <img
-              src="/images/producto1.webp"
-              alt="Producto"
-              class="w-10 h-25 object-cover rounded-t-lg"
-            />
-            <div>
-              <p class="font-medium">Burberry Her Eau de Parfum</p>
-              <p class="text-sm text-gray-600">Cantidad: 1</p>
-              <p class="text-sm text-gray-600">$30.00</p>
-            </div>
-            <div class="mt-4 flex justify-between items-center">
-              <span class="font-bold">Total: $30.00</span>
-              <a
-                href="/cartModal"
-                class="bg-black text-white px-4 py-2 rounded hover:bg-pink-800 transition"
-                >Ver todo</a
-              >
-            </div>
-          </div>
-        </div>
+      </button>
       </div>
     </div>
   </div>
+  <CartModal />
 
   <!-- Navbar -->
   <div class="w-full mx-auto bg-white">
@@ -294,7 +261,7 @@ import ButtonLogin from "./Navbar/ButtonLogin.astro";
       desktopMenus.forEach((menu) => {
         menu.addEventListener(
           "mouseenter",
-          () => (isDesktopMenuHovered = true)
+          () => (isDesktopMenuHovered = true),
         );
         menu.addEventListener("mouseleave", () => {
           isDesktopMenuHovered = false;
@@ -311,7 +278,7 @@ import ButtonLogin from "./Navbar/ButtonLogin.astro";
       }
 
       desktopMenu.addEventListener("mouseleave", () =>
-        setTimeout(hideAllDesktopMenus, 100)
+        setTimeout(hideAllDesktopMenus, 100),
       );
 
       // Mobile
@@ -321,7 +288,7 @@ import ButtonLogin from "./Navbar/ButtonLogin.astro";
       });
 
       const mobileButtons = document.querySelectorAll(
-        "button[data-mobile-menu]"
+        "button[data-mobile-menu]",
       );
       mobileButtons.forEach((button) => {
         button.addEventListener("click", function () {
@@ -370,7 +337,7 @@ import ButtonLogin from "./Navbar/ButtonLogin.astro";
   });
 
   const mobileSearchDialogClose = document.getElementById(
-    "mobile-search-dialog-close"
+    "mobile-search-dialog-close",
   );
   mobileSearchDialogClose.addEventListener("click", () => {
     mobileSearchDialog.close();
