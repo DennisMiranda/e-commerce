@@ -1,0 +1,92 @@
+---
+//Botón de Inicio de sesión
+import { Icon } from "astro-icon/components";
+const token = Astro.cookies.get("token")?.value;
+const isAuthenticated = !!token;
+
+const { isMobile } = Astro.props;
+---
+
+{
+  isMobile ? (
+    <button
+      id={isAuthenticated ? "logout-button-mobile" : "login-button-mobile"}
+      class="ml-1 mb-4 font-bold"
+    >
+      <span>{isAuthenticated ? "Cerrar Sesión" : "Iniciar Sesión"}</span>
+    </button>
+  ) : (
+    <button
+      id={isAuthenticated ? "logout-button" : "login-button"}
+      class="p-2 focus:outline-none cursor-pointer hidden md:block"
+    >
+      <div class="flex items-center">
+        <span id={isAuthenticated ? "username" : "login-message"}>
+          Iniciar sesión
+        </span>
+        <Icon name="user" size={35} />
+      </div>
+    </button>
+  )
+}
+
+<dialog id="logout-dialog" class="m-auto p-5 rounded-xl shadow-md">
+  <h1 class="text-center mt-2">¿Deseas cerrar sesión?</h1>
+  <div class="gap-3">
+    <button
+      id="close-dialog"
+      class="bg-gray-800 text-white text-sm m-4 p-2 rounded-md hover:bg-black"
+      >Cancelar</button
+    >
+    <button
+      id="logout-button-dialog"
+      class="bg-gray-800 text-white text-sm m-4 p-2 rounded-md hover:bg-black"
+      >Cerrar Sesión</button
+    >
+  </div>
+</dialog>
+
+<script>
+  const logoutBtn = document.getElementById("logout-button");
+  const logoutBtnMobile = document.getElementById("logout-button-mobile");
+  const logoutDialog = document.getElementById("logout-dialog");
+  const logoutBtnDialog = document.getElementById("logout-button-dialog");
+  const closeDialog = document.getElementById("close-dialog");
+
+  if (logoutBtn) {
+    //Abrir dialog
+    [logoutBtn, logoutBtnMobile].forEach((element) => {
+      element.addEventListener("click", async () => {
+        logoutDialog.showModal();
+      });
+    });
+  }
+
+  // Llamar al endpoint para cerrar sesión
+  logoutBtnDialog?.addEventListener("click", async () => {
+    try {
+      await fetch("http://localhost:3000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("Error cerrando sesión", err);
+    }
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.location.href = "/";
+  });
+
+  //Cerrar Dialog
+  closeDialog.addEventListener("click", async () => {
+    logoutDialog.close();
+  });
+
+  //Obtener nombre de usuario
+  const usernameLabel = document.getElementById("username");
+  if (usernameLabel) {
+    const user = JSON.parse(window.localStorage?.getItem("user") || "{}");
+    usernameLabel.textContent = user.name;
+  }
+</script>

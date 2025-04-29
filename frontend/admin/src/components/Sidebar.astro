@@ -72,8 +72,6 @@ import { Icon } from "astro-icon/components";
 
   const user = JSON.parse(window.localStorage?.getItem("user") || "{}");
 
-  console.log(user);
-
   usernameLabel.textContent = user.name;
   emailLabel.innerText = user.email;
 

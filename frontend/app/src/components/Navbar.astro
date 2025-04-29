@@ -3,6 +3,8 @@
 
 import { Icon } from "astro-icon/components";
 import ModalForm from "./ModalForm.astro";
+import ButtonOrders from "./Navbar/ButtonOrders.astro";
+import ButtonLogin from "./Navbar/ButtonLogin.astro";
 ---
 
 <!-- Banner promocional -->
@@ -56,12 +58,9 @@ import ModalForm from "./ModalForm.astro";
       >
         <Icon name="busqueda" size={30} />
       </button>
-      <button
-        id="login-button"
-        class="p-2 focus:outline-none cursor-pointer hidden md:block"
-      >
-        <Icon name="user" size={35} />
-      </button>
+
+      <ButtonLogin />
+      <ButtonOrders />
 
       <!-- MODIFICACION DEL CARRITO -->
       <div class="relative group">
@@ -125,11 +124,7 @@ import ModalForm from "./ModalForm.astro";
       <!-- Menú móvil (visible solo en móvil) -->
       <div id="mobile-menu" class="mobile-menu md:hidden">
         <div class="p-4">
-          <span
-            ><button id="login-button-movil" class="ml-1 mb-4 font-bold"
-              >Iniciar Sesión</button
-            ></span
-          >
+          <ButtonLogin isMobile={true} />
 
           <!-- Los botones móviles se generarán dinámicamente con JavaScript -->
         </div>

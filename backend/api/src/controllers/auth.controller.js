@@ -65,7 +65,9 @@ export const login = async (req, res) => {
       maxAge: 3600000, // 1h
     });
 
-    res.json({ token });
+    user.password = undefined; // Eliminar la contraseña del objeto de usuario
+
+    res.json({ user, token });
   } catch (err) {
     res
       .status(500)
