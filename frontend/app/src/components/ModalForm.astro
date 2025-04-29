@@ -165,19 +165,21 @@
 <script>
   // Modal functionality
   const loginButton = document.getElementById("login-button");
-  const loginButtonMovil = document.getElementById("login-button-movil");
+  const loginButtonMobile = document.getElementById("login-button-mobile");
   const loginModal = document.getElementById("login-modal");
   const registerModal = document.getElementById("register-modal");
   const registerLink = document.getElementById("register-link");
   const loginLink = document.getElementById("login-link");
   const closeButtons = document.querySelectorAll(".close");
 
-  // Open login modal
-  [loginButton, loginButtonMovil].forEach((element) => {
-    element.addEventListener("click", function () {
-      loginModal.style.display = "block";
+  if (loginButton && loginButtonMobile) {
+    // Open login modal
+    [loginButton, loginButtonMobile].forEach((element) => {
+      element.addEventListener("click", function () {
+        loginModal.style.display = "block";
+      });
     });
-  });
+  }
 
   // Switch to register modal
   registerLink.addEventListener("click", function () {
