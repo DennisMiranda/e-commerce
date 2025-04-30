@@ -1,0 +1,19 @@
+---
+const steps = ["Resumen de compra", "Identificación", "Envío", "Pago"];
+---
+
+<div class="w-full flex items-center justify-between mt-4 mb-8">
+  {
+    steps.map((step, index) => (
+      <div class="flex-1 text-center">
+        <div
+          id={`step-circle-${index + 1}`}
+          class={`rounded-full w-10 h-10 flex items-center justify-center mx-auto`}
+        >
+          {index + 1}
+        </div>
+        <p class="text-xs mt-2">{step}</p>
+      </div>
+    ))
+  }
+</div>
