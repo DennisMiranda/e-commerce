@@ -1,0 +1,98 @@
+---
+import LayoutCheckout from "../layouts/LayoutCheckout.astro";
+import OrdersCard from "../components/OrdersCard.astro";
+import Steps from "../components/Checkout/Steps.astro";
+import IdentificationForm from "../components/Checkout/IdentificationForm.astro";
+import Shipping from "../components/Checkout/Shipping.astro";
+import Payment from "../components/Checkout/Payment.astro";
+---
+
+<LayoutCheckout>
+  <div>
+    <!---Pasos botones--->
+    <div class="flex flex-col justify-between">
+      <Steps />
+      <div class="flex flex-col items-center">
+        <!---Resumen de compras--->
+        <div id="checkout-step-1" class="w-full flex justify-center">
+          <OrdersCard />
+        </div>
+        <div id="checkout-step-2" class="w-full">
+          <IdentificationForm />
+        </div>
+        <div id="checkout-step-3" class="w-full">
+          <Shipping />
+        </div>
+        <div id="checkout-step-4" class="w-full">
+          <Payment />
+        </div>
+      </div>
+
+      <div class="flex justify-between m-6">
+        <a id="btn-back" class="px-6 py-2 border rounded cursor-pointer"
+          >Atrás</a
+        >
+        <a
+          id="btn-next"
+          class="bg-gray-700 text-white px-6 py-2 rounded cursor-pointer"
+          >Continuar</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 0;
+    const btnBack = document.getElementById("btn-back");
+    const btnNext = document.getElementById("btn-next");
+
+    goToStep(1);
+
+    btnBack.addEventListener("click", () => goToStep(currentStep - 1));
+    btnNext.addEventListener("click", () => goToStep(currentStep + 1));
+
+    function goToStep(step) {
+      if (step < 1 || step > 4) return;
+
+      const stepsElements = document.querySelectorAll('[id^="checkout-step-"]');
+      stepsElements.forEach((section) => section.classList.add("hidden"));
+      // Quitar la clase hidden al paso actual
+      document
+        .getElementById(`checkout-step-${step}`)
+        .classList.remove("hidden");
+
+      if (step === 1) {
+        btnBack.innerText = "Seguir comprando";
+        btnBack.setAttribute("href", "/productos");
+      } else if (step === 4) {
+        btnNext.innerText = "Finalizar";
+      } else {
+        btnBack.innerText = "Atrás";
+        btnBack.removeAttribute("href");
+        btnNext.innerText = "Continuar";
+      }
+
+      updateStepIndicator(step);
+      currentStep = step;
+    }
+
+    function updateStepIndicator(step) {
+      for (let i = 1; i <= 4; i++) {
+        const circle = document.getElementById(`step-circle-${i}`);
+        if (circle) {
+          circle.classList.remove(
+            "bg-gray-700",
+            "text-white",
+            "bg-gray-300",
+            "text-black"
+          );
+          if (i === step) {
+            circle.classList.add("bg-gray-700", "text-white");
+          } else {
+            circle.classList.add("bg-gray-300", "text-black");
+          }
+        }
+      }
+    }
+  </script>
+</LayoutCheckout>

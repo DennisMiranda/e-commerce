@@ -1,0 +1,53 @@
+---
+
+---
+
+<div class="flex flex-col items-center p-4">
+  <h2 class="text-xl font-semibold mb-4">Pago</h2>
+
+  <!-- Payment -->
+  <div class="space-y-4">
+    <p class="text-sm text-gray-600">Todas las transacciones son seguras.</p>
+
+    <form class="space-y-4">
+      <label class="flex items-center space-x-2 border rounded p-2">
+        <input type="radio" name="payment" value="credit-card" checked />
+        <span>Tarjeta de Crédito/Débito</span>
+      </label>
+      <div class="space-y-4 ml-6">
+        <input
+          type="text"
+          placeholder="Número de tarjeta"
+          class="border p-1.5 rounded w-full"
+        />
+        <div class="grid grid-cols-2 gap-4">
+          <input
+            type="text"
+            placeholder="Fecha de expiración"
+            class="border p-1.5 rounded"
+          />
+          <input type="text" placeholder="CVV" class="border p-1.5 rounded" />
+        </div>
+      </div>
+
+      <!--Opción de pago Paypal -->
+      <label class="flex items-center space-x-2 border rounded p-2">
+        <input type="radio" name="payment" value="paypal" />
+        <span>PayPal</span>
+      </label>
+
+      <!--Opción de pago Yape -->
+      <label class="flex items-center space-x-2 border rounded p-2">
+        <input type="radio" name="payment" value="shop-pay" />
+        <span><strong class="text-purple-600">Yape</strong> </span>
+      </label>
+      <!--Terminos y condiciones de compra -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" id="billing-same" checked />
+        <label for="billing-same" class="text-sm"
+          >Aceptar términos y condiciones</label
+        >
+      </div>
+    </form>
+  </div>
+</div>
