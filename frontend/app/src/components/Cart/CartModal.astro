@@ -1,0 +1,123 @@
+---
+import { Icon } from "astro-icon/components";
+import CartItem from "./CartItem.astro";
+
+const token = Astro.cookies.get("token")?.value;
+let products = [];
+try {
+  const response = await fetch("http://localhost:3000/app/cart", {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  const { data } = await response.json();
+  products = data;
+} catch (error) {
+  console.log(error);
+}
+
+console.log(products);
+---
+
+<!-- Overlay para bloquear la interacción con la página -->
+<div
+  id="cartModalOverlay"
+  class="fixed inset-0 bg-black opacity-50 z-40 hidden"
+  onclick="window.closeCartModal()"
+>
+</div>
+
+<!-- Modal -->
+<div
+  id="cartModal"
+  class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto"
+>
+  <div class="p-4 relative">
+    <!-- Botón X de cierre -->
+    <button
+      onclick="window.closeCartModal()"
+      class="absolute top-2 right-2 p-2 text-gray-700 hover:text-gray-900"
+      aria-label="Cerrar"
+    >
+      <Icon name="cerrar" size={30} />
+    </button>
+
+    <h2 class="text-xl font-bold mb-4">Cart</h2>
+
+    {
+      products.length === 0 ? (
+        <p class="text-center text-gray-700">No hay productos en el carrito.</p>
+      ) : (
+        <div class="space-y-4">
+          {products.map((item) => (
+            <CartItem
+              id={item.id}
+              name={item.name}
+              image={item.image}
+              price={item.price}
+              quantity={item.quantity}
+            />
+          ))}
+          <div class="text-right font-bold text-lg">
+            Subtotal: $
+            {products
+              .reduce((acc, item) => acc + item.price * item.quantity, 0)
+              .toFixed(2)}
+          </div>
+          <button
+            onclick="window.location.href='/cart'"
+            class="w-full border p-2 bg-white hover:bg-gray-100"
+          >
+            GO TO CART
+          </button>
+          <button
+            onclick="window.location.href='/pagos'"
+            class="w-full bg-black text-white p-2 hover:bg-gray-800"
+          >
+            CHECKOUT
+          </button>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script type="module">
+  window.addEventListener("DOMContentLoaded", () => {
+    window.openCartModal = () => {
+      // Mostrar el modal y el overlay
+      document
+        .getElementById("cartModal")
+        ?.classList.remove("translate-x-full");
+      document.getElementById("cartModalOverlay")?.classList.remove("hidden");
+    };
+
+    window.closeCartModal = () => {
+      // Ocultar el modal y el overlay
+      document.getElementById("cartModal")?.classList.add("translate-x-full");
+      document.getElementById("cartModalOverlay")?.classList.add("hidden");
+    };
+  });
+
+  function updateQty(id, change) {
+    alert("Actualizar cantidad en lógica real");
+  }
+
+  // Función para almacenar los productos en localStorage
+  function storeCart() {
+    localStorage.setItem("cart", JSON.stringify(products));
+  }
+
+  // Redirigir a la página de carrito y almacenar los productos
+  function goToCart() {
+    storeCart();
+    window.location.href = "/cart";
+  }
+
+  // Redirigir a la página de checkout y almacenar los productos
+  function goToCheckout() {
+    storeCart();
+    window.location.href = "/pagos";
+  }
+</script>

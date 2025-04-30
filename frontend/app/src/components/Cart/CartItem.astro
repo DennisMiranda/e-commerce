@@ -1,0 +1,19 @@
+---
+const { id, name, price, image, quantity } = Astro.props;
+---
+
+<div class="border-b pb-4 flex gap-4">
+  <img src={image} alt={name} class="w-16 h-16 object-cover" />
+  <div class="flex-1">
+    <p class="font-semibold">{name}</p>
+    <p class="text-sm text-gray-700">
+      ${price}
+    </p>
+    <!-- <p class="text-sm">Color: {color}</p> -->
+    <div class="flex items-center mt-1">
+      <button class="px-2 border" onclick={`updateQty(${id}, -1)`}> − </button>
+      <span class="px-3">{quantity}</span>
+      <button class="px-2 border" onclick={`updateQty(${id}, 1)`}> + </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,348 @@
+---
+// Navbar.astro
+
+import { Icon } from "astro-icon/components";
+import ModalForm from "../ModalForm.astro";
+import ButtonOrders from "./ButtonOrders.astro";
+import ButtonLogin from "./ButtonLogin.astro";
+import CartModal from "../Cart/CartModal.astro";
+---
+
+<!-- Banner promocional -->
+<div class="bg-black text-white py-2 overflow-hidden">
+  <div class="flex justify-center items-center">
+    <a
+      href="#"
+      class="group relative inline-block text-xs font-medium tracking-wider text-white"
+    >
+      <span
+        class="block text-center bg-[length:0%_2px] bg-left-bottom bg-gradient-to-r from-white to-white bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-300"
+      >
+        ¡DISFRUTA UN 20% DE DESCUENTO CON EL CÓDIGO 11MAY!
+      </span>
+    </a>
+  </div>
+</div>
+
+<!-- Header principal -->
+<header class="bg-white pt-4 px-4 md:px-8">
+  <!-- Búsqueda, nombre y botones principal -->
+  <div class="mx-auto flex items-center justify-between">
+    <!-- Búsqueda desktop -->
+    <div
+      class="w-1/3 hidden md:flex items-center justify-end rounded-full border border-border-primary relative"
+    >
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Buscar"
+        class="flex-grow w-full focus:outline-none text-text-secondary placeholder-gray-700 p-2 pl-2"
+      />
+      <Icon name="busqueda" class="absolute mr-2 w-10 text-2xl" />
+    </div>
+
+    <!-- Logo (centro) -->
+    <div class="w-1/3 flex md:justify-center">
+      <a
+        href="/"
+        class="mented-logo text-3xl md:text-4xl font-light"
+        style="font-family: 'Cal Sans', sans-serif;">Aroma</a
+      >
+    </div>
+
+    <!-- Cuenta y carrito (derecha)-->
+    <div class="w-1/3 flex justify-end gap-4">
+      <!-- Búsqueda iconos mobile -->
+      <button
+        id="mobile-search-btn"
+        class="md:hidden block p-2 focus:outline-none cursor-pointer"
+      >
+        <Icon name="busqueda" size={30} />
+      </button>
+
+      <ButtonLogin />
+      <ButtonOrders />
+
+      <!-- MODIFICACION DEL CARRITO -->
+      <div class="relative group">
+        <button onclick="window.openCartModal()" class="p-2 focus:outline-none">
+          <Icon name="cart" size={30} />
+          <span id="cart-count" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <CartModal />
+
+  <!-- Navbar -->
+  <div class="w-full mx-auto bg-white">
+    <!-- Contenedor principal -->
+    <div class="relative" id="navbar-container">
+      <!-- Botón de hamburguesa (visible solo en móvil) -->
+      <div class="md:hidden flex justify-between items-center p-4">
+        <!-- <div class="text-xl font-bold">Ecommerce</div> -->
+        <button id="hamburger-button" class="hamburger-icon focus:outline-none">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Menú móvil (visible solo en móvil) -->
+      <div id="mobile-menu" class="mobile-menu md:hidden">
+        <div class="p-4">
+          <ButtonLogin isMobile={true} />
+
+          <!-- Los botones móviles se generarán dinámicamente con JavaScript -->
+        </div>
+      </div>
+
+      <!-- Menú de escritorio (visible solo en desktop) -->
+      <div class="hidden md:block">
+        <ul class="flex justify-center gap-6 p-4">
+          <!-- Los botones de escritorio se generarán dinámicamente con JavaScript -->
+        </ul>
+
+        <!-- Los menús de escritorio se generarán dinámicamente con JavaScript -->
+      </div>
+    </div>
+  </div>
+</header>
+<ModalForm />
+<dialog
+  id="mobile-search-dialog"
+  class="w-full m-auto mt-8 rounded-full p-4 bg-white shadow-lg"
+  closedby="any"
+>
+  <div class="w-full flex">
+    <input
+      id="mobile-search-dialog-input"
+      type="text"
+      placeholder="Buscar"
+      class="flex-grow focus:outline-none text-text-secondary placeholder-gray-700"
+    />
+    <button id="mobile-search-dialog-close" class="text-2xl cursor-pointer">
+      <Icon name="close" />
+    </button>
+  </div>
+</dialog>
+
+<script type="module">
+  import { updateCartCount } from "/scripts/cart.js";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbarContainer = document.getElementById("navbar-container");
+    const desktopMenu = navbarContainer.querySelector(".md\\:block");
+    const desktopButtonsList = desktopMenu.querySelector("ul");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const mobileMenuContent = mobileMenu.querySelector(".p-4");
+    const hamburgerButton = document.getElementById("hamburger-button");
+
+    fetch("http://localhost:3000/categories")
+      .then((response) => response.json())
+      .then((data) => {
+        const menuConfig = data.map((category) => {
+          return {
+            id: category.name.toLowerCase().replace(/\s+/g, ""),
+            items: category.products.slice(0, 10).map((product) => ({
+              id: product.id, // Asegúrate que el ID del producto está presente
+              name: product.name, // Y también su nombre
+            })),
+            title: category.name,
+          };
+        });
+
+        generateDesktopMenus(menuConfig);
+        generateMobileMenus(menuConfig);
+        setupEvents(menuConfig);
+      })
+      .catch((error) => console.error("Error fetching categories:", error));
+
+    function generateDesktopMenus(menuConfig) {
+      menuConfig.forEach((menu) => {
+        const listItem = document.createElement("li");
+        const button = document.createElement("button");
+        button.className =
+          "text-lg font-bold cursor-pointer hover:text-gray-500 transition-colors flex items-center";
+        button.setAttribute("data-menu", `${menu.id}-menu`);
+        button.innerHTML = `${menu.title}<span class="arrow-icon ml-1">▽</span>`;
+        listItem.appendChild(button);
+        desktopButtonsList.appendChild(listItem);
+
+        const menuElement = document.createElement("div");
+        menuElement.id = `${menu.id}-menu`;
+        menuElement.className =
+          "absolute top-full left-0 right-0 hidden bg-white text-black pl-10 pr-10 py-6 z-10 border border-gray-300 max-w-full overflow-x-hidden menu-container";
+
+        const menuList = document.createElement("ul");
+        menuList.className = "grid grid-rows-5 grid-flow-col gap-x-8 space-y-2";
+        menu.items.forEach((product) => {
+          const menuItem = document.createElement("li");
+          menuItem.innerHTML = `
+        <a href="/producto/${product.id}" class="block hover:text-blue-600  font-sans">
+      ${product.name}
+    </a>
+  `;
+          menuList.appendChild(menuItem);
+        });
+
+        menuElement.appendChild(menuList);
+        desktopMenu.appendChild(menuElement);
+      });
+    }
+
+    function generateMobileMenus(menuConfig) {
+      menuConfig.forEach((menu) => {
+        const mobileCategory = document.createElement("div");
+        mobileCategory.className = "border-b border-gray-200 py-2";
+
+        const mobileButton = document.createElement("button");
+        mobileButton.className =
+          "w-full flex justify-between items-center py-2 px-1 focus:outline-none";
+        mobileButton.setAttribute("data-mobile-menu", `mobile-${menu.id}-menu`);
+        mobileButton.innerHTML = `<span class="font-bold">${menu.title}</span><span class="plus-icon"></span>`;
+
+        const mobileSubmenu = document.createElement("div");
+        mobileSubmenu.id = `mobile-${menu.id}-menu`;
+        mobileSubmenu.className = "mobile-submenu pl-4";
+
+        const submenuList = document.createElement("ul");
+        submenuList.className = "py-2";
+        menu.items.forEach((item) => {
+          const submenuItem = document.createElement("li");
+          submenuItem.className = "py-1";
+          submenuItem.innerHTML = `<a href="/producto/${item.id}" class="block hover:text-blue-600 font-sans">${item.name}</a>`;
+          submenuList.appendChild(submenuItem);
+        });
+
+        mobileSubmenu.appendChild(submenuList);
+        mobileCategory.appendChild(mobileButton);
+        mobileCategory.appendChild(mobileSubmenu);
+        mobileMenuContent.appendChild(mobileCategory);
+      });
+    }
+
+    function setupEvents() {
+      const desktopButtons = document.querySelectorAll("button[data-menu]");
+      const desktopMenus = document.querySelectorAll(".menu-container");
+      const arrowIcons = document.querySelectorAll(".arrow-icon");
+      let activeDesktopMenu = null;
+      let isDesktopMenuHovered = false;
+
+      desktopButtons.forEach((button) => {
+        button.addEventListener("mouseenter", function () {
+          showDesktopMenu(this.getAttribute("data-menu"), this);
+        });
+        button.addEventListener("focus", function () {
+          showDesktopMenu(this.getAttribute("data-menu"), this);
+        });
+        button.addEventListener("click", function () {
+          const menuId = this.getAttribute("data-menu");
+          if (activeDesktopMenu && activeDesktopMenu.id === menuId) {
+            activeDesktopMenu.classList.add("hidden");
+            this.querySelector(".arrow-icon").classList.remove("open");
+            activeDesktopMenu = null;
+          } else {
+            showDesktopMenu(menuId, this);
+          }
+        });
+      });
+
+      function showDesktopMenu(menuId, buttonElement) {
+        desktopMenus.forEach((menu) => menu.classList.add("hidden"));
+        arrowIcons.forEach((icon) => icon.classList.remove("open"));
+
+        const targetMenu = document.getElementById(menuId);
+        if (targetMenu) {
+          targetMenu.classList.remove("hidden");
+          activeDesktopMenu = targetMenu;
+          buttonElement.querySelector(".arrow-icon").classList.add("open");
+        }
+      }
+
+      desktopMenus.forEach((menu) => {
+        menu.addEventListener(
+          "mouseenter",
+          () => (isDesktopMenuHovered = true)
+        );
+        menu.addEventListener("mouseleave", () => {
+          isDesktopMenuHovered = false;
+          setTimeout(hideAllDesktopMenus, 100);
+        });
+      });
+
+      function hideAllDesktopMenus() {
+        if (!isDesktopMenuHovered) {
+          desktopMenus.forEach((menu) => menu.classList.add("hidden"));
+          arrowIcons.forEach((icon) => icon.classList.remove("open"));
+          activeDesktopMenu = null;
+        }
+      }
+
+      desktopMenu.addEventListener("mouseleave", () =>
+        setTimeout(hideAllDesktopMenus, 100)
+      );
+
+      // Mobile
+      hamburgerButton.addEventListener("click", function () {
+        this.classList.toggle("active");
+        mobileMenu.classList.toggle("open");
+      });
+
+      const mobileButtons = document.querySelectorAll(
+        "button[data-mobile-menu]"
+      );
+      mobileButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const menuId = this.getAttribute("data-mobile-menu");
+          const targetMenu = document.getElementById(menuId);
+          const plusIcon = this.querySelector(".plus-icon");
+
+          if (targetMenu) {
+            targetMenu.classList.toggle("open");
+            plusIcon.classList.toggle("open");
+          }
+        });
+      });
+
+      // Cerrar menú cuando clic fuera
+      document.addEventListener("click", (event) => {
+        if (
+          ![...desktopButtons].some((btn) => btn.contains(event.target)) &&
+          ![...desktopMenus].some((menu) => menu.contains(event.target))
+        ) {
+          hideAllDesktopMenus();
+        }
+      });
+    }
+    updateCartCount();
+  });
+
+  // Buscador
+  const searchInput = document.getElementById("search-input");
+  const dialogInput = document.getElementById("mobile-search-dialog-input");
+  [searchInput, dialogInput].forEach((item) => {
+    item.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        const searchTerm = event.target.value.trim();
+        if (searchTerm) {
+          // Redirigir a la página de búsqueda con el término ingresado
+          window.location.href = `/productos?q=${encodeURIComponent(searchTerm)}`;
+        }
+      }
+    });
+  });
+
+  const mobileSearchBtn = document.getElementById("mobile-search-btn");
+  const mobileSearchDialog = document.getElementById("mobile-search-dialog");
+  mobileSearchBtn.addEventListener("click", () => {
+    mobileSearchDialog.showModal();
+  });
+
+  const mobileSearchDialogClose = document.getElementById(
+    "mobile-search-dialog-close"
+  );
+  mobileSearchDialogClose.addEventListener("click", () => {
+    mobileSearchDialog.close();
+  });
+</script>

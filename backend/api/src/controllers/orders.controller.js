@@ -1,9 +1,7 @@
 import { getConnection } from "../database/connection.js";
-import { decryptToken } from "./auth.controller.js";
 
 export const getOrders = async (req, res) => {
-  const token = req.headers["authorization"];
-  const userData = decryptToken(token);
+  const userData = req.tokenData;
 
   const dbConnection = await getConnection();
   const result = await dbConnection.request().input("userId", userData.id)
@@ -26,4 +24,38 @@ export const getOrders = async (req, res) => {
     WHERE po.users_id=@userId`);
 
   res.send({ data: result.recordset });
+};
+
+const createOrder = async (req, res) => {
+  const userData = req.tokenData;
+  const { products, total } = req.body;
+  const dbConnection = await getConnection();
+  try {
+    await dbConnection.transaction(async (transaction) => {
+      const orderResult = await transaction
+        .request()
+        .input("userId", userData.id)
+        .input("total", total)
+        .query(`INSERT INTO purchase_order (users_id, create_date, total, status) 
+        OUTPUT INSERTED.id 
+        VALUES (@userId, GETDATE(), @total, 'pending')`);
+
+      const orderId = orderResult.recordset[0].id;
+
+      for (const product of products) {
+        await transaction
+          .request()
+          .input("orderId", orderId)
+          .input("productId", product.id)
+          .input("quantity", product.quantity)
+          .input("sellPrice", product.sell_price)
+          .query(`INSERT INTO purchase_order_details (purchase_order_id, products_id, quantity, sell_price) 
+          VALUES (@orderId, @productId, @quantity, @sellPrice)`);
+      }
+    });
+    res.status(201).send({ message: "Order created successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error creating order" });
+  }
 };
